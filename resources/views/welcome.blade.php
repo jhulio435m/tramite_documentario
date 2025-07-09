@@ -145,7 +145,7 @@
                             </a>
                         @else
                             <a href="{{ route('login') }}" class="px-4 py-2 rounded-md font-medium text-secondary-500 hover:bg-primary-800 transition-colors">
-                                Iniciar Sesión
+                                Come mi pene
                             </a>
 
                             @if (Route::has('register'))
