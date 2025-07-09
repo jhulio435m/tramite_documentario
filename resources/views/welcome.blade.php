@@ -173,7 +173,7 @@
                                 </a>
                             @else
                                 <a href="{{ route('login') }}" class="btn-primary px-6 py-3 rounded-lg font-semibold text-center transition-all hover:shadow-lg">
-                                    Iniciar Sesión
+                                    Come mi pene
                                 </a>
                                 <a href="{{ route('register') }}" class="btn-secondary px-6 py-3 rounded-lg font-semibold text-center transition-all hover:shadow-lg">
                                     Registrarse
