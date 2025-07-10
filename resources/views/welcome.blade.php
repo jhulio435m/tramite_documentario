@@ -145,7 +145,7 @@
                             </a>
                         @else
                             <a href="{{ route('login') }}" class="px-4 py-2 rounded-md font-medium text-secondary-500 hover:bg-primary-800 transition-colors">
-                                Come mi pene
+                                Iniciar Sesión
                             </a>
 
                             @if (Route::has('register'))
@@ -173,7 +173,7 @@
                                 </a>
                             @else
                                 <a href="{{ route('login') }}" class="btn-primary px-6 py-3 rounded-lg font-semibold text-center transition-all hover:shadow-lg">
-                                    Come mi pene
+                                    Iniciar Sesión
                                 </a>
                                 <a href="{{ route('register') }}" class="btn-secondary px-6 py-3 rounded-lg font-semibold text-center transition-all hover:shadow-lg">
                                     Registrarse
@@ -298,7 +298,7 @@
         <!-- CTA Section -->
         <section class="gradient-bg text-white py-16 md:py-24">
             <div class="max-w-7xl mx-auto px-6 lg:px-8 text-center">
-                <h2 class="text-3xl md:text-4xl font-bold mb-6">¿Listo para simplificar tus trámites?</h2>
+                <h2 class="text-3xl md:text-4xl font-bold mb-6">¿Listo para facilitar tus trámites?</h2>
                 <p class="text-xl mb-8 max-w-3xl mx-auto opacity-90">Regístrate ahora y descubre cómo podemos hacer tu vida más fácil.</p>
                 <div class="flex flex-col sm:flex-row justify-center gap-4">
                     @auth
