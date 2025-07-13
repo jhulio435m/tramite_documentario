@@ -24,24 +24,36 @@ new #[Layout('components.layouts.auth')] class extends Component {
      * Handle an incoming authentication request.
      */
     public function login(): void
-    {
-        $this->validate();
+{
+    $this->validate([
+        'email' => ['required', 'string'], // Cambiado: ya no valida como email
+        'password' => ['required', 'string']
+    ]);
 
-        $this->ensureIsNotRateLimited();
+    $this->ensureIsNotRateLimited();
 
-        if (! Auth::attempt(['email' => $this->email, 'password' => $this->password], $this->remember)) {
-            RateLimiter::hit($this->throttleKey());
+    // Determina si el input es email o DNI
+    $credentials = $this->getCredentials();
 
-            throw ValidationException::withMessages([
-                'email' => __('auth.failed'),
-            ]);
-        }
-
-        RateLimiter::clear($this->throttleKey());
-        Session::regenerate();
-
-        $this->redirectIntended(default: route('dashboard', absolute: false), navigate: true);
+    if (!Auth::attempt($credentials, $this->remember)) {
+        RateLimiter::hit($this->throttleKey());
+        throw ValidationException::withMessages([
+            'email' => __('auth.failed'),
+        ]);
     }
+
+    RateLimiter::clear($this->throttleKey());
+    Session::regenerate();
+    $this->redirectIntended(default: route('dashboard', absolute: false), navigate: true);
+}
+
+protected function getCredentials(): array
+{
+    // Si es exactamente 8 dígitos, usa DNI, de lo contrario usa email
+    return (strlen($this->email) === 8 && ctype_digit($this->email))
+        ? ['dni' => $this->email, 'password' => $this->password]
+        : ['email' => $this->email, 'password' => $this->password];
+}
 
     /**
      * Ensure the authentication request is not rate limited.
@@ -84,7 +96,7 @@ new #[Layout('components.layouts.auth')] class extends Component {
         <flux:input
             wire:model="email"
             :label="__('Correo Electrónico / DNI')"
-            type="email"
+            type="text  "
             required
             autofocus
             autocomplete="email"
