@@ -11,6 +11,14 @@ Route::view('dashboard', 'dashboard')
     ->middleware(['auth', 'verified'])
     ->name('dashboard');
 
+Route::view('archivo_central', 'archivo_central')
+    ->middleware(['auth', 'verified'])
+    ->name('archivo.central');
+
+Route::view('carga_documentos', 'carga_documentos')
+    ->middleware(['auth', 'verified'])
+    ->name('carga.documentos');
+
 Route::middleware(['auth'])->group(function () {
     Route::redirect('settings', 'settings/profile');
 
