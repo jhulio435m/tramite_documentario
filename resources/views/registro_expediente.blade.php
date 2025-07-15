@@ -1,8 +1,27 @@
 <x-layouts.app :title="__('Archivo Central')">
-    <div class="pb-8">
-        <h1 class="text-3xl font-bold text-green-800">Archivo Central</h1>
+    <!-- Título -->
+    <div class="pb-2">
+        <h1 class="text-3xl font-bold text-green-800">Registro de expediente</h1>
     </div>
 
+    <!-- Botón registrar -->
+    <div class="mb-6">
+        <flux:button color="green" class="px- py-2">+ Registrar nuevo expediente</flux:button>
+    </div>
+
+    <!-- Formulario de registro -->
+    <div class="bg-white shadow-md rounded-xl p-6 mb-6 space-y-4">
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+            <flux:input name="nombre" placeholder="Nombre del expediente" />
+            <flux:input name="dependencia" placeholder="Dependencia de origen" />
+            <flux:input type="date" name="fecha" label="Fecha" />
+        </div>
+        <div>
+            <flux:button color="yellow">Guardar expediente</flux:button>
+        </div>
+    </div>
+
+    <!-- Filtros -->
     <div class="max-w-5xl mx-auto bg-white shadow-md rounded-xl mt-5 p-4 space-y-6">
         <flux:input icon="magnifying-glass" placeholder="Filtrar por palabras clave " />
     </div>
@@ -97,11 +116,42 @@
         </div>
     </div>
 
-   
-   
-    
 
-
-
-
+    <!-- Tabla de expedientes -->
+    <div class="bg-white shadow-md rounded-xl p-6">
+        <table class="min-w-full text-sm text-left">
+            <thead class="bg-gray-100 text-gray-700 uppercase">
+                <tr>
+                    <th class="px-4 py-2">Código</th>
+                    <th class="px-4 py-2">Trámite</th>
+                    <th class="px-4 py-2">Fecha</th>
+                    <th class="px-4 py-2">Facultad</th>
+                    <th class="px-4 py-2">Estado</th>
+                    <th class="px-4 py-2 text-center">Acciones</th>
+                </tr>
+            </thead>
+            <tbody class="divide-y divide-gray-200">
+                <tr>
+                    <td class="px-4 py-2">00001</td>
+                    <td class="px-4 py-2">Constancia de estudios</td>
+                    <td class="px-4 py-2">08/07/2025</td>
+                    <td class="px-4 py-2">Sistemas</td>
+                    <td class="px-4 py-2">Finalizado</td>
+                    <td class="px-4 py-2 text-center">
+                        <a href="#" class="text-green-700 font-bold text-lg">👁️</a>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="px-4 py-2">00002</td>
+                    <td class="px-4 py-2">Constancia de estudios</td>
+                    <td class="px-4 py-2">09/07/2025</td>
+                    <td class="px-4 py-2">Sistemas</td>
+                    <td class="px-4 py-2">Finalizado</td>
+                    <td class="px-4 py-2 text-center">
+                        <a href="#" class="text-green-700 font-bold text-lg">👁️</a>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
 </x-layouts.app>

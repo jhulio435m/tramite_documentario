@@ -15,7 +15,10 @@
                 <flux:navlist.group class="grid">
                     <flux:navlist.item icon="home" :href="route('dashboard')" :current="request()->routeIs('dashboard')" wire:navigate>{{ __('Dashboard') }}</flux:navlist.item>
                     <flux:navlist.item icon="document" :href="route('archivo.central')" :current="request()->routeIs('archivo.central')" wire:navigate>{{ __('Archivo Central') }}</flux:navlist.item>
-                    <flux:navlist.item icon="document" :href="route('carga.documentos')" :current="request()->routeIs('carga.documentos')" wire:navigate>{{ __('Carga de documentos digitalizados') }}</flux:navlist.item>
+                    <flux:navlist.item icon="document" :href="route('carga.documentos')" :current="request()->routeIs('carga.documentos')" wire:navigate>{{ __('Cargar Documentos') }}</flux:navlist.item>
+                    <flux:navlist.item icon="document" :href="route('registro.expediente')" :current="request()->routeIs('registro.expediente')" wire:navigate>{{ __('Registro Expediente') }}</flux:navlist.item>
+                    <flux:navlist.item icon="document" :href="route('solicitudes.pendientes')" :current="request()->routeIs('solicitudes.pendientes')" wire:navigate>{{ __('Solicitudes Pendientes') }}</flux:navlist.item>
+                    <flux:navlist.item icon="document" :href="route('formulario.solicitudes')" :current="request()->routeIs('formulario.solicitudes')" wire:navigate>{{ __('Formulario Solicitudes') }}</flux:navlist.item>
                 </flux:navlist.group>
             </flux:navlist>
 
