@@ -15,6 +15,10 @@ Route::view('vereExpe', 'vereExpe')
     ->middleware(['auth', 'verified'])
     ->name('vereExpe');
 
+Route::view('remisiondeExp', 'remisiondeExp')
+    ->middleware(['auth', 'verified'])
+    ->name('remisiondeExp');
+
 Route::middleware(['auth'])->group(function () {
     Route::redirect('settings', 'settings/profile');
 
