@@ -2,6 +2,8 @@
 
 use Illuminate\Support\Facades\Route;
 use Livewire\Volt\Volt;
+use App\Livewire\VerificacionExpediente;
+use App\Livewire\RegistroObservaciones;
 
 Route::get('/', function () {
     return view('welcome');
@@ -11,13 +13,26 @@ Route::view('dashboard', 'dashboard')
     ->middleware(['auth', 'verified'])
     ->name('dashboard');
 
-Route::view('vereExpe', 'vereExpe')
+Route::get('/verificacion-expediente', VerificacionExpediente::class)
     ->middleware(['auth', 'verified'])
-    ->name('vereExpe');
+    ->name('verificacionExpediente');
 
-Route::view('remisiondeExp', 'remisiondeExp')
+Route::get('/registro-observaciones/{expedienteId?}', RegistroObservaciones::class)
     ->middleware(['auth', 'verified'])
-    ->name('remisiondeExp');
+    ->name('registroObservaciones');
+
+Route::view('remisionExpediente', 'remisionExpediente')
+    ->middleware(['auth', 'verified'])
+    ->name('remisionExpediente');
+
+Route::view('registroEnvioAutomatico', 'registroEnvioAutomatico')
+    ->middleware(['auth', 'verified'])
+    ->name('registroEnvioAutomatico');
+
+Route::view('formularioFlujo', 'formularioFlujo')
+    ->middleware(['auth', 'verified'])
+    ->name('formularioFlujo');
+
 
 Route::middleware(['auth'])->group(function () {
     Route::redirect('settings', 'settings/profile');
