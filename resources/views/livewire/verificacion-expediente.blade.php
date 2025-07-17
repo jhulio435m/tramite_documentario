@@ -28,9 +28,12 @@
                             <td class="p-2">{{ $exp->estado }}</td>
                             <td class="p-2 flex gap-2">
                                 <button class="btn-ver" wire:click="seleccionarExpediente({{ $exp->id }})">Ver</button>
-                                <a href="{{ route('registroObservaciones', ['expedienteId' => $exp->id]) }}" class="btn-observar bg-blue-500 text-white px-2 py-1 rounded text-sm hover:bg-blue-600">
-                                    Observar
-                                </a>
+                                @if ($exp->estado === 'En Curso')
+                                    <a href="{{ route('registroObservaciones', ['expedienteId' => $exp->id]) }}"
+                                       class="btn-observar bg-blue-500 text-white px-2 py-1 rounded text-sm hover:bg-blue-600">
+                                        Observar
+                                    </a>
+                                @endif
                             </td>
                         </tr>
                     @endforeach
@@ -51,19 +54,16 @@
                     <div><strong>Estado:</strong> {{ $expedienteSeleccionado->estado }}</div>
                 </div>
 
-                <div class="form-group mb-4">
-                    <label class="block font-medium mb-1">Observaciones:</label>
-                    <textarea rows="4" class="w-full p-2 border rounded" wire:model.defer="observaciones" placeholder="Escriba observaciones..."></textarea>
-                </div>
-
-                <div class="acciones flex gap-4">
-                    <button wire:click="validarExpediente" class="btn validar-btn bg-green-600 text-white px-4 py-2 rounded">
-                        VALIDAR
-                    </button>
-                    <button wire:click="rechazarExpediente" class="btn rechazar-btn bg-red-600 text-white px-4 py-2 rounded">
-                        RECHAZAR Y ARCHIVAR
-                    </button>
-                </div>
+                @if ($expedienteSeleccionado->estado === 'En Curso')
+                    <div class="acciones flex gap-4">
+                        <button wire:click="validarExpediente" class="btn validar-btn bg-green-600 text-white px-4 py-2 rounded">
+                            VALIDAR
+                        </button>
+                        <button wire:click="rechazarExpediente" class="btn rechazar-btn bg-red-600 text-white px-4 py-2 rounded">
+                            RECHAZAR
+                        </button>
+                    </div>
+                @endif
             </div>
         @endif
     </main>

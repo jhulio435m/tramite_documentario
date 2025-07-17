@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\Route;
 use Livewire\Volt\Volt;
 use App\Livewire\VerificacionExpediente;
 use App\Livewire\RegistroObservaciones;
+use App\Livewire\RemisionExpediente;
 
 Route::get('/', function () {
     return view('welcome');
@@ -20,6 +21,10 @@ Route::get('/verificacion-expediente', VerificacionExpediente::class)
 Route::get('/registro-observaciones/{expedienteId?}', RegistroObservaciones::class)
     ->middleware(['auth', 'verified'])
     ->name('registroObservaciones');
+
+Route::get('/remision-expediente/{expedienteId}', RemisionExpediente::class)
+    ->middleware(['auth', 'verified'])
+    ->name('remisionExpediente');
 
 Route::view('remisionExpediente', 'remisionExpediente')
     ->middleware(['auth', 'verified'])

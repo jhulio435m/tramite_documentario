@@ -9,7 +9,6 @@ class VerificacionExpediente extends Component
 {
     public $expedientes;
     public $expedienteSeleccionado = null;
-    public $observaciones = '';
 
     public function mount()
     {
@@ -19,32 +18,29 @@ class VerificacionExpediente extends Component
     public function seleccionarExpediente($id)
     {
         $this->expedienteSeleccionado = Expediente::find($id);
-        $this->observaciones = $this->expedienteSeleccionado->observaciones ?? '';
     }
 
     public function validarExpediente()
     {
         if ($this->expedienteSeleccionado) {
             $this->expedienteSeleccionado->estado = 'Aprobado';
-            $this->expedienteSeleccionado->observaciones = $this->observaciones;
             $this->expedienteSeleccionado->save();
 
-            $this->reset('expedienteSeleccionado', 'observaciones');
+            $this->reset('expedienteSeleccionado');
             $this->expedientes = Expediente::all();
         }
     }
-
-    public function rechazarExpediente()
-    {
+    
+    public function rechazarExpediente(){
         if ($this->expedienteSeleccionado) {
             $this->expedienteSeleccionado->estado = 'Rechazado';
-            $this->expedienteSeleccionado->observaciones = $this->observaciones;
             $this->expedienteSeleccionado->save();
 
-            $this->reset('expedienteSeleccionado', 'observaciones');
+            $this->reset('expedienteSeleccionado');
             $this->expedientes = Expediente::all();
         }
     }
+
 
     public function render()
     {
