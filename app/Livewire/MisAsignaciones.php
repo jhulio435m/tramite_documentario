@@ -4,10 +4,10 @@ namespace App\Livewire;
 
 use Livewire\Component;
 
-class Derivar extends Component
+class MisAsignaciones extends Component
 {
     public function render()
     {
-        return view('livewire.derivar');
+        return view('livewire.mis-asignaciones');
     }
 }

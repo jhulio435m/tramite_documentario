@@ -11,13 +11,13 @@ Route::view('dashboard', 'dashboard')
     ->middleware(['auth', 'verified'])
     ->name('dashboard');
 
-Route::view('ejemplo', 'ejemplo')
+Route::view('mis_asignaciones', 'mis_asignaciones')
     ->middleware(['auth', 'verified'])
-    ->name('ejemplo');
+    ->name('mis.asignaciones');
 
-Route::view('ejemplo_dashboard', 'ejemplo_dashboard')
+Route::view('panel_principal', 'panel_principal')
     ->middleware(['auth', 'verified'])
-    ->name('ejemplo.dashboard');
+    ->name('panel.principal');
 
 Route::middleware(['auth'])->group(function () {
     Route::redirect('settings', 'settings/profile');
