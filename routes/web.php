@@ -5,6 +5,8 @@ use Livewire\Volt\Volt;
 use App\Livewire\VerificacionExpediente;
 use App\Livewire\RegistroObservaciones;
 use App\Livewire\RemisionExpediente;
+use App\Livewire\RegistroEnvioAutomatico;
+use App\Livewire\FormularioFlujo;
 
 Route::get('/', function () {
     return view('welcome');
@@ -26,14 +28,13 @@ Route::get('/remision-expediente/{expedienteId?}', RemisionExpediente::class)
     ->middleware(['auth', 'verified'])
     ->name('remisionExpediente');
 
-Route::view('registroEnvioAutomatico', 'registroEnvioAutomatico')
+Route::get('/registro-envio-automatico', RegistroEnvioAutomatico::class)
     ->middleware(['auth', 'verified'])
     ->name('registroEnvioAutomatico');
 
-Route::view('formularioFlujo', 'formularioFlujo')
-    ->middleware(['auth', 'verified'])
+Route::get('/formulario-flujo', FormularioFlujo::class)
+    ->middleware(['auth'])
     ->name('formularioFlujo');
-
 
 Route::middleware(['auth'])->group(function () {
     Route::redirect('settings', 'settings/profile');

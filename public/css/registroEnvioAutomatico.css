@@ -29,27 +29,11 @@ body {
 }
 
 .expediente {
-    display: flex;
-    align-items: flex-start;
     background-color: white;
     padding: 15px;
     border-radius: 5px;
     box-shadow: 0 0 1px rgba(0, 0, 0, 0.1);
-    gap: 10px;
-}
-
-.expediente.seleccionado {
-    background-color: #6b88b9;
-    color: white;
-}
-
-.expediente.seleccionado .estado-ok,
-.expediente.seleccionado .timestamp {
-    color: white;
-}
-
-.expediente input[type="checkbox"] {
-    margin-top: 5px;
+    transition: background-color 0.3s ease;
 }
 
 .contenido p {
@@ -80,7 +64,21 @@ body {
     font-size: 16px;
 }
 
-.navegacion i {
-    margin-left: 10px;
+.navegacion button {
+    background: none;
+    border: none;
+    color: #333;
+    font-size: 18px;
     cursor: pointer;
+    margin-left: 10px;
+    transition: color 0.2s ease;
+}
+
+.navegacion button:hover {
+    color: #000;
+}
+
+.navegacion button:disabled {
+    opacity: 0.3;
+    cursor: default;
 }
