@@ -22,11 +22,7 @@ Route::get('/registro-observaciones/{expedienteId?}', RegistroObservaciones::cla
     ->middleware(['auth', 'verified'])
     ->name('registroObservaciones');
 
-Route::get('/remision-expediente/{expedienteId}', RemisionExpediente::class)
-    ->middleware(['auth', 'verified'])
-    ->name('remisionExpediente');
-
-Route::view('remisionExpediente', 'remisionExpediente')
+Route::get('/remision-expediente/{expedienteId?}', RemisionExpediente::class)
     ->middleware(['auth', 'verified'])
     ->name('remisionExpediente');
 

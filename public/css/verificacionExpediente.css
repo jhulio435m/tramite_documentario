@@ -196,3 +196,15 @@ h3 {
 .btn-observar:hover {
     background-color: #2779bd;
 }
+
+.btn-remitir {
+    background-color: #3490dc;
+    color: #fff;
+    padding: 10px 15px;
+    border-radius: 5px;
+    font-weight: bold;
+    text-align: center;
+    display: inline-block;
+    transition: background-color 0.3s ease;
+    text-decoration: none;
+}

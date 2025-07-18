@@ -4,34 +4,32 @@ namespace App\Livewire;
 
 use Livewire\Component;
 use App\Models\Expediente;
-use Carbon\Carbon;
 
 class RemisionExpediente extends Component
 {
     public $expedienteId;
-    public $expediente;
-    public $medioEnvio = 'Sistema eDoc';
-    public $confirmacion = false;
-    public $timestampEnvio = null;
+    public $expediente = null;
+    public $medio = 'Sistema eDoc';
 
-    public function mount($expedienteId)
+    public function mount($expedienteId = null)
     {
-        $this->expediente = Expediente::find($expedienteId);
         $this->expedienteId = $expedienteId;
-        $this->timestampEnvio = $this->expediente->fecha_envio ?? null;
+
+        if ($expedienteId) {
+            $this->expediente = Expediente::find($expedienteId);
+        }
     }
 
-    public function enviar()
+    public function enviarExpediente()
     {
-        if ($this->expediente) {
-            $this->expediente->medio_envio = $this->medioEnvio;
-            $this->expediente->estado = 'Remitido';
-            $this->expediente->fecha_envio = now();
-            $this->expediente->save();
+        if (!$this->expediente) return;
 
-            $this->confirmacion = true;
-            $this->timestampEnvio = $this->expediente->fecha_envio;
-        }
+        $this->expediente->estado = 'Enviado';
+        $this->expediente->medio_envio = $this->medio;
+        $this->expediente->fecha_envio = now();
+        $this->expediente->save();
+
+        return redirect()->route('verificacionExpediente')->with('success', 'Expediente enviado correctamente a las ' . now()->format('g:i A d/m/Y'));
     }
 
     public function render()

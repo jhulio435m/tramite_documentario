@@ -41,9 +41,14 @@ class RegistroObservaciones extends Component
             if ($expediente) {
                 $expediente->estado = $this->resultado === 'conforme' ? 'Aprobado' : 'Rechazado';
                 $expediente->observaciones = $this->observaciones;
+
+                // ✅ Registrar fecha de validación si es conforme (Aprobado)
+                if ($this->resultado === 'conforme') {
+                    $expediente->fecha_validacion = now();
+                }
+
                 $expediente->save();
 
-                // Redirige con mensaje
                 return redirect()->route('verificacionExpediente');
             }
         }

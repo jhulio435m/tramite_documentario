@@ -24,13 +24,13 @@ class VerificacionExpediente extends Component
     {
         if ($this->expedienteSeleccionado) {
             $this->expedienteSeleccionado->estado = 'Aprobado';
+            $this->expedienteSeleccionado->fecha_validacion = now();
             $this->expedienteSeleccionado->save();
 
             $this->reset('expedienteSeleccionado');
             $this->expedientes = Expediente::all();
         }
     }
-    
     public function rechazarExpediente(){
         if ($this->expedienteSeleccionado) {
             $this->expedienteSeleccionado->estado = 'Rechazado';
@@ -40,7 +40,6 @@ class VerificacionExpediente extends Component
             $this->expedientes = Expediente::all();
         }
     }
-
 
     public function render()
     {

@@ -5,7 +5,21 @@
     @endpush
 
     <main class="main-content p-6">
-        <h2 class="text-2xl font-bold mb-6 text-gray-800 dark:text-white">Verificación de Expedientes</h2>
+        <h2 class="text-2xl font-bold mb-4 text-gray-800 dark:text-white">Verificación de Expedientes</h2>
+
+        {{-- MENSAJE DE ÉXITO --}}
+        @if (session('success'))
+            <div 
+                x-data="{ show: true }" 
+                x-init="setTimeout(() => show = false, 3000)" 
+                x-show="show"
+                x-transition
+                class="bg-green-100 border border-green-400 text-green-700 px-4 py-2 rounded mb-4"
+            >
+                {{ session('success') }}
+            </div>
+        @endif
+
 
         <!-- Lista de expedientes con scroll -->
         <div class="tabla-scroll">
@@ -56,12 +70,21 @@
 
                 @if ($expedienteSeleccionado->estado === 'En Curso')
                     <div class="acciones flex gap-4">
-                        <button wire:click="validarExpediente" class="btn validar-btn bg-green-600 text-white px-4 py-2 rounded">
+                        <button wire:click="validarExpediente"
+                                class="btn validar-btn bg-green-600 text-white px-4 py-2 rounded">
                             VALIDAR
                         </button>
-                        <button wire:click="rechazarExpediente" class="btn rechazar-btn bg-red-600 text-white px-4 py-2 rounded">
+                        <button wire:click="rechazarExpediente"
+                                class="btn rechazar-btn bg-red-600 text-white px-4 py-2 rounded">
                             RECHAZAR
                         </button>
+                    </div>
+                @elseif ($expedienteSeleccionado->estado === 'Aprobado')
+                    <div class="acciones mt-4">
+                        <a href="{{ route('remisionExpediente', ['expedienteId' => $expedienteSeleccionado->id]) }}"
+                           class="btn btn-remitir bg-indigo-600 text-white px-4 py-2 rounded hover:bg-indigo-700">
+                            REMITIR EXPEDIENTE
+                        </a>
                     </div>
                 @endif
             </div>
