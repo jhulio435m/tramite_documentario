@@ -39,6 +39,7 @@ class RevisarExpedientesFinalizados extends Component
     public function marcarComoFinalizado()
     {
         if ($this->expedienteSeleccionado) {
+            // Actualiza estado del expediente
             DB::table('expedientes')
                 ->where('id', $this->expedienteSeleccionado->id)
                 ->update([
@@ -47,12 +48,23 @@ class RevisarExpedientesFinalizados extends Component
                     'updated_at' => now(),
                 ]);
 
-            session()->flash('success', 'Expediente marcado como Finalizado.');
+            // Agrega notificación para el solicitante
+            DB::table('notificaciones')->insert([
+                'expediente_id' => $this->expedienteSeleccionado->id,
+                'mensaje' => $this->mensajeNotificacion ?? 'Su expediente ha sido finalizado',
+                'created_at' => now(),
+                'updated_at' => now(),
+            ]);
+
+            session()->flash('success', 'Expediente marcado como finalizado y notificación enviada.');
+
+            // Limpia selección
             $this->expedienteSeleccionado = null;
             $this->mensajeNotificacion = '';
             $this->cargarExpedientes();
         }
     }
+
 
     public function cancelarSeleccion()
     {

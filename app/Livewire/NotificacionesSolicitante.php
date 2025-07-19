@@ -7,22 +7,24 @@ use Illuminate\Support\Facades\DB;
 
 class NotificacionesSolicitante extends Component
 {
-    public $solicitante; // El nombre del solicitante autenticado o identificado
     public $notificaciones = [];
+    public $solicitante;
 
-    public function mount($solicitante)
+    public function mount()
     {
-        $this->solicitante = $solicitante;
-        $this->cargarNotificaciones();
-    }
+        // ⚙ En producción, cuando el otro equipo termine el login:
+        $this->solicitante = auth()->user()->name;
 
-    public function cargarNotificaciones()
-    {
+        // 🔍 Paso 2: Cargar notificaciones asociadas a ese solicitante
         $this->notificaciones = DB::table('notificaciones')
             ->join('expedientes', 'notificaciones.expediente_id', '=', 'expedientes.id')
             ->where('expedientes.solicitante', $this->solicitante)
-            ->orderByDesc('notificaciones.enviado_at')
-            ->select('notificaciones.*', 'expedientes.codigo')
+            ->orderByDesc('notificaciones.created_at')
+            ->select(
+                'notificaciones.mensaje',
+                'notificaciones.created_at',
+                'expedientes.codigo'
+            )
             ->get();
     }
 
