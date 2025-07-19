@@ -11,6 +11,7 @@ use App\Livewire\CanalizarEnvio;
 use App\Livewire\RevisarExpedientesFinalizados;
 use App\Livewire\NotificacionesSolicitante;
 use App\Livewire\EntregarArchivar;
+use App\Livewire\PanelSeguimiento;
 
 Route::get('/', function () {
     return view('welcome');
@@ -55,6 +56,11 @@ Route::get('/notificaciones-solicitante', NotificacionesSolicitante::class)
 Route::get('/entregar-archivar', EntregarArchivar::class)
     ->middleware(['auth', 'verified'])
     ->name('entregarArchivar');
+
+Route::get('/panel-seguimiento', PanelSeguimiento::class)
+    ->middleware(['auth', 'verified'])
+    ->name('panelSeguimiento');
+
 
 Route::middleware(['auth'])->group(function () {
     Route::redirect('settings', 'settings/profile');
