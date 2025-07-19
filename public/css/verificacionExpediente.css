@@ -116,6 +116,12 @@ h3 {
     /* azul claro */
 }
 
+.estado-finalizado {
+    background: #74c485;
+    /* verde clarito */
+}
+
+
 .btn-ver {
     background: #f7d900;
     border: none;

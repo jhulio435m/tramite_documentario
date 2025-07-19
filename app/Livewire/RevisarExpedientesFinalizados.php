@@ -9,7 +9,6 @@ class RevisarExpedientesFinalizados extends Component
 {
     public $expedientes = [];
     public $expedienteSeleccionado = null;
-
     public $mensajeNotificacion = '';
 
     public function mount()
@@ -19,9 +18,14 @@ class RevisarExpedientesFinalizados extends Component
 
     public function cargarExpedientes()
     {
-        // Carga expedientes en estado 'Enviado' o 'Canalizado'
         $this->expedientes = DB::table('expedientes')
-            ->whereIn('estado', ['Enviado', 'Canalizado'])
+            ->where(function($query) {
+                $query->where('estado', 'Canalizado')
+                      ->orWhere(function($q) {
+                          $q->where('estado', 'Enviado')
+                            ->where('medio_envio', 'Sistema eDoc');
+                      });
+            })
             ->orderByDesc('fecha_envio')
             ->get();
     }
@@ -29,34 +33,31 @@ class RevisarExpedientesFinalizados extends Component
     public function seleccionarExpediente($id)
     {
         $this->expedienteSeleccionado = DB::table('expedientes')->find($id);
+        $this->mensajeNotificacion = '';
+    }
+
+    public function marcarComoFinalizado()
+    {
+        if ($this->expedienteSeleccionado) {
+            DB::table('expedientes')
+                ->where('id', $this->expedienteSeleccionado->id)
+                ->update([
+                    'estado' => 'Finalizado',
+                    'observaciones' => $this->mensajeNotificacion,
+                    'updated_at' => now(),
+                ]);
+
+            session()->flash('success', 'Expediente marcado como Finalizado.');
+            $this->expedienteSeleccionado = null;
+            $this->mensajeNotificacion = '';
+            $this->cargarExpedientes();
+        }
     }
 
     public function cancelarSeleccion()
     {
         $this->expedienteSeleccionado = null;
         $this->mensajeNotificacion = '';
-    }
-
-    public function marcarComoFinalizado()
-    {
-        if (!$this->expedienteSeleccionado) return;
-
-        // Actualizar estado a 'Finalizado'
-        DB::table('expedientes')
-            ->where('id', $this->expedienteSeleccionado->id)
-            ->update([
-                'estado' => 'Finalizado',
-                'updated_at' => now(),
-                'observaciones' => $this->mensajeNotificacion,
-            ]);
-
-        // Podrías aquí enviar notificación real (correo, etc.)
-        // Por ahora, solo limpiamos selección y recargamos lista
-        $this->expedienteSeleccionado = null;
-        $this->mensajeNotificacion = '';
-
-        session()->flash('success', 'Expediente marcado como finalizado y solicitante notificado.');
-        $this->cargarExpedientes();
     }
 
     public function render()
