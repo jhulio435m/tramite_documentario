@@ -5,6 +5,9 @@ namespace App\Livewire;
 use Livewire\Component;
 use Livewire\WithFileUploads;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Str;
+use Illuminate\Support\Carbon;
+use Illuminate\Support\Facades\DB;
 
 class FormularioFlujo extends Component
 {
@@ -14,35 +17,62 @@ class FormularioFlujo extends Component
     public $area_procedencia, $fecha_recepcion, $documento;
     public $observaciones;
 
-    public function archivar()
+    public function updated($property)
     {
-        $this->validate([
-            'codigo' => 'required',
-            'solicitante' => 'required',
-            'asunto' => 'required',
-            'tipo_documento' => 'required',
-            'area_procedencia' => 'required',
+        $this->validateOnly($property, [
+            'codigo' => 'required|string|max:20',
+            'solicitante' => 'required|string|max:100',
+            'asunto' => 'required|string|max:150',
+            'tipo_documento' => 'required|string|max:50',
+            'area_procedencia' => 'required|string|max:100',
             'fecha_recepcion' => 'required|date',
-            'documento' => 'nullable|file|mimes:pdf,jpg,jpeg,png',
-            'observaciones' => 'nullable|string',
-        ]);
-
-        $documentoPath = $this->documento?->store('documentos', 'public');
-
-        // Aquí puedes guardar los datos en la tabla 'expedientes' o alguna tabla personalizada
-        // Por ahora solo mostramos que se completó:
-        session()->flash('success', 'Flujo personalizado archivado correctamente.');
-
-        $this->limpiar();
-    }
-
-    public function limpiar()
-    {
-        $this->reset([
-            'codigo', 'solicitante', 'asunto', 'tipo_documento',
-            'area_procedencia', 'fecha_recepcion', 'documento', 'observaciones'
+            'documento' => 'nullable|file|mimes:pdf,jpg,jpeg,png|max:2048',
+            'observaciones' => 'nullable|string|max:500',
         ]);
     }
+
+    public function archivar(){
+        $this->validate([
+            'codigo' => 'required|string|max:20',
+            'solicitante' => 'required|string|max:100',
+            'asunto' => 'required|string|max:150',
+            'tipo_documento' => 'required|string|max:50',
+            'area_procedencia' => 'required|string|max:100',
+            'fecha_recepcion' => 'required|date',
+            'documento' => 'required|file|mimes:pdf,jpg,jpeg,png|max:2048',
+            'observaciones' => 'required|string|max:500',
+        ]);
+
+        $documentoPath = null;
+
+        if ($this->documento) {
+            $documentoPath = $this->documento->store('documentos_flujo', 'public');
+        }
+
+        DB::table('expedientes')->insert([
+            'codigo' => $this->codigo,
+            'solicitante' => $this->solicitante,
+            'sumilla' => $this->asunto,
+            'tipo_documento' => $this->tipo_documento,
+            'area_procedencia' => $this->area_procedencia,
+            'fecha_ingreso' => $this->fecha_recepcion,
+            'estado' => 'En Curso',
+            'observaciones' => $this->observaciones,
+            'documento_path' => $documentoPath,
+            'created_at' => now(),
+            'updated_at' => now(),
+        ]);
+
+        session()->flash('success', 'El flujo ha sido archivado correctamente.');
+
+        return redirect()->route('formularioFlujo');
+    }
+
+
+    public function limpiarCampos(){
+        return redirect(request()->header('Referer'));
+    }
+
 
     public function cancelar()
     {

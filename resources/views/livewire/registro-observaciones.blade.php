@@ -22,8 +22,12 @@
             <div class="form-group radio-group">
                 <label>Resultado de validación</label>
                 <div class="radios">
-                    <label><input type="radio" wire:model="resultado" value="conforme"> CONFORME</label>
-                    <label><input type="radio" wire:model="resultado" value="no_conforme"> NO CONFORME</label>
+                    <label>
+                        <input type="radio" name="resultado" wire:model="resultado" value="conforme"> CONFORME
+                    </label>
+                    <label>
+                        <input type="radio" name="resultado" wire:model="resultado" value="no_conforme"> NO CONFORME
+                    </label>
                 </div>
             </div>
 

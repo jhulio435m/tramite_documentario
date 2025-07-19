@@ -33,7 +33,7 @@ Route::get('/registro-envio-automatico', RegistroEnvioAutomatico::class)
     ->name('registroEnvioAutomatico');
 
 Route::get('/formulario-flujo', FormularioFlujo::class)
-    ->middleware(['auth'])
+    ->middleware(['auth', 'verified'])
     ->name('formularioFlujo');
 
 Route::middleware(['auth'])->group(function () {
