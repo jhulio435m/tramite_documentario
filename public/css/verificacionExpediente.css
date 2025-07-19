@@ -111,6 +111,11 @@ h3 {
     background: #fff3cd;
 }
 
+.estado-canalizado {
+    background: #cfe2ff;
+    /* azul claro */
+}
+
 .btn-ver {
     background: #f7d900;
     border: none;

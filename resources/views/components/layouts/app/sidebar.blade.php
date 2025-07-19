@@ -20,6 +20,8 @@
                 <flux:navlist.item icon="check-circle" :href="route('remisionExpediente')" :current="request()->routeIs('remisionExpediente')" wire:navigate>{{ __('Remision de Expediente') }}</flux:navlist.item>
                 <flux:navlist.item icon="check-circle" :href="route('registroEnvioAutomatico')" :current="request()->routeIs('registroEnvioAutomatico')" wire:navigate>{{ __('Registro de Envio Automatico') }}</flux:navlist.item>
                 <flux:navlist.item icon="check-circle" :href="route('formularioFlujo')" :current="request()->routeIs('formularioFlujo')" wire:navigate>{{ __('Formulario para Flujo') }}</flux:navlist.item>
+               
+                <flux:navlist.item icon="check-circle" :href="route('canalizarEnvio')" :current="request()->routeIs('canalizarEnvio')" wire:navigate>{{ __('Canalizar Expediente') }}</flux:navlist.item>
 
             </flux:navlist.group>
             </flux:navlist>

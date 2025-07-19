@@ -7,6 +7,7 @@ use App\Livewire\RegistroObservaciones;
 use App\Livewire\RemisionExpediente;
 use App\Livewire\RegistroEnvioAutomatico;
 use App\Livewire\FormularioFlujo;
+use App\Livewire\CanalizarEnvio;
 
 Route::get('/', function () {
     return view('welcome');
@@ -35,6 +36,10 @@ Route::get('/registro-envio-automatico', RegistroEnvioAutomatico::class)
 Route::get('/formulario-flujo', FormularioFlujo::class)
     ->middleware(['auth', 'verified'])
     ->name('formularioFlujo');
+
+Route::get('/canalizar-envio', CanalizarEnvio::class)
+    ->middleware(['auth', 'verified'])
+    ->name('canalizarEnvio');
 
 Route::middleware(['auth'])->group(function () {
     Route::redirect('settings', 'settings/profile');
