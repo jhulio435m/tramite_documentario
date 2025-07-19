@@ -24,6 +24,7 @@
                 <flux:navlist.item icon="check-circle" :href="route('canalizarEnvio')" :current="request()->routeIs('canalizarEnvio')" wire:navigate>{{ __('Canalizar Expediente') }}</flux:navlist.item>
                 <flux:navlist.item icon="check-circle" :href="route('revisarExpedientesFinalizados')" :current="request()->routeIs('revisarExpedientesFinalizados')" wire:navigate>{{ __('Expedientes Finalizados') }}</flux:navlist.item>
                 <flux:navlist.item icon="check-circle" :href="route('notificacionesSolicitante')" :current="request()->routeIs('notificacionesSolicitante')" wire:navigate>{{ __('Notificaciones Solicitante') }}</flux:navlist.item>
+                <flux:navlist.item icon="check-circle" :href="route('entregarArchivar')" :current="request()->routeIs('entregarArchivar')" wire:navigate>{{ __('Entrega y Archivado') }}</flux:navlist.item>
 
             </flux:navlist.group>
             </flux:navlist>

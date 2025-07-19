@@ -56,14 +56,12 @@ class RevisarExpedientesFinalizados extends Component
                 'updated_at' => now(),
             ]);
 
-            session()->flash('success', 'Expediente marcado como finalizado y notificación enviada.');
-
-            // Limpia selección
-            $this->expedienteSeleccionado = null;
-            $this->mensajeNotificacion = '';
-            $this->cargarExpedientes();
+            // Redirige recargando la vista con mensaje de éxito
+            return redirect()->route('revisarExpedientesFinalizados')
+                ->with('success', 'Expediente marcado como finalizado y notificación enviada.');
         }
     }
+
 
 
     public function cancelarSeleccion()

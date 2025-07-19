@@ -121,6 +121,10 @@ h3 {
     /* verde clarito */
 }
 
+.estado-archivado {
+    background: #a3d1da;
+    /* Gris claro, o el color que prefieras */
+}
 
 .btn-ver {
     background: #f7d900;

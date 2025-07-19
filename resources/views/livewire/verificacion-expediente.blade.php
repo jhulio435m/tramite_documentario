@@ -35,7 +35,10 @@
                 </thead>
                 <tbody>
                     @foreach ($expedientes as $exp)
-<tr class="{{ $exp->estado === 'Aprobado' ? 'estado-validado' : ($exp->estado === 'Rechazado' ? 'estado-rechazado' : ($exp->estado === 'Canalizado' ? 'estado-canalizado' : ($exp->estado === 'Finalizado' ? 'estado-finalizado' : 'estado-pendiente'))) }}">
+                        <tr class="{{$exp->estado === 'Aprobado' ? 'estado-validado' : ($exp->estado === 'Rechazado' ? 'estado-rechazado' : 
+                                ($exp->estado === 'Canalizado' ? 'estado-canalizado' : 
+                                ($exp->estado === 'Finalizado' ? 'estado-finalizado' : 
+                                ($exp->estado === 'Archivado' ? 'estado-archivado' : 'estado-pendiente'))))}}">
                             <td class="p-2">{{ $exp->codigo }}</td>
                             <td class="p-2">{{ $exp->solicitante }}</td>
                             <td class="p-2">{{ $exp->fecha_ingreso }}</td>

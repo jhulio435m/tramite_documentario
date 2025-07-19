@@ -10,6 +10,7 @@ use App\Livewire\FormularioFlujo;
 use App\Livewire\CanalizarEnvio;
 use App\Livewire\RevisarExpedientesFinalizados;
 use App\Livewire\NotificacionesSolicitante;
+use App\Livewire\EntregarArchivar;
 
 Route::get('/', function () {
     return view('welcome');
@@ -50,6 +51,10 @@ Route::get('/revisar-expedientes-finalizados', RevisarExpedientesFinalizados::cl
 Route::get('/notificaciones-solicitante', NotificacionesSolicitante::class)
     ->middleware(['auth', 'verified'])
     ->name('notificacionesSolicitante');
+
+Route::get('/entregar-archivar', EntregarArchivar::class)
+    ->middleware(['auth', 'verified'])
+    ->name('entregarArchivar');
 
 Route::middleware(['auth'])->group(function () {
     Route::redirect('settings', 'settings/profile');
