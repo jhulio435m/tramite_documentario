@@ -16,7 +16,7 @@ class Expedientes extends Model
         'year',
         'month_id',
         'faculty_id',
-        'document_type_id',
+        'tramite_type_id',
         'status_id',
         'sumilla',
         'observaciones',
@@ -32,9 +32,9 @@ class Expedientes extends Model
         return $this->belongsTo(Month::class);
     }
 
-    public function documentType()
+    public function tramiteType()
     {
-        return $this->belongsTo(DocumentType::class);
+        return $this->belongsTo(TramiteType::class);
     }
 
     public function status()

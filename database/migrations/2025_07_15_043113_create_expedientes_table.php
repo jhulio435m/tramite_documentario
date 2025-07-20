@@ -19,7 +19,7 @@ return new class extends Migration
             $table->year('year')->nullable()->index();
             $table->foreignId('month_id')->nullable()->constrained('months')->index();
             $table->foreignId('faculty_id')->nullable()->constrained('facultades')->index();
-            $table->foreignId('document_type_id')->nullable()->constrained('document_types')->index();
+            $table->foreignId('tramite_type_id')->nullable()->constrained('tramite_types')->index();
             $table->foreignId('status_id')->nullable()->constrained('statuses')->index();
             $table->string('sumilla');
             $table->text('observaciones')->nullable();

@@ -31,9 +31,9 @@
     @endforeach
 </flux:select>
 
-    <flux:select wire:model.defer="document_type_id" placeholder="Tipo de documento" label="Tipo de documento">
+    <flux:select wire:model.defer="tramite_type_id" placeholder="Tipo de trámite" label="Tipo de trámite">
         <flux:select.option value="">Todos</flux:select.option>
-        @foreach($documentTypes as $type)
+        @foreach($tramiteTypes as $type)
             <flux:select.option value="{{ $type->id }}">{{ $type->name }}</flux:select.option>
         @endforeach
     </flux:select>
@@ -74,7 +74,7 @@
             <td class="px-4 py-2">{{ $file->id }}</td>
             <td class="px-4 py-2">{{ $file->dni }}</td>
             <td class="px-4 py-2">{{ $file->name }}</td>
-            <td class="px-4 py-2">{{ $file->documentType->name ?? '-' }}</td>
+            <td class="px-4 py-2">{{ $file->tramiteType->name ?? '-' }}</td>
             <td class="px-4 py-2">{{ $file->facultad->nombre ?? '-' }}</td>
             <td class="px-4 py-2">{{ $file->created_at->format('d/m/Y h:i a') }}</td>
             <td class="px-4 py-2">
