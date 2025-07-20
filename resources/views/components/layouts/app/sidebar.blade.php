@@ -16,10 +16,13 @@
                 <flux:navlist.group class="grid">
                     <flux:navlist.item icon="home" :href="route('dashboard')" :current="request()->routeIs('dashboard')" wire:navigate>{{ __('Dashboard') }}</flux:navlist.item>
                     <flux:navlist.item icon="document-magnifying-glass" :href="route('archivo.central')" :current="request()->routeIs('archivo.central')" wire:navigate>{{ __('Archivo Central') }}</flux:navlist.item>
+                    <flux:navlist.item icon="clock" :href="route('tramite.pendiente')" :current="request()->routeIs('tramite.pendiente')" wire:navigate>{{ __('Trámite Pendiente') }}</flux:navlist.item>
+                    <flux:navlist.item icon="arrow-right-circle" :href="route('tramite.proceso')" :current="request()->routeIs('tramite.proceso')" wire:navigate>{{ __('Trámite en Proceso') }}</flux:navlist.item>
+                    <flux:navlist.item icon="document-check" :href="route('tramite.finalizado')" :current="request()->routeIs('tramite.finalizado')" wire:navigate>{{ __('Trámite Finalizado') }}</flux:navlist.item>
                     <flux:navlist.item icon="document-plus" :href="route('carga.documentos')" :current="request()->routeIs('carga.documentos')" wire:navigate>{{ __('Cargar Documentos') }}</flux:navlist.item>
                     <flux:navlist.item icon="document-text" :href="route('registro.expediente')" :current="request()->routeIs('registro.expediente')" wire:navigate>{{ __('Registro Expediente') }}</flux:navlist.item>
                     <flux:navlist.item icon="document-duplicate" :href="route('solicitudes.pendientes')" :current="request()->routeIs('solicitudes.pendientes')" wire:navigate>{{ __('Solicitudes Pendientes') }}</flux:navlist.item>
-                    <flux:navlist.item icon="document-arrow-up" :href="route('formulario.solicitudes')" :current="request()->routeIs('formulario.solicitudes')" wire:navigate>{{ __('Formulario Solicitudes') }}</flux:navlist.item>
+                    <flux:navlist.item icon="arrow-up-circle" :href="route('formulario.solicitudes')" :current="request()->routeIs('formulario.solicitudes')" wire:navigate>{{ __('Formulario Solicitudes') }}</flux:navlist.item>
                     <flux:navlist.item icon="document-check" :href="route('enviar.expediente')" :current="request()->routeIs('enviar.expediente')" wire:navigate>{{ __('Enviar expediente aprobado') }}</flux:navlist.item>
                     
                 </flux:navlist.group>
