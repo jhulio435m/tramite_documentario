@@ -26,6 +26,11 @@ class CentralFileFilter extends Component
         $this->reset(['search', 'year', 'month', 'faculty_id', 'document_type', 'status']);
     }
 
+    public function applyFilters()
+    {
+        // Method intentionally left blank; Livewire will re-render on invocation
+    }
+
     public function render()
     {
         // Carga la relación facultad

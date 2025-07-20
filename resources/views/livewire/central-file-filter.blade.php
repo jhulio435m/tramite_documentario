@@ -10,7 +10,7 @@
 
     <div class="max-w-6xl mx-auto bg-white shadow-md rounded-xl mt-3 p-4 space-y-6">
         <div class="flex flex-wrap gap-4 mt-4">
-            <flux:select wire:model.debounce.500ms="year" placeholder="Año" label="Año">
+            <flux:select wire:model.defer="year" placeholder="Año" label="Año">
                 <flux:select.option value="2021">2021</flux:select.option>
                 <flux:select.option value="2022">2022</flux:select.option>
                 <flux:select.option value="2023">2023</flux:select.option>
@@ -18,7 +18,7 @@
                 <flux:select.option value="2025">2025</flux:select.option>
             </flux:select>
 
-            <flux:select wire:model.debounce.500ms="month" placeholder="Mes" label="Mes">
+            <flux:select wire:model.defer="month" placeholder="Mes" label="Mes">
                 <flux:select.option value="Enero">Enero</flux:select.option>
                 <flux:select.option value="Febrero">Febrero</flux:select.option>
                 <flux:select.option value="Marzo">Marzo</flux:select.option>
@@ -33,14 +33,14 @@
                 <flux:select.option value="Diciembre">Diciembre</flux:select.option>
             </flux:select>
 
-        <flux:select wire:model.debounce.500ms="faculty_id" placeholder="Facultad" label="Facultad">
+        <flux:select wire:model.defer="faculty_id" placeholder="Facultad" label="Facultad">
     <flux:select.option value="">Todas las facultades</flux:select.option>
     @foreach($facultades as $facultad)
         <flux:select.option value="{{ $facultad->id }}">{{ $facultad->nombre }}</flux:select.option>
     @endforeach
 </flux:select>
 
-    <flux:select wire:model.debounce.500ms="document_type" placeholder="Tipo de documento" label="Tipo de documento">
+    <flux:select wire:model.defer="document_type" placeholder="Tipo de documento" label="Tipo de documento">
         <flux:select.option value="Solicitud">Solicitud</flux:select.option>
         <flux:select.option value="Constancia">Constancia</flux:select.option>
         <flux:select.option value="Certificado">Certificado</flux:select.option>
@@ -50,13 +50,16 @@
         <flux:select.option value="Oficio">Oficio</flux:select.option>
     </flux:select>
 
-    <flux:select wire:model.debounce.500ms="status" placeholder="Estado" label="Estado">
+    <flux:select wire:model.defer="status" placeholder="Estado" label="Estado">
         <flux:select.option value="Pendiente">Pendiente</flux:select.option>
         <flux:select.option value="En Proceso">En Proceso</flux:select.option>
         <flux:select.option value="Finalizado">Finalizado</flux:select.option>
     </flux:select>
 
-    <div class="flex justify-end">
+    <div class="flex justify-end gap-2">
+        <flux:button wire:click="applyFilters" variant="primary" color="green">
+            Aplicar filtros
+        </flux:button>
         <flux:button wire:click="limpiarFiltros" variant="primary" color="yellow">
             Limpiar filtros
         </flux:button>
