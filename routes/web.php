@@ -33,10 +33,12 @@ Route::prefix('notificaciones')->name('notificaciones.')->group(function () {
 
 require __DIR__.'/auth.php';
 
+//Tramites 
 use App\Http\Controllers\TramiteController;
 
 Route::get('/tramites', [TramiteController::class, 'listaTramites'])->name('tramites.index');
 Route::get('/tramites/{id}', [TramiteController::class, 'show'])->name('tramites.show');
+Route::post('/tramites/{id}/enviar', [TramiteController::class, 'enviarSolicitud'])->name('tramites.enviar');
 
 Route::get('/tramites/historial', function () {
     return 'Página de historial aún no implementada.';

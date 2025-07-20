@@ -1,4 +1,4 @@
-@extends('layouts.app')
+@extends('components.layouts.tramiteView')
 
 @section('title', 'Listado de Trámites')
 
@@ -9,7 +9,7 @@
         $tramites = [
             'Constancia de expedito para optar título profesional',
             'Constancia de expedito para grado de bachiller',
-            'Constancia de prácticas preprofesionales/profesional',
+            'Constancia de prácticas preprofesionales/internado',
             'Constancia de inscripción, aprobación y asesoramiento del plan de tesis',
             'Constancia de egresado (bachiller y título profesional)',
             'Certificado de estudios de pregrado (formato 1)',

@@ -282,7 +282,7 @@
         <div class="sidebar">
             <div>
                 <h2>Mesa de Partes Virtual<br>UNCP</h2>
-                <a href="{{ route('tramites.index') }}">Mi Panel</a>
+                <a href="{{ route('tramites.index') }}"> Mi Panel</a>
                 <a href="#" class="active">Nuevo Trámite</a>
                 <a href="{{ route('tramites.historial') }}">Historial de Trámites</a>
             </div>
