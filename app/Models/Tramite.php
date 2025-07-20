@@ -13,4 +13,6 @@ class Tramite extends Model
         'fecha_inicio',
         'estado',
     ];
+
+    
 }
