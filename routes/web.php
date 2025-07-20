@@ -17,35 +17,35 @@ Route::get('archivo_central', CentralFileFilter::class)
     ->middleware(['auth', 'verified'])
     ->name('archivo.central');
 
-Route::view('tramite_pendiente', 'tramite_pendiente')
+Route::view('tramite_pendiente', 'Administrador.tramite_pendiente')
     ->middleware(['auth', 'verified'])
     ->name('tramite.pendiente');
 
-Route::view('tramite_en_proceso', 'tramite_en_proceso')
+Route::view('tramite_en_proceso', 'Administrador.tramite_en_proceso')
     ->middleware(['auth', 'verified'])
     ->name('tramite.proceso');
 
-Route::view('tramite_finalizado', 'tramite_finalizado')
+Route::view('tramite_finalizado', 'Administrador.tramite_finalizado')
     ->middleware(['auth', 'verified'])
     ->name('tramite.finalizado');
 
-Route::view('carga_documentos', 'carga_documentos')
+Route::view('carga_documentos', 'Administrador.carga_documentos')
     ->middleware(['auth', 'verified'])
     ->name('carga.documentos');
 
-Route::view('registro_expediente', 'registro_expediente')
+Route::view('registro_expediente', 'Administrador.registro_expediente')
     ->middleware(['auth', 'verified'])
     ->name('registro.expediente');
 
-Route::view('solicitudes_pendientes', 'solicitudes_pendientes')
+Route::view('solicitudes_pendientes', 'Administrador.solicitudes_pendientes')
     ->middleware(['auth', 'verified'])
     ->name('solicitudes.pendientes');
 
-Route::view('formulario_solicitudes', 'formulario_solicitudes')
+Route::view('formulario_solicitudes', 'Administrador.formulario_solicitudes')
     ->middleware(['auth', 'verified'])
     ->name('formulario.solicitudes');
 
-Route::view('enviar_expediente', 'enviar_expediente')
+Route::view('enviar_expediente', 'Administrador.enviar_expediente')
     ->middleware(['auth', 'verified'])
     ->name('enviar.expediente');
 

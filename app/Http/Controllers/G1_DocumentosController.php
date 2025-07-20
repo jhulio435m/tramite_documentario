@@ -16,7 +16,7 @@ class G1_DocumentosController extends Controller
             ['id' => 3, 'nombre' => 'Expediente C'],
         ];
 
-        return view('carga_documentos', compact('expedientes'));
+        return view('Administrador.carga_documentos', compact('expedientes'));
     }
 
     // Procesar archivos subidos
