@@ -38,12 +38,6 @@
         @endforeach
     </flux:select>
 
-    <flux:select wire:model.defer="status_id" placeholder="Estado" label="Estado">
-        <flux:select.option value="">Todos</flux:select.option>
-        @foreach($statuses as $status)
-            <flux:select.option value="{{ $status->id }}">{{ $status->name }}</flux:select.option>
-        @endforeach
-    </flux:select>
 
     <div class="flex justify-end gap-2">
         <flux:button wire:click="applyFilters" variant="primary" color="green">
@@ -95,6 +89,10 @@
         @endforelse
     </tbody>
 </table>
+
+    <div class="mt-4">
+        {{ $files->links() }}
+    </div>
 
 
 </div>

@@ -17,6 +17,18 @@ Route::get('archivo_central', CentralFileFilter::class)
     ->middleware(['auth', 'verified'])
     ->name('archivo.central');
 
+Route::view('tramite_pendiente', 'tramite_pendiente')
+    ->middleware(['auth', 'verified'])
+    ->name('tramite.pendiente');
+
+Route::view('tramite_en_proceso', 'tramite_en_proceso')
+    ->middleware(['auth', 'verified'])
+    ->name('tramite.proceso');
+
+Route::view('tramite_finalizado', 'tramite_finalizado')
+    ->middleware(['auth', 'verified'])
+    ->name('tramite.finalizado');
+
 Route::view('carga_documentos', 'carga_documentos')
     ->middleware(['auth', 'verified'])
     ->name('carga.documentos');
