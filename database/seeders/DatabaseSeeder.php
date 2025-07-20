@@ -21,6 +21,7 @@ class DatabaseSeeder extends Seeder
             TramiteTypeSeeder::class,
             StatusSeeder::class,
             ExpedientesSeeder::class,
+            DefaultUsersSeeder::class,
         ]);
     }
 }
