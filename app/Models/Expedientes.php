@@ -3,10 +3,23 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class Expedientes extends Model
 {
-    protected $fillable = ['name', 'year', 'month', 'faculty_id', 'document_type', 'status'];
+    use HasFactory;
+
+    protected $fillable = [
+        'codigo',
+        'name',
+        'year',
+        'month',
+        'faculty_id',
+        'document_type',
+        'status',
+        'sumilla',
+        'observaciones',
+    ];
 
     public function facultad()
     {

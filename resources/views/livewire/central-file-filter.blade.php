@@ -5,32 +5,32 @@
     </div>
 
     <div class="max-w-6xl mx-auto bg-white shadow-md rounded-xl mt-5 p-4 space-y-6">
-        <flux:input icon="magnifying-glass" placeholder="Filtrar por palabras clave" label="Filtros"/>
+        <flux:input wire:model.debounce.500ms="search" icon="magnifying-glass" placeholder="Filtrar por palabras clave" label="Filtros"/>
     </div>
 
     <div class="max-w-6xl mx-auto bg-white shadow-md rounded-xl mt-3 p-4 space-y-6">
         <div class="flex flex-wrap gap-4 mt-4">
             <flux:select wire:model.debounce.500ms="year" placeholder="Año" label="Año">
-                <flux:select.option>2021</flux:select.option>
-                <flux:select.option>2022</flux:select.option>
-                <flux:select.option>2023</flux:select.option>
-                <flux:select.option>2024</flux:select.option>
-                <flux:select.option>2025</flux:select.option>
+                <flux:select.option value="2021">2021</flux:select.option>
+                <flux:select.option value="2022">2022</flux:select.option>
+                <flux:select.option value="2023">2023</flux:select.option>
+                <flux:select.option value="2024">2024</flux:select.option>
+                <flux:select.option value="2025">2025</flux:select.option>
             </flux:select>
 
             <flux:select wire:model.debounce.500ms="month" placeholder="Mes" label="Mes">
-                <flux:select.option>Enero</flux:select.option>
-                <flux:select.option>Febrero</flux:select.option>
-                <flux:select.option>Marzo</flux:select.option>
-                <flux:select.option>Abril</flux:select.option>
-                <flux:select.option>Mayo</flux:select.option>
-                <flux:select.option>Junio</flux:select.option>
-                <flux:select.option>Julio</flux:select.option>
-                <flux:select.option>Agosto</flux:select.option>
-                <flux:select.option>Septiembre</flux:select.option>
-                <flux:select.option>Octubre</flux:select.option>
-                <flux:select.option>Noviembre</flux:select.option>
-                <flux:select.option>Diciembre</flux:select.option>
+                <flux:select.option value="Enero">Enero</flux:select.option>
+                <flux:select.option value="Febrero">Febrero</flux:select.option>
+                <flux:select.option value="Marzo">Marzo</flux:select.option>
+                <flux:select.option value="Abril">Abril</flux:select.option>
+                <flux:select.option value="Mayo">Mayo</flux:select.option>
+                <flux:select.option value="Junio">Junio</flux:select.option>
+                <flux:select.option value="Julio">Julio</flux:select.option>
+                <flux:select.option value="Agosto">Agosto</flux:select.option>
+                <flux:select.option value="Septiembre">Septiembre</flux:select.option>
+                <flux:select.option value="Octubre">Octubre</flux:select.option>
+                <flux:select.option value="Noviembre">Noviembre</flux:select.option>
+                <flux:select.option value="Diciembre">Diciembre</flux:select.option>
             </flux:select>
 
         <flux:select wire:model.debounce.500ms="faculty_id" placeholder="Facultad" label="Facultad">
@@ -41,19 +41,19 @@
 </flux:select>
 
     <flux:select wire:model.debounce.500ms="document_type" placeholder="Tipo de documento" label="Tipo de documento">
-        <flux:select.option>Solicitud</flux:select.option>
-        <flux:select.option>Constancia</flux:select.option>
-        <flux:select.option>Certificado</flux:select.option>
-        <flux:select.option>Resolución</flux:select.option>
-        <flux:select.option>Informe</flux:select.option>
-        <flux:select.option>Memorando</flux:select.option>
-        <flux:select.option>Oficio</flux:select.option>
+        <flux:select.option value="Solicitud">Solicitud</flux:select.option>
+        <flux:select.option value="Constancia">Constancia</flux:select.option>
+        <flux:select.option value="Certificado">Certificado</flux:select.option>
+        <flux:select.option value="Resolución">Resolución</flux:select.option>
+        <flux:select.option value="Informe">Informe</flux:select.option>
+        <flux:select.option value="Memorando">Memorando</flux:select.option>
+        <flux:select.option value="Oficio">Oficio</flux:select.option>
     </flux:select>
 
     <flux:select wire:model.debounce.500ms="status" placeholder="Estado" label="Estado">
-        <flux:select.option>Pendiente</flux:select.option>
-        <flux:select.option>En Proceso</flux:select.option>
-        <flux:select.option>Finalizado</flux:select.option>
+        <flux:select.option value="Pendiente">Pendiente</flux:select.option>
+        <flux:select.option value="En Proceso">En Proceso</flux:select.option>
+        <flux:select.option value="Finalizado">Finalizado</flux:select.option>
     </flux:select>
 
     <div class="flex justify-end">

@@ -11,20 +11,19 @@ return new class extends Migration
      */
     public function up(): void
     {
-       Schema::create('expedientes', function (Blueprint $table) {
-        $table->id();
-        $table->string('codigo');
-        $table->string('solicitante');
-        $table->year('year')->nullable();
-        $table->string('month')->nullable();
-        $table->unsignedBigInteger('faculty_id')->nullable(); // Si usarás relación
-        $table->string('document_type')->nullable();
-        $table->string('status')->nullable();
-        $table->string('solicitante');
-        $table->string('sumilla');
-        $table->text('observaciones')->nullable();
-        $table->timestamps();
-    });
+        Schema::create('expedientes', function (Blueprint $table) {
+            $table->id();
+            $table->string('codigo');
+            $table->string('name');
+            $table->year('year')->nullable();
+            $table->string('month')->nullable();
+            $table->foreignId('faculty_id')->nullable()->constrained('facultades');
+            $table->string('document_type')->nullable();
+            $table->string('status')->nullable();
+            $table->string('sumilla');
+            $table->text('observaciones')->nullable();
+            $table->timestamps();
+        });
     }
 
     /**

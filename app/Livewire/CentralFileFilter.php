@@ -8,6 +8,7 @@ use App\Models\Facultad;
 
 class CentralFileFilter extends Component
 {
+    public $search;
     public $year;
     public $month;
     public $faculty_id;
@@ -22,13 +23,17 @@ class CentralFileFilter extends Component
 
     public function limpiarFiltros()
     {
-        $this->reset(['year', 'month', 'faculty_id', 'document_type', 'status']);
+        $this->reset(['search', 'year', 'month', 'faculty_id', 'document_type', 'status']);
     }
 
     public function render()
     {
         // Carga la relación facultad
         $query = Expedientes::with('facultad');
+
+        if ($this->search) {
+            $query->where('name', 'like', "%{$this->search}%");
+        }
 
         if ($this->year) {
             $query->where('year', $this->year);
