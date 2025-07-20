@@ -35,38 +35,143 @@
         </div>
     </div>
 
-    {{-- Tabla de documentos --}}
-    <div class="rounded-lg shadow bg-white">
-        <div class="p-4 border-b flex items-center justify-between">
-            <div class="flex items-center gap-2">
-                <flux:icon.folder class="w-5 h-5 text-blue-500" />
-                <h2 class="text-lg font-semibold">Documentos Asignados Recientes</h2>
+    {{-- Layout de dos columnas --}}
+    <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+        
+        {{-- Columna izquierda: Bandeja de entrada --}}
+        <div class="rounded-lg shadow bg-white">
+            <div class="p-4 border-b flex items-center justify-between">
+                <div class="flex items-center gap-2">
+                    <flux:icon.inbox class="w-5 h-5 text-orange-500" />
+                    <h2 class="text-lg font-semibold">Bandeja de Entrada</h2>
+                </div>
+                <flux:badge variant="warning" size="sm">
+                    {{ count($tramitesPendientes) }} pendientes
+                </flux:badge>
+            </div>
+
+            {{-- Filtro por fechas --}}
+            <div class="p-4 border-b bg-gray-50">
+                <div class="flex items-center gap-2 mb-3">
+                    <flux:icon.calendar-days class="w-4 h-4 text-gray-600" />
+                    <h3 class="text-sm font-medium text-gray-700">Filtrar por fecha</h3>
+                </div>
+                
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-3">
+                    <div>
+                        <label class="block text-xs font-medium text-gray-600 mb-1">Desde</label>
+                        <input 
+                            type="date" 
+                            wire:model.live="fechaDesde"
+                            class="w-full px-3 py-2 text-sm border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                            max="{{ date('Y-m-d') }}"
+                        >
+                    </div>
+                    
+                    <div>
+                        <label class="block text-xs font-medium text-gray-600 mb-1">Hasta</label>
+                        <input 
+                            type="date" 
+                            wire:model.live="fechaHasta"
+                            class="w-full px-3 py-2 text-sm border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                            max="{{ date('Y-m-d') }}"
+                        >
+                    </div>
+                </div>
+
+                {{-- Botones de filtro --}}
+                <div class="flex items-center gap-2 mt-3">
+                    @if($fechaDesde || $fechaHasta)
+                        <flux:button 
+                            variant="outline" 
+                            size="xs" 
+                            icon="x-mark"
+                            wire:click="limpiarFiltros"
+                            class="text-gray-600 border-gray-300 hover:bg-gray-100">
+                            Limpiar
+                        </flux:button>
+                        
+                        <span class="text-xs text-gray-500">
+                            @if($fechaDesde && $fechaHasta)
+                                {{ \Carbon\Carbon::parse($fechaDesde)->format('d/m/Y') }} - {{ \Carbon\Carbon::parse($fechaHasta)->format('d/m/Y') }}
+                            @elseif($fechaDesde)
+                                Desde {{ \Carbon\Carbon::parse($fechaDesde)->format('d/m/Y') }}
+                            @elseif($fechaHasta)
+                                Hasta {{ \Carbon\Carbon::parse($fechaHasta)->format('d/m/Y') }}
+                            @endif
+                        </span>
+                    @endif
+                </div>
+            </div>
+
+            {{-- Lista de trámites --}}
+            <div class="max-h-96 overflow-y-auto">
+                @if(count($tramitesPendientes) > 0)
+                    @foreach($tramitesPendientes as $tramite)
+                        <div wire:click="seleccionarTramite({{ $tramite->id }})" 
+                             class="p-4 border-b border-gray-100 hover:bg-gray-50 cursor-pointer transition-colors duration-150 {{ $tramiteSeleccionado && $tramiteSeleccionado->id == $tramite->id ? 'bg-blue-50 border-l-4 border-l-blue-500' : '' }}">
+                            
+                            <div class="flex justify-between items-start mb-2">
+                                <div class="flex-1">
+                                    <div class="font-semibold text-gray-900">{{ $tramite->documento }}</div>
+                                    <div class="text-gray-500 text-xs">{{ $tramite->codigo }}</div>
+                                </div>
+                                <flux:badge variant="warning" size="sm">
+                                    {{ $tramite->estado }}
+                                </flux:badge>
+                            </div>
+                            
+                            <div class="space-y-1 text-sm">
+                                <div class="flex items-center text-gray-600">
+                                    <flux:icon.user class="w-4 h-4 mr-2" />
+                                    <span class="font-medium">Solicitante:</span>
+                                    <span class="ml-1">{{ $tramite->solicitante }}</span>
+                                </div>
+                                <div class="flex items-center text-gray-600">
+                                    <flux:icon.calendar-days class="w-4 h-4 mr-2" />
+                                    <span class="font-medium">Fecha:</span>
+                                    <span class="ml-1">{{ \Carbon\Carbon::parse($tramite->fecha_inicio)->format('d/m/Y') }}</span>
+                                </div>
+                            </div>
+                        </div>
+                    @endforeach
+                @else
+                    <div class="p-8 text-center text-gray-500">
+                        <flux:icon.folder-open variant="outline" class="w-12 h-12 mx-auto mb-4 text-gray-400" />
+                        @if($fechaDesde || $fechaHasta)
+                            <p class="text-lg font-medium mb-2">No hay trámites en este período</p>
+                            <p class="text-sm">Intenta cambiar las fechas del filtro</p>
+                        @else
+                            <p class="text-lg font-medium mb-2">No hay trámites pendientes</p>
+                            <p class="text-sm">Tu bandeja de entrada está vacía</p>
+                        @endif
+                    </div>
+                @endif
             </div>
         </div>
 
-        <div class="overflow-x-auto">
-            <table class="min-w-full text-sm">
-                <thead>
-                    <tr class="bg-gray-100 text-left">
-                        <th class="p-2">Documento</th>
-                        <th class="p-2">Solicitante</th>
-                        <th class="p-2">Fecha Inicio</th>
-                        <th class="p-2">Estado</th>
-                        <th class="p-2">Acciones</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    @foreach($tramitesRecientes as $tramite)
-                        <tr class="border-t">
-                            <td class="p-2">
-                                <div class="font-semibold">{{ $tramite->documento }}</div>
-                                <div class="text-gray-500 text-xs">{{ $tramite->codigo }}</div>
-                            </td>
-                            <td class="p-2">{{ $tramite->solicitante }}</td>
-                            <td class="p-2">{{ $tramite->fecha_inicio }}</td>
-                            <td class="p-2">
+        {{-- Columna derecha: Detalles del trámite --}}
+        <div class="rounded-lg shadow bg-white">
+            <div class="p-4 border-b flex items-center gap-2">
+                <flux:icon.document-text class="w-5 h-5 text-blue-500" />
+                <h2 class="text-lg font-semibold">Detalles del Trámite</h2>
+            </div>
+            
+            @if($tramiteSeleccionado)
+                <div class="p-6 space-y-6">
+                    {{-- Información básica --}}
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-1">Código</label>
+                            <div class="bg-gray-50 rounded-lg p-3 font-mono text-sm">
+                                {{ $tramiteSeleccionado->codigo }}
+                            </div>
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-1">Estado</label>
+                            <div class="flex">
                                 @php
-                                    $badgeVariant = match($tramite->estado) {
+                                    $badgeVariant = match($tramiteSeleccionado->estado) {
                                         'Pendiente' => 'warning',
                                         'En Revisión' => 'info', 
                                         'Atendido' => 'primary',
@@ -76,65 +181,147 @@
                                         default => 'zinc'
                                     };
                                 @endphp
-                                <flux:badge variant="{{ $badgeVariant }}" size="sm">
-                                    {{ $tramite->estado }}
+                                <flux:badge variant="{{ $badgeVariant }}">
+                                    {{ $tramiteSeleccionado->estado }}
                                 </flux:badge>
-                            </td>
-                            <td class="p-2">
-                                <div class="flex items-center gap-2">
-                                    <flux:button variant="ghost" size="sm" icon="eye" />
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 mb-1">Documento</label>
+                        <div class="bg-gray-50 rounded-lg p-3 text-sm">
+                            {{ $tramiteSeleccionado->documento }}
+                        </div>
+                    </div>
+                    
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 mb-1">Solicitante</label>
+                        <div class="bg-gray-50 rounded-lg p-3 text-sm flex items-center">
+                            <flux:icon.user class="w-4 h-4 mr-2 text-gray-500" />
+                            {{ $tramiteSeleccionado->solicitante }}
+                        </div>
+                    </div>
+                    
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-1">Fecha de Inicio</label>
+                            <div class="bg-gray-50 rounded-lg p-3 text-sm flex items-center">
+                                <flux:icon.calendar-days class="w-4 h-4 mr-2 text-gray-500" />
+                                {{ \Carbon\Carbon::parse($tramiteSeleccionado->fecha_inicio)->format('d/m/Y') }}
+                            </div>
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-1">Fecha de Registro</label>
+                            <div class="bg-gray-50 rounded-lg p-3 text-sm flex items-center">
+                                <flux:icon.clock class="w-4 h-4 mr-2 text-gray-500" />
+                                {{ $tramiteSeleccionado->created_at->format('d/m/Y H:i') }}
+                            </div>
+                        </div>
+                    </div>
+                    
+                    {{-- Botones de acción --}}
+                    <div class="border-t pt-6">
+                        <h3 class="text-sm font-medium text-gray-700 mb-4 flex items-center">
+                            <flux:icon.cog-6-tooth class="w-4 h-4 mr-2" />
+                            Acciones Disponibles
+                        </h3>
+                        
+                        @if($tramiteSeleccionado->estado === 'Pendiente')
+                            <div class="grid grid-cols-1 md:grid-cols-2 gap-3">
+                                <flux:button 
+                                    variant="primary" 
+                                    size="sm" 
+                                    icon="hand-raised"
+                                    wire:click="marcarAtendido({{ $tramiteSeleccionado->id }})" 
+                                    wire:confirm="¿Marcar este trámite como atendido?"
+                                    class="w-full">
+                                    Marcar Atendido
+                                </flux:button>
 
-                                    @if($tramite->estado === 'Pendiente' || $tramite->estado === 'En Revisión')
-                                        <flux:button 
-                                            variant="outline" 
-                                            size="sm" 
-                                            icon="hand-raised"
-                                            wire:click="marcarAtendido({{ $tramite->id }})" 
-                                            wire:confirm="¿Marcar este trámite como atendido?"
-                                            class="text-yellow-600 border-yellow-300 hover:bg-yellow-50">
-                                        </flux:button>
+                                <flux:button 
+                                    variant="outline" 
+                                    size="sm" 
+                                    icon="share"
+                                    wire:click="derivar({{ $tramiteSeleccionado->id }})" 
+                                    wire:confirm="¿Derivar este trámite?"
+                                    class="w-full text-blue-600 border-blue-300 hover:bg-blue-50">
+                                    Derivar
+                                </flux:button>
 
-                                    @elseif($tramite->estado === 'Atendido')
-                                        <flux:button 
-                                            variant="outline" 
-                                            size="sm" 
-                                            icon="check"
-                                            wire:click="aprobar({{ $tramite->id }})" 
-                                            wire:confirm="¿Aprobar este trámite?"
-                                            class="text-green-600 border-green-300 hover:bg-green-50">
-                                        </flux:button>
-                                        
-                                        <flux:button 
-                                            variant="outline" 
-                                            size="sm" 
-                                            icon="share"
-                                            wire:click="derivar({{ $tramite->id }})" 
-                                            wire:confirm="¿Derivar este trámite?"
-                                            class="text-blue-600 border-blue-300 hover:bg-blue-50">
-                                        </flux:button>
+                                <flux:button 
+                                    variant="outline" 
+                                    size="sm" 
+                                    icon="check"
+                                    wire:click="aprobar({{ $tramiteSeleccionado->id }})" 
+                                    wire:confirm="¿Aprobar este trámite?"
+                                    class="w-full text-green-600 border-green-300 hover:bg-green-50">
+                                    Aprobar Directamente
+                                </flux:button>
 
-                                    @elseif($tramite->estado === 'Aprobado')
-                                        <flux:button 
-                                            variant="outline" 
-                                            size="sm" 
-                                            icon="check-badge"
-                                            wire:click="finalizar({{ $tramite->id }})" 
-                                            wire:confirm="¿Finalizar este trámite?"
-                                            class="text-indigo-600 border-indigo-300 hover:bg-indigo-50">
-                                        </flux:button>
+                                <flux:button 
+                                    variant="outline" 
+                                    size="sm" 
+                                    icon="check-badge"
+                                    wire:click="finalizar({{ $tramiteSeleccionado->id }})" 
+                                    wire:confirm="¿Finalizar este trámite?"
+                                    class="w-full text-indigo-600 border-indigo-300 hover:bg-indigo-50">
+                                    Finalizar
+                                </flux:button>
+                            </div>
 
-                                    @elseif($tramite->estado === 'Derivado')
-                                        <flux:badge variant="zinc" size="sm">Derivado</flux:badge>
+                        @elseif($tramiteSeleccionado->estado === 'Atendido')
+                            <div class="grid grid-cols-1 md:grid-cols-2 gap-3">
+                                <flux:button 
+                                    variant="outline" 
+                                    size="sm" 
+                                    icon="check"
+                                    wire:click="aprobar({{ $tramiteSeleccionado->id }})" 
+                                    wire:confirm="¿Aprobar este trámite?"
+                                    class="w-full text-green-600 border-green-300 hover:bg-green-50">
+                                    Aprobar
+                                </flux:button>
+                                
+                                <flux:button 
+                                    variant="outline" 
+                                    size="sm" 
+                                    icon="share"
+                                    wire:click="derivar({{ $tramiteSeleccionado->id }})" 
+                                    wire:confirm="¿Derivar este trámite?"
+                                    class="w-full text-blue-600 border-blue-300 hover:bg-blue-50">
+                                    Derivar
+                                </flux:button>
+                            </div>
 
-                                    @elseif($tramite->estado === 'Finalizado')
-                                        <flux:badge variant="success" size="sm">Completado</flux:badge>
-                                    @endif
-                                </div>
-                            </td>
-                        </tr>
-                    @endforeach
-                </tbody>
-            </table>
+                        @elseif($tramiteSeleccionado->estado === 'Aprobado')
+                            <flux:button 
+                                variant="outline" 
+                                size="sm" 
+                                icon="check-badge"
+                                wire:click="finalizar({{ $tramiteSeleccionado->id }})" 
+                                wire:confirm="¿Finalizar este trámite?"
+                                class="w-full text-indigo-600 border-indigo-300 hover:bg-indigo-50">
+                                Finalizar Trámite
+                            </flux:button>
+
+                        @else
+                            <div class="text-center py-4">
+                                <flux:icon.check-circle class="w-8 h-8 mx-auto mb-2 text-green-500" />
+                                <p class="text-gray-500 text-sm">Este trámite ya no requiere acciones</p>
+                                <flux:badge variant="success" size="sm" class="mt-2">
+                                    Estado: {{ $tramiteSeleccionado->estado }}
+                                </flux:badge>
+                            </div>
+                        @endif
+                    </div>
+                </div>
+            @else
+                <div class="p-8 text-center text-gray-500">
+                    <flux:icon.document-text variant="outline" class="w-12 h-12 mx-auto mb-4 text-gray-400" />
+                    <p class="text-lg font-medium mb-2">Selecciona un trámite</p>
+                    <p class="text-sm">Haz clic en un trámite de la bandeja de entrada para ver sus detalles</p>
+                </div>
+            @endif
         </div>
     </div>
 

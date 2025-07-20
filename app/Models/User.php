@@ -61,4 +61,36 @@ class User extends Authenticatable
             ->map(fn ($word) => Str::substr($word, 0, 1))
             ->implode('');
     }
+
+    /**
+     * Relación: Trámites asignados a este usuario
+     */
+    public function tramites()
+    {
+        return $this->hasMany(Tramite::class, 'user_id');
+    }
+
+    /**
+     * Relación: Trámites solicitados por este usuario
+     */
+    public function tramitesSolicitados()
+    {
+        return $this->hasMany(Tramite::class, 'solicitante_id');
+    }
+
+    /**
+     * Obtener trámites pendientes del usuario
+     */
+    public function tramitesPendientes()
+    {
+        return $this->tramites()->where('estado', 'Pendiente');
+    }
+
+    /**
+     * Contar trámites pendientes del usuario
+     */
+    public function contarTramitesPendientes()
+    {
+        return $this->tramitesPendientes()->count();
+    }
 }

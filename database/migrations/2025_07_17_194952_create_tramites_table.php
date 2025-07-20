@@ -19,6 +19,7 @@ return new class extends Migration
             $table->date('fecha_inicio');
             $table->string('estado')->default('Pendiente');
             $table->timestamps();
+            $table->string('funcionario_destinatario')->nullable();
         });
     }
 

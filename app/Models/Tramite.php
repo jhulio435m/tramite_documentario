@@ -12,7 +12,9 @@ class Tramite extends Model
         'solicitante',
         'fecha_inicio',
         'estado',
+        'funcionario_destinatario',
     ];
 
+    
     
 }
