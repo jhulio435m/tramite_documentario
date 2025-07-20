@@ -25,6 +25,7 @@ class ExpedientesFactory extends Factory
             'dni' => $this->faker->numerify('########'),
             'year' => $this->faker->numberBetween(2021, 2025),
             'month_id' => Month::inRandomOrder()->value('id'),
+            'fecha_ingreso' => $this->faker->date(),
             'faculty_id' => Facultad::inRandomOrder()->value('id'),
             'tramite_type_id' => TramiteType::inRandomOrder()->value('id'),
             'status_id' => Status::inRandomOrder()->value('id'),
