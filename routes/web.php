@@ -2,6 +2,16 @@
 
 use Illuminate\Support\Facades\Route;
 use Livewire\Volt\Volt;
+use App\Livewire\VerificacionExpediente;
+use App\Livewire\RegistroObservaciones;
+use App\Livewire\RemisionExpediente;
+use App\Livewire\RegistroEnvioAutomatico;
+use App\Livewire\FormularioFlujo;
+use App\Livewire\CanalizarEnvio;
+use App\Livewire\RevisarExpedientesFinalizados;
+use App\Livewire\NotificacionesSolicitante;
+use App\Livewire\EntregarArchivar;
+use App\Livewire\PanelSeguimiento;
 
 Route::get('/', function () {
     return view('welcome');
@@ -11,9 +21,46 @@ Route::view('dashboard', 'dashboard')
     ->middleware(['auth', 'verified'])
     ->name('dashboard');
 
-Route::view('vereExpe', 'vereExpe')
+Route::get('/verificacion-expediente', VerificacionExpediente::class)
     ->middleware(['auth', 'verified'])
-    ->name('vereExpe');
+    ->name('verificacionExpediente');
+
+Route::get('/registro-observaciones/{expedienteId?}', RegistroObservaciones::class)
+    ->middleware(['auth', 'verified'])
+    ->name('registroObservaciones');
+
+Route::get('/remision-expediente/{expedienteId?}', RemisionExpediente::class)
+    ->middleware(['auth', 'verified'])
+    ->name('remisionExpediente');
+
+Route::get('/registro-envio-automatico', RegistroEnvioAutomatico::class)
+    ->middleware(['auth', 'verified'])
+    ->name('registroEnvioAutomatico');
+
+Route::get('/formulario-flujo', FormularioFlujo::class)
+    ->middleware(['auth', 'verified'])
+    ->name('formularioFlujo');
+
+Route::get('/canalizar-envio', CanalizarEnvio::class)
+    ->middleware(['auth', 'verified'])
+    ->name('canalizarEnvio');
+
+Route::get('/revisar-expedientes-finalizados', RevisarExpedientesFinalizados::class)
+    ->middleware(['auth', 'verified'])
+    ->name('revisarExpedientesFinalizados');
+
+Route::get('/notificaciones-solicitante', NotificacionesSolicitante::class)
+    ->middleware(['auth', 'verified'])
+    ->name('notificacionesSolicitante');
+
+Route::get('/entregar-archivar', EntregarArchivar::class)
+    ->middleware(['auth', 'verified'])
+    ->name('entregarArchivar');
+
+Route::get('/panel-seguimiento', PanelSeguimiento::class)
+    ->middleware(['auth', 'verified'])
+    ->name('panelSeguimiento');
+
 
 Route::middleware(['auth'])->group(function () {
     Route::redirect('settings', 'settings/profile');

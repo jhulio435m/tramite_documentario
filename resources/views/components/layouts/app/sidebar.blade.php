@@ -3,8 +3,8 @@
     <head>
         @include('partials.head')
     </head>
-    <body class="min-h-screen bg-white dark:bg-zinc-800">
-        <flux:sidebar sticky stashable class="border-e border-zinc-200 bg-zinc-50 dark:border-zinc-700 dark:bg-zinc-900">
+    <body class="min-h-screen bg-zinc-200">
+        <flux:sidebar sticky stashable class="border-e border-zinc-200 bg-green-800">
             <flux:sidebar.toggle class="lg:hidden" icon="x-mark" />
 
             <a href="{{ route('dashboard') }}" class="me-5 flex items-center space-x-2 rtl:space-x-reverse" wire:navigate>
@@ -15,14 +15,24 @@
                 <flux:navlist.group :heading="__('Platform')" class="grid">
                     
                 <flux:navlist.item icon="home" :href="route('dashboard')" :current="request()->routeIs('dashboard')" wire:navigate>{{ __('Dashboard') }}</flux:navlist.item>
-                <flux:navlist.item icon="home" :href="route('vereExpe')" :current="request()->routeIs('vereExpe')" wire:navigate>{{ __('pene') }}</flux:navlist.item>
-                <flux:navlist.item icon="home" :href="route('remisionExpe')" :current="request()->routeIs('vereExpe')" wire:navigate>{{ __('pene') }}</flux:navlist.item>
+                
+                <flux:navlist.item icon="check-circle" :href="route('verificacionExpediente')" :current="request()->routeIs('verificacionExpediente')" wire:navigate>{{ __('Verificación de expediente') }}</flux:navlist.item>
+                <flux:navlist.item icon="check-circle" :href="route('registroObservaciones')" :current="request()->routeIs('registroObservaciones')" wire:navigate>{{ __('Registro de observaciones') }}</flux:navlist.item>
+                <flux:navlist.item icon="check-circle" :href="route('remisionExpediente')" :current="request()->routeIs('remisionExpediente')" wire:navigate>{{ __('Remision de Expediente') }}</flux:navlist.item>
+                <flux:navlist.item icon="check-circle" :href="route('registroEnvioAutomatico')" :current="request()->routeIs('registroEnvioAutomatico')" wire:navigate>{{ __('Registro de Envio Automatico') }}</flux:navlist.item>
+                <flux:navlist.item icon="check-circle" :href="route('formularioFlujo')" :current="request()->routeIs('formularioFlujo')" wire:navigate>{{ __('Formulario para Flujo') }}</flux:navlist.item>
+               
+                <flux:navlist.item icon="check-circle" :href="route('canalizarEnvio')" :current="request()->routeIs('canalizarEnvio')" wire:navigate>{{ __('Canalizar Expediente') }}</flux:navlist.item>
+                <flux:navlist.item icon="check-circle" :href="route('revisarExpedientesFinalizados')" :current="request()->routeIs('revisarExpedientesFinalizados')" wire:navigate>{{ __('Expedientes Finalizados') }}</flux:navlist.item>
+                <flux:navlist.item icon="check-circle" :href="route('notificacionesSolicitante')" :current="request()->routeIs('notificacionesSolicitante')" wire:navigate>{{ __('Notificaciones Solicitante') }}</flux:navlist.item>
+                <flux:navlist.item icon="check-circle" :href="route('entregarArchivar')" :current="request()->routeIs('entregarArchivar')" wire:navigate>{{ __('Entrega y Archivado') }}</flux:navlist.item>
+                <flux:navlist.item icon="check-circle" :href="route('panelSeguimiento')" :current="request()->routeIs('panelSeguimiento')" wire:navigate>{{ __('Panel de Seguimiento') }}</flux:navlist.item>
 
             </flux:navlist.group>
             </flux:navlist>
 
             <flux:spacer />
-
+<!--
             <flux:navlist variant="outline">
                 <flux:navlist.item icon="folder-git-2" href="https://github.com/laravel/livewire-starter-kit" target="_blank">
                 {{ __('Repository') }}
@@ -32,7 +42,7 @@
                 {{ __('Documentation') }}
                 </flux:navlist.item>
             </flux:navlist>
-
+-->
             <!-- Desktop User Menu -->
             <flux:dropdown class="hidden lg:block" position="bottom" align="start">
                 <flux:profile
