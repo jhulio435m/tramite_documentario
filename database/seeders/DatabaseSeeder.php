@@ -17,6 +17,9 @@ class DatabaseSeeder extends Seeder
 
         $this->call([
             FacultadSeeder::class,
+            MonthSeeder::class,
+            DocumentTypeSeeder::class,
+            StatusSeeder::class,
             ExpedientesSeeder::class,
         ]);
     }

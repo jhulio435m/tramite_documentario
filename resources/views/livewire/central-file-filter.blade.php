@@ -4,38 +4,22 @@
         <h1 class="text-3xl font-bold text-green-800">Archivo Central</h1>
     </div>
 
-    <div class="max-w-6xl mx-auto bg-white shadow-md rounded-xl mt-5 p-4 space-y-6">
-        <div class="flex items-end gap-2">
-            <flux:input wire:model.defer="search" icon="magnifying-glass" placeholder="Filtrar por palabras clave" label="Filtros" class="flex-1"/>
-            <flux:button wire:click="applyFilters" variant="primary" color="gray">
-                <flux:icon.magnifying-glass />
-            </flux:button>
-        </div>
-    </div>
+
 
     <div class="max-w-6xl mx-auto bg-white shadow-md rounded-xl mt-3 p-4 space-y-6">
         <div class="flex flex-wrap gap-4 mt-4">
             <flux:select wire:model.defer="year" placeholder="Año" label="Año">
-                <flux:select.option value="2021">2021</flux:select.option>
-                <flux:select.option value="2022">2022</flux:select.option>
-                <flux:select.option value="2023">2023</flux:select.option>
-                <flux:select.option value="2024">2024</flux:select.option>
-                <flux:select.option value="2025">2025</flux:select.option>
+                <flux:select.option value="">Todos</flux:select.option>
+                @foreach($years as $y)
+                    <flux:select.option value="{{ $y }}">{{ $y }}</flux:select.option>
+                @endforeach
             </flux:select>
 
-            <flux:select wire:model.defer="month" placeholder="Mes" label="Mes">
-                <flux:select.option value="Enero">Enero</flux:select.option>
-                <flux:select.option value="Febrero">Febrero</flux:select.option>
-                <flux:select.option value="Marzo">Marzo</flux:select.option>
-                <flux:select.option value="Abril">Abril</flux:select.option>
-                <flux:select.option value="Mayo">Mayo</flux:select.option>
-                <flux:select.option value="Junio">Junio</flux:select.option>
-                <flux:select.option value="Julio">Julio</flux:select.option>
-                <flux:select.option value="Agosto">Agosto</flux:select.option>
-                <flux:select.option value="Septiembre">Septiembre</flux:select.option>
-                <flux:select.option value="Octubre">Octubre</flux:select.option>
-                <flux:select.option value="Noviembre">Noviembre</flux:select.option>
-                <flux:select.option value="Diciembre">Diciembre</flux:select.option>
+            <flux:select wire:model.defer="month_id" placeholder="Mes" label="Mes">
+                <flux:select.option value="">Todos</flux:select.option>
+                @foreach($months as $month)
+                    <flux:select.option value="{{ $month->id }}">{{ $month->name }}</flux:select.option>
+                @endforeach
             </flux:select>
 
             <flux:input wire:model.defer="dni" icon="identification" placeholder="DNI" label="DNI" />
@@ -47,20 +31,18 @@
     @endforeach
 </flux:select>
 
-    <flux:select wire:model.defer="document_type" placeholder="Tipo de documento" label="Tipo de documento">
-        <flux:select.option value="Solicitud">Solicitud</flux:select.option>
-        <flux:select.option value="Constancia">Constancia</flux:select.option>
-        <flux:select.option value="Certificado">Certificado</flux:select.option>
-        <flux:select.option value="Resolución">Resolución</flux:select.option>
-        <flux:select.option value="Informe">Informe</flux:select.option>
-        <flux:select.option value="Memorando">Memorando</flux:select.option>
-        <flux:select.option value="Oficio">Oficio</flux:select.option>
+    <flux:select wire:model.defer="document_type_id" placeholder="Tipo de documento" label="Tipo de documento">
+        <flux:select.option value="">Todos</flux:select.option>
+        @foreach($documentTypes as $type)
+            <flux:select.option value="{{ $type->id }}">{{ $type->name }}</flux:select.option>
+        @endforeach
     </flux:select>
 
-    <flux:select wire:model.defer="status" placeholder="Estado" label="Estado">
-        <flux:select.option value="Pendiente">Pendiente</flux:select.option>
-        <flux:select.option value="En Proceso">En Proceso</flux:select.option>
-        <flux:select.option value="Finalizado">Finalizado</flux:select.option>
+    <flux:select wire:model.defer="status_id" placeholder="Estado" label="Estado">
+        <flux:select.option value="">Todos</flux:select.option>
+        @foreach($statuses as $status)
+            <flux:select.option value="{{ $status->id }}">{{ $status->name }}</flux:select.option>
+        @endforeach
     </flux:select>
 
     <div class="flex justify-end gap-2">
@@ -92,12 +74,12 @@
             <td class="px-4 py-2">{{ $file->id }}</td>
             <td class="px-4 py-2">{{ $file->dni }}</td>
             <td class="px-4 py-2">{{ $file->name }}</td>
-            <td class="px-4 py-2">{{ $file->document_type }}</td>
+            <td class="px-4 py-2">{{ $file->documentType->name ?? '-' }}</td>
             <td class="px-4 py-2">{{ $file->facultad->nombre ?? '-' }}</td>
             <td class="px-4 py-2">{{ $file->created_at->format('d/m/Y h:i a') }}</td>
             <td class="px-4 py-2">
                 <span class="bg-green-100 text-green-800 text-xs font-semibold px-2.5 py-0.5 rounded">
-                    {{ $file->status }}
+                    {{ $file->status->name ?? '-' }}
                 </span>
             </td>
             <td class="px-4 py-2">

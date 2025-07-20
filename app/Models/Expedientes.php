@@ -14,10 +14,10 @@ class Expedientes extends Model
         'name',
         'dni',
         'year',
-        'month',
+        'month_id',
         'faculty_id',
-        'document_type',
-        'status',
+        'document_type_id',
+        'status_id',
         'sumilla',
         'observaciones',
     ];
@@ -25,5 +25,20 @@ class Expedientes extends Model
     public function facultad()
     {
         return $this->belongsTo(Facultad::class, 'faculty_id');
+    }
+
+    public function month()
+    {
+        return $this->belongsTo(Month::class);
+    }
+
+    public function documentType()
+    {
+        return $this->belongsTo(DocumentType::class);
+    }
+
+    public function status()
+    {
+        return $this->belongsTo(Status::class);
     }
 }

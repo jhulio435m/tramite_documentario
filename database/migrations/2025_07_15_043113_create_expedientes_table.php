@@ -16,11 +16,11 @@ return new class extends Migration
             $table->string('codigo');
             $table->string('name');
             $table->string('dni', 8)->nullable();
-            $table->year('year')->nullable();
-            $table->string('month')->nullable();
-            $table->foreignId('faculty_id')->nullable()->constrained('facultades');
-            $table->string('document_type')->nullable();
-            $table->string('status')->nullable();
+            $table->year('year')->nullable()->index();
+            $table->foreignId('month_id')->nullable()->constrained('months')->index();
+            $table->foreignId('faculty_id')->nullable()->constrained('facultades')->index();
+            $table->foreignId('document_type_id')->nullable()->constrained('document_types')->index();
+            $table->foreignId('status_id')->nullable()->constrained('statuses')->index();
             $table->string('sumilla');
             $table->text('observaciones')->nullable();
             $table->timestamps();

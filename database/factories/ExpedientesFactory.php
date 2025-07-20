@@ -2,8 +2,11 @@
 
 namespace Database\Factories;
 
+use App\Models\DocumentType;
 use App\Models\Expedientes;
 use App\Models\Facultad;
+use App\Models\Month;
+use App\Models\Status;
 use Illuminate\Database\Eloquent\Factories\Factory;
 use Illuminate\Support\Str;
 
@@ -16,23 +19,15 @@ class ExpedientesFactory extends Factory
 
     public function definition(): array
     {
-        $months = [
-            'Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio',
-            'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre',
-        ];
-
-        $types = ['Solicitud', 'Constancia', 'Certificado', 'Resolución', 'Informe', 'Memorando', 'Oficio'];
-        $statuses = ['Pendiente', 'En Proceso', 'Finalizado'];
-
         return [
             'codigo' => strtoupper(Str::random(8)),
             'name' => $this->faker->name(),
             'dni' => $this->faker->numerify('########'),
             'year' => $this->faker->numberBetween(2021, 2025),
-            'month' => $this->faker->randomElement($months),
+            'month_id' => Month::inRandomOrder()->value('id'),
             'faculty_id' => Facultad::inRandomOrder()->value('id'),
-            'document_type' => $this->faker->randomElement($types),
-            'status' => $this->faker->randomElement($statuses),
+            'document_type_id' => DocumentType::inRandomOrder()->value('id'),
+            'status_id' => Status::inRandomOrder()->value('id'),
             'sumilla' => $this->faker->sentence(),
             'observaciones' => $this->faker->optional()->sentence(),
         ];
