@@ -13,12 +13,16 @@ return new class extends Migration
     {
        Schema::create('expedientes', function (Blueprint $table) {
         $table->id();
-        $table->string('name');
+        $table->string('codigo');
+        $table->string('solicitante');
         $table->year('year')->nullable();
         $table->string('month')->nullable();
         $table->unsignedBigInteger('faculty_id')->nullable(); // Si usarás relación
         $table->string('document_type')->nullable();
         $table->string('status')->nullable();
+        $table->string('solicitante');
+        $table->string('sumilla');
+        $table->text('observaciones')->nullable();
         $table->timestamps();
     });
     }
