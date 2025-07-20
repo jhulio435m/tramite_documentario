@@ -21,6 +21,8 @@ class RegistrationTest extends TestCase
     {
         $response = Volt::test('auth.register')
             ->set('name', 'Test User')
+            ->set('last_name', 'Test Lastname')
+            ->set('dni', '12345678')
             ->set('email', 'test@example.com')
             ->set('password', 'password')
             ->set('password_confirmation', 'password')
@@ -31,5 +33,31 @@ class RegistrationTest extends TestCase
             ->assertRedirect(route('dashboard', absolute: false));
 
         $this->assertAuthenticated();
+    }
+
+    public function test_registration_requires_last_name(): void
+    {
+        $response = Volt::test('auth.register')
+            ->set('name', 'Test User')
+            ->set('dni', '12345678')
+            ->set('email', 'test@example.com')
+            ->set('password', 'password')
+            ->set('password_confirmation', 'password')
+            ->call('register');
+
+        $response->assertHasErrors(['last_name']);
+    }
+
+    public function test_registration_requires_dni(): void
+    {
+        $response = Volt::test('auth.register')
+            ->set('name', 'Test User')
+            ->set('last_name', 'Test Lastname')
+            ->set('email', 'test@example.com')
+            ->set('password', 'password')
+            ->set('password_confirmation', 'password')
+            ->call('register');
+
+        $response->assertHasErrors(['dni']);
     }
 }
