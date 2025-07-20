@@ -12,6 +12,7 @@ class Expedientes extends Model
     protected $fillable = [
         'codigo',
         'name',
+        'dni',
         'year',
         'month',
         'faculty_id',

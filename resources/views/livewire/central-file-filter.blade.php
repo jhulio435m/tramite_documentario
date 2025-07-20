@@ -5,7 +5,12 @@
     </div>
 
     <div class="max-w-6xl mx-auto bg-white shadow-md rounded-xl mt-5 p-4 space-y-6">
-        <flux:input wire:model.debounce.500ms="search" icon="magnifying-glass" placeholder="Filtrar por palabras clave" label="Filtros"/>
+        <div class="flex items-end gap-2">
+            <flux:input wire:model.defer="search" icon="magnifying-glass" placeholder="Filtrar por palabras clave" label="Filtros" class="flex-1"/>
+            <flux:button wire:click="applyFilters" variant="primary" color="gray">
+                <flux:icon.magnifying-glass />
+            </flux:button>
+        </div>
     </div>
 
     <div class="max-w-6xl mx-auto bg-white shadow-md rounded-xl mt-3 p-4 space-y-6">
@@ -32,6 +37,8 @@
                 <flux:select.option value="Noviembre">Noviembre</flux:select.option>
                 <flux:select.option value="Diciembre">Diciembre</flux:select.option>
             </flux:select>
+
+            <flux:input wire:model.defer="dni" icon="identification" placeholder="DNI" label="DNI" />
 
         <flux:select wire:model.defer="faculty_id" placeholder="Facultad" label="Facultad">
     <flux:select.option value="">Todas las facultades</flux:select.option>
@@ -70,6 +77,7 @@
     <thead class="text-xs text-gray-600 uppercase border-b">
         <tr>
             <th class="px-4 py-2">Código</th>
+            <th class="px-4 py-2">DNI</th>
             <th class="px-4 py-2">Solicitante</th>
             <th class="px-4 py-2">Tipo</th>
             <th class="px-4 py-2">Facultad</th>
@@ -79,9 +87,10 @@
         </tr>
     </thead>
     <tbody>
-        @foreach($files as $file)
+        @forelse($files as $file)
         <tr class="border-b">
             <td class="px-4 py-2">{{ $file->id }}</td>
+            <td class="px-4 py-2">{{ $file->dni }}</td>
             <td class="px-4 py-2">{{ $file->name }}</td>
             <td class="px-4 py-2">{{ $file->document_type }}</td>
             <td class="px-4 py-2">{{ $file->facultad->nombre ?? '-' }}</td>
@@ -97,7 +106,11 @@
                 </flux:button>
             </td>
         </tr>
-        @endforeach
+        @empty
+        <tr>
+            <td colspan="7" class="px-4 py-6 text-center text-gray-500">No se encontraron resultados</td>
+        </tr>
+        @endforelse
     </tbody>
 </table>
 

@@ -15,6 +15,7 @@ return new class extends Migration
             $table->id();
             $table->string('codigo');
             $table->string('name');
+            $table->string('dni', 8)->nullable();
             $table->year('year')->nullable();
             $table->string('month')->nullable();
             $table->foreignId('faculty_id')->nullable()->constrained('facultades');

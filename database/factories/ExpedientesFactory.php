@@ -27,6 +27,7 @@ class ExpedientesFactory extends Factory
         return [
             'codigo' => strtoupper(Str::random(8)),
             'name' => $this->faker->name(),
+            'dni' => $this->faker->numerify('########'),
             'year' => $this->faker->numberBetween(2021, 2025),
             'month' => $this->faker->randomElement($months),
             'faculty_id' => Facultad::inRandomOrder()->value('id'),

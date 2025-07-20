@@ -9,6 +9,7 @@ use App\Models\Facultad;
 class CentralFileFilter extends Component
 {
     public $search;
+    public $dni;
     public $year;
     public $month;
     public $faculty_id;
@@ -23,7 +24,7 @@ class CentralFileFilter extends Component
 
     public function limpiarFiltros()
     {
-        $this->reset(['search', 'year', 'month', 'faculty_id', 'document_type', 'status']);
+        $this->reset(['search', 'dni', 'year', 'month', 'faculty_id', 'document_type', 'status']);
     }
 
     public function applyFilters()
@@ -37,7 +38,16 @@ class CentralFileFilter extends Component
         $query = Expedientes::with('facultad');
 
         if ($this->search) {
-            $query->where('name', 'like', "%{$this->search}%");
+            $query->where(function ($q) {
+                $term = "%{$this->search}%";
+                $q->where('name', 'like', $term)
+                  ->orWhere('codigo', 'like', $term)
+                  ->orWhere('sumilla', 'like', $term);
+            });
+        }
+
+        if ($this->dni) {
+            $query->where('dni', $this->dni);
         }
 
         if ($this->year) {
