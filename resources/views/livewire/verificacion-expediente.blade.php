@@ -35,7 +35,7 @@
                 </thead>
                 <tbody>
                     @foreach ($expedientes as $exp)
-                        <tr class="{{$exp->estado === 'Aprobado' ? 'estado-validado' : ($exp->estado === 'Rechazado' ? 'estado-rechazado' : 
+                        <tr class="{{$exp->state_id === 'Aprobado' ? 'estado-validado' : ($exp->state_id === 'Rechazado' ? 'estado-rechazado' : 
                                 ($exp->estado === 'Canalizado' ? 'estado-canalizado' : 
                                 ($exp->estado === 'Finalizado' ? 'estado-finalizado' : 
                                 ($exp->estado === 'Archivado' ? 'estado-archivado' : 'estado-pendiente'))))}}">

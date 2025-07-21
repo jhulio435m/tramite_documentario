@@ -28,7 +28,7 @@ class CanalizarEnvio extends Component
     public function cargarExpedientes()
     {
         $this->expedientes = DB::table('expedientes')
-            ->where('estado', 'Enviado')
+            ->where('status_id', 'Enviado')
             ->where('medio_envio', 'Otro medio')
             ->orderByDesc('fecha_envio')
             ->get();

@@ -56,7 +56,7 @@ class FormularioFlujo extends Component
             'tipo_documento' => $this->tipo_documento,
             'area_procedencia' => $this->area_procedencia,
             'fecha_ingreso' => $this->fecha_recepcion,
-            'estado' => 'En Curso',
+            'status_id' => 'Progreso',
             'observaciones' => $this->observaciones,
             'documento_path' => $documentoPath,
             'created_at' => now(),

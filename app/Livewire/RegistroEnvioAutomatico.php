@@ -32,7 +32,7 @@ class RegistroEnvioAutomatico extends Component
 
     private function actualizarTotalPaginas()
     {
-        $totalExpedientes = DB::table('expedientes')->where('estado', 'Enviado')->count();
+        $totalExpedientes = DB::table('expedientes')->where('status_id', 'Enviado')->count();
         $this->totalPaginas = (int) ceil($totalExpedientes / $this->porPagina);
     }
 
@@ -41,7 +41,7 @@ class RegistroEnvioAutomatico extends Component
         $this->actualizarTotalPaginas();
 
         $expedientes = DB::table('expedientes')
-            ->where('estado', 'Enviado')
+            ->where('status_id', 'Enviado')
             ->orderByDesc('fecha_envio')
             ->offset(($this->paginaActual - 1) * $this->porPagina)
             ->limit($this->porPagina)

@@ -29,7 +29,7 @@ class EntregarArchivar extends Component
     public function cargarExpedientes()
     {
         $this->expedientes = DB::table('expedientes')
-            ->where('estado', 'Finalizado')
+            ->where('status_id', 'Finalizado')
             ->orderByDesc('updated_at')
             ->get();
     }
@@ -67,7 +67,7 @@ class EntregarArchivar extends Component
             DB::table('expedientes')
                 ->where('id', $this->expedienteSeleccionado->id)
                 ->update([
-                    'estado' => 'Archivado',
+                    'status_id' => 'Archivado',
                     'fecha_archivo' => Carbon::parse($this->fechaEntrega),
                     'observacion_archivo' => $this->observacionEntrega,
                     'archivo_cargo' => $archivoPath,

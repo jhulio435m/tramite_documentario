@@ -22,9 +22,9 @@ class PanelSeguimiento extends Component
     {
         // Conteo general sin filtro (para mantener el resumen completo)
         $this->resumen = DB::table('expedientes')
-            ->select('estado', DB::raw('count(*) as total'))
-            ->groupBy('estado')
-            ->pluck('total', 'estado')
+            ->select('status_id', DB::raw('count(*) as total'))
+            ->groupBy('status_id')
+            ->pluck('total', 'status_id')
             ->toArray();
 
         // Filtro por fechas (si están definidos)

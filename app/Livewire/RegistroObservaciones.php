@@ -10,7 +10,7 @@ class RegistroObservaciones extends Component
     public $expedienteId;
     public $expedienteCodigo = '';
     public $solicitante = '';
-    public $estadoExpediente = 'En espera';
+    public $estadoExpediente = 'Pendiente';
     public $resultado;
     public $observaciones = '';
 
@@ -23,7 +23,7 @@ class RegistroObservaciones extends Component
                 $this->expedienteId = $expediente->id;
                 $this->expedienteCodigo = $expediente->codigo;
                 $this->solicitante = $expediente->solicitante;
-                $this->estadoExpediente = $expediente->estado;
+                $this->estadoExpediente = $expediente->status_id;
             }
         }
     }
