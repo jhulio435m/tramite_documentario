@@ -11,16 +11,19 @@ class StatusSeeder extends Seeder
         $statuses = [
             'Pendiente',
             'Progreso',
+            'En Revisión',
+            'Atendido',
             'Aprobado',
             'Rechazado',
             'Enviado',
             'Canalizado',
             'Finalizado',
+            'Derivado',
             'Archivado'
         ];
 
         foreach ($statuses as $name) {
-            \App\Models\Status::create(['name' => $name]);
+            \App\Models\Status::firstOrCreate(['name' => $name]);
         }
     }
 }
