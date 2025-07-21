@@ -2,35 +2,20 @@
 
 use Illuminate\Support\Facades\Route;
 use Livewire\Volt\Volt;
+use App\Http\Controllers\TramiteController;
 
 Route::get('/', function () {
     return view('welcome');
 })->name('home');
 
-Route::view('dashboard', 'dashboard')
-    ->middleware(['auth', 'verified'])
-    ->name('dashboard');
-
-Route::view('ejemplo', 'ejemplo')
-    ->middleware(['auth', 'verified'])
-    ->name('ejemplo');
-
-Route::view('ejemplo_dashboard', 'ejemplo_dashboard')
-    ->middleware(['auth', 'verified'])
-    ->name('ejemplo.dashboard');
-
-
-Route::view('ampliacion_plazo', 'ampliacion_plazo')
-    ->middleware(['auth', 'verified'])
-    ->name('ampliacion_plazo');
-
-Route::view('cambio_titulo_asesor', 'cambio_titulo_asesor')
-    ->middleware(['auth', 'verified'])
-    ->name('cambio_titulo_asesor');
-
-Route::view('otros_tramites', 'otros_tramites')
-    ->middleware(['auth', 'verified'])
-    ->name('otros_tramites');
+Route::middleware(['auth', 'verified'])->group(function () {
+    Route::view('dashboard', 'dashboard')->name('dashboard');
+    Route::view('ejemplo', 'ejemplo')->name('ejemplo');
+    Route::view('ejemplo_dashboard', 'ejemplo_dashboard')->name('ejemplo.dashboard');
+    Route::view('ampliacion_plazo', 'ampliacion_plazo')->name('ampliacion_plazo');
+    Route::view('cambio_titulo_asesor', 'cambio_titulo_asesor')->name('cambio_titulo_asesor');
+    Route::view('otros_tramites', 'otros_tramites')->name('otros_tramites');
+});
 
 
 Route::middleware(['auth'])->group(function () {
@@ -43,8 +28,7 @@ Route::middleware(['auth'])->group(function () {
 
 require __DIR__.'/auth.php';
 
-//Tramites 
-use App\Http\Controllers\TramiteController;
+// Tramites
 
 Route::get('/tramites', [TramiteController::class, 'listaTramites'])->name('tramites.index');
 Route::get('/tramites/{id}', [TramiteController::class, 'show'])->name('tramites.show');

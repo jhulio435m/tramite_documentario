@@ -13,24 +13,17 @@
 
             <flux:navlist variant="outline">
                 <flux:navlist.group class="grid">
-                    <flux:navlist.item icon="home" :href="route('dashboard')" :current="request()->routeIs('dashboard')" wire:navigate>{{ __('Dashboard no usar') }}</flux:navlist.item>
-                    <flux:navlist.item icon="home" :href="route('ejemplo.dashboard')" :current="request()->routeIs('ejemplo.dashboard')" wire:navigate>{{ __('Dashboard') }}</flux:navlist.item>
-                    <flux:navlist.item icon="document" :href="route('ejemplo')" :current="request()->routeIs('ejemplo')" wire:navigate>{{ __('Ejemplo') }}</flux:navlist.item>
+                    <flux:navlist.item icon="home" :href="route('dashboard')" :current="request()->routeIs('dashboard')" wire:navigate>{{ __('Dashboard') }}</flux:navlist.item>
+                    <flux:navlist.item icon="home" :href="route('ejemplo.dashboard')" :current="request()->routeIs('ejemplo.dashboard')" wire:navigate>{{ __('Ejemplo Dashboard') }}</flux:navlist.item>
+                    <flux:navlist.item icon="document" :href="route('ejemplo')" :current="request()->routeIs('ejemplo')" wire:navigate>{{ __('Derivar') }}</flux:navlist.item>
+                    <flux:navlist.item icon="document" :href="route('ampliacion_plazo')" :current="request()->routeIs('ampliacion_plazo')" wire:navigate>{{ __('Ampliación de Plazo') }}</flux:navlist.item>
+                    <flux:navlist.item icon="document" :href="route('cambio_titulo_asesor')" :current="request()->routeIs('cambio_titulo_asesor')" wire:navigate>{{ __('Cambio de Título o Asesor') }}</flux:navlist.item>
+                    <flux:navlist.item icon="document" :href="route('otros_tramites')" :current="request()->routeIs('otros_tramites')" wire:navigate>{{ __('Otros Trámites') }}</flux:navlist.item>
+                    <flux:navlist.item icon="document" :href="route('tramites.index')" :current="request()->routeIs('tramites.*')" wire:navigate>{{ __('Trámites') }}</flux:navlist.item>
                 </flux:navlist.group>
             </flux:navlist>
 
             <flux:spacer />
-<!--
-            <flux:navlist vari  ant="outline">
-                <flux:navlist.item icon="folder-git-2" href="https://github.com/laravel/livewire-starter-kit" target="_blank">
-                {{ __('Repository') }}
-                </flux:navlist.item>
-
-                <flux:navlist.item icon="book-open-text" href="https://laravel.com/docs/starter-kits#livewire" target="_blank">
-                {{ __('Documentation') }}
-                </flux:navlist.item>
-            </flux:navlist>
--->
             <!-- Desktop User Menu -->
             <flux:dropdown class="hidden lg:block" position="bottom" align="start">
                 <flux:profile
