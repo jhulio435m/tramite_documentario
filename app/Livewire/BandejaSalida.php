@@ -4,6 +4,7 @@ namespace App\Livewire;
 
 use Livewire\Component;
 use App\Models\Tramite;
+use App\Models\Status;
 use Illuminate\Support\Facades\Auth;
 
 class BandejaSalida extends Component
@@ -15,9 +16,11 @@ class BandejaSalida extends Component
     public $filtroFechaDesde = null;
     public $filtroFechaHasta = null;
     public $soloMisAcciones = false;
+    public $statuses = [];
 
     public function mount()
     {
+        $this->statuses = Status::orderBy('name')->pluck('name');
         $this->cargarTramites();
     }
 
@@ -64,6 +67,8 @@ class BandejaSalida extends Component
 
     public function render()
     {
-        return view('livewire.bandeja-salida');
+        return view('livewire.bandeja-salida', [
+            'statuses' => $this->statuses,
+        ]);
     }
 }

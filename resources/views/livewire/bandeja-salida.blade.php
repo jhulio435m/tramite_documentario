@@ -23,12 +23,9 @@
                             <label class="block text-xs font-medium text-gray-600 mb-1">Estado</label>
                             <select wire:model="filtroEstado" class="w-full px-2 py-1 text-sm border border-gray-300 rounded-lg">
                                 <option value="">-- Todos --</option>
-                                <option value="Pendiente">Pendiente</option>
-                                <option value="En Revisión">En Revisión</option>
-                                <option value="Atendido">Atendido</option>
-                                <option value="Aprobado">Aprobado</option>
-                                <option value="Finalizado">Finalizado</option>
-                                <option value="Derivado">Derivado</option>
+                                @foreach($statuses as $status)
+                                    <option value="{{ $status }}">{{ $status }}</option>
+                                @endforeach
                             </select>
                         </div>
 
