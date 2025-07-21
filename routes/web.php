@@ -21,6 +21,12 @@ Route::view('panel_principal', 'panel_principal')
     ->middleware(['auth', 'verified'])
     ->name('panel.principal');
 
+// bandeja salida
+Route::view('bandeja_salida', 'bandeja_salida')
+    ->middleware(['auth', 'verified'])
+    ->name('bandeja.salida');
+
+
 Route::view('perfil/editar', 'editar-perfil')
     ->middleware(['auth', 'verified'])
     ->name('perfil.editar');

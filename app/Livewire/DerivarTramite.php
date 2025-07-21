@@ -38,10 +38,9 @@ class DerivarTramite extends Component
         $nuevoResponsableId = $this->destinatariosIds[0];
         $usuarioDestino = User::find($nuevoResponsableId); // Obtiene el usuario al que se deriva
 
-        // Actualiza el trámite
-        $this->tramite->user_id = $nuevoResponsableId; // Asigna el nuevo responsable (ajusta según tu campo de responsable, podría ser 'funcionario_destinatario_id' o 'responsable_id')
-        // Si usas el email como responsable, asegúrate de actualizarlo:
-        // $this->tramite->funcionario_destinatario = $usuarioDestino->email;
+        // Actualiza el trámite: ACTUALIZAMOS funcionario_destinatario con el email correcto!
+        $this->tramite->funcionario_destinatario = $usuarioDestino->email;
+        // NO tocar user_id porque no es el campo que usa para bandeja
         $this->tramite->estado = 'Derivado';
         $this->tramite->save();
 
@@ -62,7 +61,6 @@ class DerivarTramite extends Component
             'visto' => false,
         ]);
 
-
         // Emitir evento para refrescar la campana de notificaciones de TODOS LOS USUARIOS AFECTADOS
         // Esto solo es necesario si estás usando broadcasting en tiempo real (Laravel Echo)
         // Para refrescar la campana del usuario actual o del destino, puedes usar $this->emit/dispatch
@@ -74,7 +72,6 @@ class DerivarTramite extends Component
             // Livewire 2.x
             $this->emit('notificacionCreada');
         }
-
 
         session()->flash('success', 'El trámite ha sido derivado correctamente.');
         return redirect()->route('panel.principal');
