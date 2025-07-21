@@ -67,7 +67,7 @@
         <tr class="border-b">
             <td class="px-4 py-2">{{ $file->id }}</td>
             <td class="px-4 py-2">{{ $file->dni }}</td>
-            <td class="px-4 py-2">{{ $file->name }}</td>
+            <td class="px-4 py-2">{{ $file->solicitante }}</td>
             <td class="px-4 py-2">{{ $file->tramiteType->name ?? '-' }}</td>
             <td class="px-4 py-2">{{ $file->facultad->nombre ?? '-' }}</td>
             <td class="px-4 py-2">{{ $file->created_at->format('d/m/Y h:i a') }}</td>

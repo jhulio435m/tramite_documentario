@@ -22,13 +22,17 @@ class PanelSeguimiento extends Component
     {
         // Conteo general sin filtro (para mantener el resumen completo)
         $this->resumen = DB::table('expedientes')
-            ->select('status_id', DB::raw('count(*) as total'))
-            ->groupBy('status_id')
-            ->pluck('total', 'status_id')
+            ->join('statuses', 'expedientes.status_id', '=', 'statuses.id')
+            ->select('statuses.name as estado', DB::raw('count(*) as total'))
+            ->groupBy('statuses.name')
+            ->pluck('total', 'estado')
             ->toArray();
 
         // Filtro por fechas (si están definidos)
-        $query = DB::table('expedientes')->orderByDesc('updated_at');
+        $query = DB::table('expedientes')
+            ->leftJoin('statuses', 'expedientes.status_id', '=', 'statuses.id')
+            ->select('expedientes.*', 'statuses.name as estado')
+            ->orderByDesc('expedientes.updated_at');
 
         if ($this->fechaInicio) {
             $query->whereDate('updated_at', '>=', $this->fechaInicio);

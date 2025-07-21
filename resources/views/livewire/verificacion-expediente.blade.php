@@ -35,17 +35,17 @@
                 </thead>
                 <tbody>
                     @foreach ($expedientes as $exp)
-                        <tr class="{{$exp->state_id === 'Aprobado' ? 'estado-validado' : ($exp->state_id === 'Rechazado' ? 'estado-rechazado' : 
-                                ($exp->estado === 'Canalizado' ? 'estado-canalizado' : 
-                                ($exp->estado === 'Finalizado' ? 'estado-finalizado' : 
-                                ($exp->estado === 'Archivado' ? 'estado-archivado' : 'estado-pendiente'))))}}">
+                        <tr class="{{$exp->status->name === 'Aprobado' ? 'estado-validado' : ($exp->status->name === 'Rechazado' ? 'estado-rechazado' :
+                                ($exp->status->name === 'Canalizado' ? 'estado-canalizado' :
+                                ($exp->status->name === 'Finalizado' ? 'estado-finalizado' :
+                                ($exp->status->name === 'Archivado' ? 'estado-archivado' : 'estado-pendiente'))))}}">
                             <td class="p-2">{{ $exp->codigo }}</td>
                             <td class="p-2">{{ $exp->solicitante }}</td>
                             <td class="p-2">{{ $exp->fecha_ingreso }}</td>
-                            <td class="p-2">{{ $exp->estado }}</td>
+                            <td class="p-2">{{ $exp->status->name }}</td>
                             <td class="p-2 flex gap-2">
                                 <button class="btn-ver" wire:click="seleccionarExpediente({{ $exp->id }})">Ver</button>
-                                @if ($exp->estado === 'En Curso')
+                                @if ($exp->status->name === 'En Curso' || $exp->status->name === 'Progreso')
                                     <a href="{{ route('registroObservaciones', ['expedienteId' => $exp->id]) }}"
                                        class="btn-observar bg-blue-500 text-white px-2 py-1 rounded text-sm hover:bg-blue-600">
                                         Observar
@@ -68,10 +68,10 @@
                     <div><strong>Solicitante:</strong> {{ $expedienteSeleccionado->solicitante }}</div>
                     <div><strong>Fecha Ingreso:</strong> {{ $expedienteSeleccionado->fecha_ingreso }}</div>
                     <div><strong>Sumilla:</strong> {{ $expedienteSeleccionado->sumilla }}</div>
-                    <div><strong>Estado:</strong> {{ $expedienteSeleccionado->estado }}</div>
+                    <div><strong>Estado:</strong> {{ $expedienteSeleccionado->status->name }}</div>
                 </div>
 
-                @if ($expedienteSeleccionado->estado === 'En Curso')
+                @if ($expedienteSeleccionado->status->name === 'En Curso' || $expedienteSeleccionado->status->name === 'Progreso')
                     <div class="acciones flex gap-4">
                         <button wire:click="validarExpediente"
                                 class="btn validar-btn bg-green-600 text-white px-4 py-2 rounded">
@@ -82,7 +82,7 @@
                             RECHAZAR
                         </button>
                     </div>
-                @elseif ($expedienteSeleccionado->estado === 'Aprobado')
+                @elseif ($expedienteSeleccionado->status->name === 'Aprobado')
                     <div class="acciones mt-4">
                         <a href="{{ route('remisionExpediente', ['expedienteId' => $expedienteSeleccionado->id]) }}"
                            class="btn btn-remitir bg-indigo-600 text-white px-4 py-2 rounded hover:bg-indigo-700">

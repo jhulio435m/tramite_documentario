@@ -6,6 +6,7 @@ use Livewire\Component;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
+use App\Models\Status;
 
 class CanalizarEnvio extends Component
 {
@@ -27,8 +28,9 @@ class CanalizarEnvio extends Component
 
     public function cargarExpedientes()
     {
+        $enviado = Status::where('name', 'Enviado')->value('id');
         $this->expedientes = DB::table('expedientes')
-            ->where('status_id', 'Enviado')
+            ->where('status_id', $enviado)
             ->where('medio_envio', 'Otro medio')
             ->orderByDesc('fecha_envio')
             ->get();
@@ -78,9 +80,10 @@ class CanalizarEnvio extends Component
             $response = Http::withHeaders($headers)->post($this->endpoint, $payload);
 
             if ($response->successful()) {
+                $canalizado = Status::where('name', 'Canalizado')->value('id');
                 DB::table('expedientes')
                     ->where('id', $this->expedienteSeleccionado->id)
-                    ->update(['estado' => 'Canalizado']);
+                    ->update(['status_id' => $canalizado]);
 
                 return redirect()->route('canalizarEnvio')
                     ->with('success', 'Envío realizado correctamente al servicio externo.');

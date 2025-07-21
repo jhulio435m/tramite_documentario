@@ -2,17 +2,22 @@
 
 namespace Database\Seeders;
 
-use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 
 class StatusSeeder extends Seeder
 {
-    /**
-     * Run the database seeds.
-     */
     public function run(): void
     {
-        $statuses = ['Enviado', 'Pendiente', 'En Proceso', 'Finalizado', 'Archivado'];
+        $statuses = [
+            'Pendiente',
+            'Progreso',
+            'Aprobado',
+            'Rechazado',
+            'Enviado',
+            'Canalizado',
+            'Finalizado',
+            'Archivado'
+        ];
 
         foreach ($statuses as $name) {
             \App\Models\Status::create(['name' => $name]);

@@ -4,6 +4,7 @@ namespace App\Livewire;
 
 use Livewire\Component;
 use App\Models\Expediente;
+use App\Models\Status;
 
 class RemisionExpediente extends Component
 {
@@ -24,7 +25,8 @@ class RemisionExpediente extends Component
     {
         if (!$this->expediente) return;
 
-        $this->expediente->estado = 'Enviado';
+        $enviado = Status::where('name', 'Enviado')->value('id');
+        $this->expediente->status_id = $enviado;
         $this->expediente->medio_envio = $this->medio;
         $this->expediente->fecha_envio = now();
         $this->expediente->save();

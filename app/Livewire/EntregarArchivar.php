@@ -6,6 +6,7 @@ use Livewire\Component;
 use Livewire\WithFileUploads;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Carbon;
+use App\Models\Status;
 
 class EntregarArchivar extends Component
 {
@@ -28,15 +29,22 @@ class EntregarArchivar extends Component
 
     public function cargarExpedientes()
     {
+        $finalizado = Status::where('name', 'Finalizado')->value('id');
         $this->expedientes = DB::table('expedientes')
-            ->where('status_id', 'Finalizado')
-            ->orderByDesc('updated_at')
+            ->leftJoin('statuses', 'expedientes.status_id', '=', 'statuses.id')
+            ->select('expedientes.*', 'statuses.name as estado')
+            ->where('expedientes.status_id', $finalizado)
+            ->orderByDesc('expedientes.updated_at')
             ->get();
     }
 
     public function seleccionarExpediente($id)
     {
-        $this->expedienteSeleccionado = DB::table('expedientes')->find($id);
+        $this->expedienteSeleccionado = DB::table('expedientes')
+            ->leftJoin('statuses', 'expedientes.status_id', '=', 'statuses.id')
+            ->select('expedientes.*', 'statuses.name as estado')
+            ->where('expedientes.id', $id)
+            ->first();
         $this->mensajeExito = null;
         $this->mensajeError = null;
 
@@ -67,7 +75,7 @@ class EntregarArchivar extends Component
             DB::table('expedientes')
                 ->where('id', $this->expedienteSeleccionado->id)
                 ->update([
-                    'status_id' => 'Archivado',
+                    'status_id' => Status::where('name', 'Archivado')->value('id'),
                     'fecha_archivo' => Carbon::parse($this->fechaEntrega),
                     'observacion_archivo' => $this->observacionEntrega,
                     'archivo_cargo' => $archivoPath,

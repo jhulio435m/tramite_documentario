@@ -4,6 +4,7 @@ namespace App\Livewire;
 
 use Livewire\Component;
 use Illuminate\Support\Facades\DB;
+use App\Models\Status;
 
 class RegistroEnvioAutomatico extends Component
 {
@@ -32,7 +33,8 @@ class RegistroEnvioAutomatico extends Component
 
     private function actualizarTotalPaginas()
     {
-        $totalExpedientes = DB::table('expedientes')->where('status_id', 'Enviado')->count();
+        $enviado = Status::where('name', 'Enviado')->value('id');
+        $totalExpedientes = DB::table('expedientes')->where('status_id', $enviado)->count();
         $this->totalPaginas = (int) ceil($totalExpedientes / $this->porPagina);
     }
 
@@ -40,8 +42,9 @@ class RegistroEnvioAutomatico extends Component
     {
         $this->actualizarTotalPaginas();
 
+        $enviado = Status::where('name', 'Enviado')->value('id');
         $expedientes = DB::table('expedientes')
-            ->where('status_id', 'Enviado')
+            ->where('status_id', $enviado)
             ->orderByDesc('fecha_envio')
             ->offset(($this->paginaActual - 1) * $this->porPagina)
             ->limit($this->porPagina)

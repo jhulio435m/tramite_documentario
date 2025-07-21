@@ -4,7 +4,7 @@ namespace App\Livewire;
 
 use Livewire\Component;
 use Livewire\WithPagination;
-use App\Models\Expedientes;
+use App\Models\Expediente;
 use App\Models\Facultad;
 
 class CentralFileFilter extends Component
@@ -29,7 +29,7 @@ class CentralFileFilter extends Component
         $this->facultades = Facultad::orderBy('nombre')->get();
         $this->months = \App\Models\Month::all();
         $this->tramiteTypes = \App\Models\TramiteType::all();
-        $this->years = Expedientes::select('year')->distinct()->orderBy('year')->pluck('year');
+        $this->years = Expediente::select('year')->distinct()->orderBy('year')->pluck('year');
     }
 
     public function limpiarFiltros()
@@ -50,7 +50,7 @@ class CentralFileFilter extends Component
     public function render()
     {
         // Carga la relación facultad
-        $query = Expedientes::with('facultad');
+        $query = Expediente::with('facultad');
 
         if ($this->dni) {
             $query->where('dni', $this->dni);

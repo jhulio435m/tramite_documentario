@@ -4,6 +4,7 @@ namespace App\Livewire;
 
 use Livewire\Component;
 use App\Models\Expediente;
+use App\Models\Status;
 
 class RegistroObservaciones extends Component
 {
@@ -23,7 +24,7 @@ class RegistroObservaciones extends Component
                 $this->expedienteId = $expediente->id;
                 $this->expedienteCodigo = $expediente->codigo;
                 $this->solicitante = $expediente->solicitante;
-                $this->estadoExpediente = $expediente->status_id;
+                $this->estadoExpediente = optional($expediente->status)->name;
             }
         }
     }
@@ -39,7 +40,8 @@ class RegistroObservaciones extends Component
             $expediente = Expediente::find($this->expedienteId);
 
             if ($expediente) {
-                $expediente->estado = $this->resultado === 'conforme' ? 'Aprobado' : 'Rechazado';
+                $statusName = $this->resultado === 'conforme' ? 'Aprobado' : 'Rechazado';
+                $expediente->status_id = Status::where('name', $statusName)->value('id');
                 $expediente->observaciones = $this->observaciones;
 
                 // ✅ Registrar fecha de validación si es conforme (Aprobado)
