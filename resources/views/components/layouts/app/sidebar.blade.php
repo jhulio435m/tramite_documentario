@@ -63,6 +63,7 @@
 
                     <flux:menu.radio.group>
                         <flux:menu.item :href="route('settings.profile')" icon="cog" wire:navigate>{{ __('Settings') }}</flux:menu.item>
+                        <flux:menu.item :href="route('perfil.editar')" icon="user-circle" wire:navigate>{{ __('Editar Perfil') }}</flux:menu.item>
                     </flux:menu.radio.group>
 
                     <flux:menu.separator />
@@ -113,6 +114,7 @@
 
                     <flux:menu.radio.group>
                         <flux:menu.item :href="route('settings.profile')" icon="cog" wire:navigate>{{ __('Settings') }}</flux:menu.item>
+                        <flux:menu.item :href="route('perfil.editar')" icon="user-circle" wire:navigate>{{ __('Editar Perfil') }}</flux:menu.item>
                     </flux:menu.radio.group>
 
                     <flux:menu.separator />

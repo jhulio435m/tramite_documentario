@@ -2,7 +2,7 @@
 
 namespace App\Models;
 
-// use Illuminate\Contracts\Auth\MustVerifyEmail;
+use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
@@ -16,7 +16,6 @@ class User extends Authenticatable
     /**
      * The attributes that are mass assignable.
      *
-     * @var list<string>
      */
     protected $fillable = [
         'name',
@@ -24,7 +23,9 @@ class User extends Authenticatable
         'dni',
         'email',
         'password',
-        'role_id'
+        'role_id',
+        'cargo',
+        'dependencia',
     ];
 
     /**
@@ -60,37 +61,5 @@ class User extends Authenticatable
             ->take(2)
             ->map(fn ($word) => Str::substr($word, 0, 1))
             ->implode('');
-    }
-
-    /**
-     * Relación: Trámites asignados a este usuario
-     */
-    public function tramites()
-    {
-        return $this->hasMany(Tramite::class, 'user_id');
-    }
-
-    /**
-     * Relación: Trámites solicitados por este usuario
-     */
-    public function tramitesSolicitados()
-    {
-        return $this->hasMany(Tramite::class, 'solicitante_id');
-    }
-
-    /**
-     * Obtener trámites pendientes del usuario
-     */
-    public function tramitesPendientes()
-    {
-        return $this->tramites()->where('estado', 'Pendiente');
-    }
-
-    /**
-     * Contar trámites pendientes del usuario
-     */
-    public function contarTramitesPendientes()
-    {
-        return $this->tramitesPendientes()->count();
     }
 }

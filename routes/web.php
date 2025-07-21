@@ -19,6 +19,11 @@ Route::view('panel_principal', 'panel_principal')
     ->middleware(['auth', 'verified'])
     ->name('panel.principal');
 
+Route::view('perfil/editar', 'editar-perfil')
+    ->middleware(['auth', 'verified'])
+    ->name('perfil.editar');
+
+
 Route::middleware(['auth'])->group(function () {
     Route::redirect('settings', 'settings/profile');
 
