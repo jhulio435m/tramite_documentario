@@ -25,7 +25,7 @@
                             <td class="p-2">{{ $exp->codigo }}</td>
                             <td class="p-2">{{ $exp->solicitante }}</td>
                             <td class="p-2">{{ $exp->fecha_ingreso }}</td>
-                            <td class="p-2">{{ $exp->status_id }}</td>
+                            <td class="p-2">{{ $exp->estado }}</td>
                             <td class="p-2">
                                 <button class="btn btn-ver" wire:click="seleccionarExpediente({{ $exp->id }})">
                                     Revisar
@@ -52,7 +52,7 @@
                     <div><strong>N° Expediente:</strong> {{ $expedienteSeleccionado->codigo }}</div>
                     <div><strong>Solicitante:</strong> {{ $expedienteSeleccionado->solicitante }}</div>
                     <div><strong>Fecha Ingreso:</strong> {{ $expedienteSeleccionado->fecha_ingreso }}</div>
-                    <div><strong>Estado Actual:</strong> {{ $expedienteSeleccionado->status_id }}</div>
+                    <div><strong>Estado Actual:</strong> {{ $expedienteSeleccionado->estado }}</div>
                     <div><strong>Observaciones:</strong> {{ $expedienteSeleccionado->observaciones }}</div>
                 </div>
 

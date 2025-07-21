@@ -4,6 +4,7 @@ namespace App\Livewire;
 
 use Livewire\Component;
 use App\Models\Expediente;
+use App\Models\Status;
 
 class VerificacionExpediente extends Component
 {
@@ -12,7 +13,7 @@ class VerificacionExpediente extends Component
 
     public function mount()
     {
-        $this->expedientes = Expediente::all();
+        $this->expedientes = Expediente::with('status')->get();
     }
 
     public function seleccionarExpediente($id)
@@ -23,21 +24,23 @@ class VerificacionExpediente extends Component
     public function validarExpediente()
     {
         if ($this->expedienteSeleccionado) {
-            $this->expedienteSeleccionado->estado = 'Aprobado';
+            $aprobado = Status::where('name', 'Aprobado')->value('id');
+            $this->expedienteSeleccionado->status_id = $aprobado;
             $this->expedienteSeleccionado->fecha_validacion = now();
             $this->expedienteSeleccionado->save();
 
             $this->reset('expedienteSeleccionado');
-            $this->expedientes = Expediente::all();
+            $this->expedientes = Expediente::with('status')->get();
         }
     }
     public function rechazarExpediente(){
         if ($this->expedienteSeleccionado) {
-            $this->expedienteSeleccionado->estado = 'Rechazado';
+            $rechazado = Status::where('name', 'Rechazado')->value('id');
+            $this->expedienteSeleccionado->status_id = $rechazado;
             $this->expedienteSeleccionado->save();
 
             $this->reset('expedienteSeleccionado');
-            $this->expedientes = Expediente::all();
+            $this->expedientes = Expediente::with('status')->get();
         }
     }
 
