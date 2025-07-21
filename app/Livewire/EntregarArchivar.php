@@ -7,6 +7,7 @@ use Livewire\WithFileUploads;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Carbon;
 use App\Models\Status;
+use App\Models\ArchiveRequest;
 
 class EntregarArchivar extends Component
 {
@@ -81,6 +82,10 @@ class EntregarArchivar extends Component
                     'archivo_cargo' => $archivoPath,
                     'updated_at' => now(),
                 ]);
+
+            ArchiveRequest::create([
+                'expediente_id' => $this->expedienteSeleccionado->id,
+            ]);
 
             // Redireccionar para recargar
             return redirect()->route('entregarArchivar')->with('success', 'Expediente archivado correctamente.');

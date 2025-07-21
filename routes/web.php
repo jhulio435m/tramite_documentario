@@ -83,6 +83,9 @@ Route::middleware(['auth', 'verified', 'role:administrador'])->group(function ()
     Route::view('enviar_expediente', 'Administrador.enviar_expediente')
         ->name('enviar.expediente');
 
+    Route::view('bandeja_entrada', 'Administrador.bandeja_entrada')
+        ->name('bandeja.entrada');
+
     Route::get('/carga_documentos', [G1_DocumentosController::class, 'index'])
         ->name('carga.documentos');
 
