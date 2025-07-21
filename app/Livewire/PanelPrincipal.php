@@ -188,6 +188,50 @@ class PanelPrincipal extends Component
         }
     }
 
+
+    public $observaciones = '';
+    public $mostrarObservaciones = false;
+    // Método para calcular días transcurridos
+    public function calcularDiasTranscurridos($fechaInicio)
+    {
+        $fechaInicio = Carbon::parse($fechaInicio)->startOfDay();
+        $fechaActual = Carbon::now()->startOfDay();
+        return $fechaInicio->diffInDays($fechaActual, false);
+    }
+
+
+
+    // Método para obtener estado de plazo
+    public function obtenerEstadoPlazo($fechaInicio)
+    {
+        $dias = $this->calcularDiasTranscurridos($fechaInicio);
+        
+        if ($dias <= 1) {
+            return ['estado' => 'en_plazo', 'color' => 'green', 'texto' => 'En plazo', 'dias' => $dias];
+        } elseif ($dias == 2) {
+            return ['estado' => 'cerca_vencimiento', 'color' => 'yellow', 'texto' => 'Cerca de vencimiento', 'dias' => $dias];
+        } else {
+            return ['estado' => 'vencido', 'color' => 'red', 'texto' => 'Vencido', 'dias' => $dias];
+        }
+    }
+
+    // Método para guardar observaciones
+    public function guardarObservaciones()
+    {
+        if ($this->tramiteSeleccionado && !empty($this->observaciones)) {
+            // Aquí deberías tener un campo 'observaciones' en tu tabla tramites
+            $this->tramiteSeleccionado->observaciones = $this->observaciones;
+            $this->tramiteSeleccionado->save();
+            
+            $this->observaciones = '';
+            $this->mostrarObservaciones = false;
+            
+            session()->flash('success', 'Observaciones guardadas correctamente.');
+        }
+    }
+
+
+
     public function render()
     {
         return view('livewire.panel-principal');

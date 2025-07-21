@@ -108,33 +108,52 @@
             <div class="max-h-96 overflow-y-auto">
                 @if(count($tramitesPendientes) > 0)
                     @foreach($tramitesPendientes as $tramite)
-                        <div wire:click="seleccionarTramite({{ $tramite->id }})" 
-                             class="p-4 border-b border-gray-100 hover:bg-gray-50 cursor-pointer transition-colors duration-150 {{ $tramiteSeleccionado && $tramiteSeleccionado->id == $tramite->id ? 'bg-blue-50 border-l-4 border-l-blue-500' : '' }}">
-                            
-                            <div class="flex justify-between items-start mb-2">
-                                <div class="flex-1">
-                                    <div class="font-semibold text-gray-900">{{ $tramite->documento }}</div>
-                                    <div class="text-gray-500 text-xs">{{ $tramite->codigo }}</div>
-                                </div>
-                                <flux:badge variant="warning" size="sm">
-                                    {{ $tramite->estado }}
-                                </flux:badge>
-                            </div>
-                            
-                            <div class="space-y-1 text-sm">
-                                <div class="flex items-center text-gray-600">
-                                    <flux:icon.user class="w-4 h-4 mr-2" />
-                                    <span class="font-medium">Solicitante:</span>
-                                    <span class="ml-1">{{ $tramite->solicitante }}</span>
-                                </div>
-                                <div class="flex items-center text-gray-600">
-                                    <flux:icon.calendar-days class="w-4 h-4 mr-2" />
-                                    <span class="font-medium">Fecha:</span>
-                                    <span class="ml-1">{{ \Carbon\Carbon::parse($tramite->fecha_inicio)->format('d/m/Y') }}</span>
-                                </div>
-                            </div>
-                        </div>
-                    @endforeach
+    @php
+        $plazoInfo = $this->obtenerEstadoPlazo($tramite->fecha_inicio);
+        $estadoTexto = '';
+        if($plazoInfo['color'] == 'green') {
+            $estadoTexto = 'En plazo';
+        } elseif($plazoInfo['color'] == 'yellow') {
+            $estadoTexto = 'Cerca de vencer';
+        } else {
+            $estadoTexto = 'Vencido';
+        }
+    @endphp
+    <div wire:click="seleccionarTramite({{ $tramite->id }})" 
+         class="p-4 border-b border-gray-100 hover:bg-gray-50 cursor-pointer transition-colors duration-150 {{ $tramiteSeleccionado && $tramiteSeleccionado->id == $tramite->id ? 'bg-blue-50 border-l-4 border-l-blue-500' : '' }}">
+        
+        <div class="flex justify-between items-start mb-2">
+            <div class="flex-1">
+                <div class="font-semibold text-gray-900">{{ $tramite->documento }}</div>
+                <div class="text-gray-500 text-xs">{{ $tramite->codigo }}</div>
+            </div>
+            <div class="flex flex-col gap-1">
+                <flux:badge variant="warning" size="sm">
+                    {{ $tramite->estado }}
+                </flux:badge>
+                <div class="flex items-center gap-2">
+                    <div class="w-5 h-5 rounded-full @if($plazoInfo['color'] == 'green') bg-green-500 @elseif($plazoInfo['color'] == 'yellow') bg-yellow-500 @else bg-red-500 @endif"></div>
+                    <span class="text-xs font-medium @if($plazoInfo['color'] == 'green') text-green-700 @elseif($plazoInfo['color'] == 'yellow') text-yellow-700 @else text-red-700 @endif">
+                        {{ $estadoTexto }}
+                    </span>
+                </div>
+            </div>
+        </div>
+        
+        <div class="space-y-1 text-sm">
+            <div class="flex items-center text-gray-600">
+                <flux:icon.user class="w-4 h-4 mr-2" />
+                <span class="font-medium">Solicitante:</span>
+                <span class="ml-1">{{ $tramite->solicitante }}</span>
+            </div>
+            <div class="flex items-center text-gray-600">
+                <flux:icon.calendar-days class="w-4 h-4 mr-2" />
+                <span class="font-medium">Fecha:</span>
+                <span class="ml-1">{{ \Carbon\Carbon::parse($tramite->fecha_inicio)->format('d/m/Y') }}</span>
+            </div>
+        </div>
+    </div>
+@endforeach
                 @else
                     <div class="p-8 text-center text-gray-500">
                         <flux:icon.folder-open variant="outline" class="w-12 h-12 mx-auto mb-4 text-gray-400" />
@@ -158,6 +177,9 @@
             </div>
             
             @if($tramiteSeleccionado)
+            @php
+                $plazoDetalle = $this->obtenerEstadoPlazo($tramiteSeleccionado->fecha_inicio);
+            @endphp
                 <div class="p-6 space-y-6">
                     {{-- Información básica --}}
                     <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
@@ -187,7 +209,98 @@
                             </div>
                         </div>
                     </div>
+                    <div class="border-2 rounded-lg p-4 
+            @if($plazoDetalle['color'] == 'green') border-green-200 bg-green-50 
+            @elseif($plazoDetalle['color'] == 'yellow') border-yellow-200 bg-yellow-50
+            @elseif($plazoDetalle['color'] == 'red') border-red-200 bg-red-50 
+            @endif">
+            
+            <div class="flex items-center justify-between">
+                <div class="flex items-center gap-3">
+                    @if($plazoDetalle['color'] == 'green')
+                        <flux:icon.check-circle class="w-6 h-6 text-green-600" />
+                    @elseif($plazoDetalle['color'] == 'yellow')
+                        <flux:icon.clock class="w-6 h-6 text-yellow-600" />
+                    @elseif($plazoDetalle['color'] == 'red')
+                        <flux:icon.exclamation-triangle class="w-6 h-6 text-red-600" />
+                    @endif
                     
+                    <div>
+                        <h3 class="font-semibold text-lg 
+                            @if($plazoDetalle['color'] == 'green') text-green-800 
+                            @elseif($plazoDetalle['color'] == 'yellow') text-yellow-800
+                            @elseif($plazoDetalle['color'] == 'red') text-red-800 
+                            @endif">
+                            {{ $plazoDetalle['texto'] }}
+                        </h3>
+                        <p class="text-sm 
+                            @if($plazoDetalle['color'] == 'green') text-green-600 
+                            @elseif($plazoDetalle['color'] == 'yellow') text-yellow-600
+                            @elseif($plazoDetalle['color'] == 'red') text-red-600 
+                            @endif">
+                
+                        </p>
+                    </div>
+                </div>
+                
+                <flux:badge 
+                    variant="{{ $plazoDetalle['color'] == 'green' ? 'success' : ($plazoDetalle['color'] == 'yellow' ? 'warning' : 'danger') }}" 
+                    size="lg">
+                </flux:badge>
+            </div>
+        </div>
+
+        {{-- NUEVA SECCIÓN: Observaciones --}}
+        <div class="border-t pt-6">
+            <div class="flex justify-between items-center mb-4">
+                <h3 class="text-sm font-medium text-gray-700 flex items-center">
+                    <flux:icon.chat-bubble-left-ellipsis class="w-4 h-4 mr-2" />
+                    Observaciones
+                </h3>
+                <flux:button 
+                    variant="outline" 
+                    size="xs" 
+                    wire:click="$set('mostrarObservaciones', {{ !$mostrarObservaciones }})"
+                    icon="{{ $mostrarObservaciones ? 'eye-slash' : 'pencil-square' }}">
+                    {{ $mostrarObservaciones ? 'Cancelar' : 'Agregar Observación' }}
+                </flux:button>
+            </div>
+            
+            {{-- Mostrar observaciones existentes --}}
+            @if($tramiteSeleccionado->observaciones)
+                <div class="bg-gray-50 rounded-lg p-4 mb-4">
+                    <p class="text-sm text-gray-700">{{ $tramiteSeleccionado->observaciones }}</p>
+                </div>
+            @endif
+            
+            {{-- Formulario para nuevas observaciones --}}
+            @if($mostrarObservaciones)
+                <div class="space-y-3">
+                    <textarea 
+                        wire:model="observaciones"
+                        placeholder="Escribe tus observaciones aquí..."
+                        class="w-full px-3 py-2 text-sm border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 resize-none"
+                        rows="4">
+                    </textarea>
+                    
+                    <div class="flex gap-2">
+                        <flux:button 
+                            variant="primary" 
+                            size="sm" 
+                            wire:click="guardarObservaciones"
+                            icon="check">
+                            Guardar Observación
+                        </flux:button>
+                        <flux:button 
+                            variant="outline" 
+                            size="sm" 
+                            wire:click="$set('mostrarObservaciones', false)"
+                            icon="x-mark">
+                            Cancelar
+                        </flux:button>
+                    </div>
+                </div>
+            @endif
                     <div>
                         <label class="block text-sm font-medium text-gray-700 mb-1">Documento</label>
                         <div class="bg-gray-50 rounded-lg p-3 text-sm">
