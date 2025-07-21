@@ -12,6 +12,7 @@ use App\Livewire\RevisarExpedientesFinalizados;
 use App\Livewire\NotificacionesSolicitante;
 use App\Livewire\EntregarArchivar;
 use App\Livewire\PanelSeguimiento;
+use App\Livewire\MisAsignaciones;
 use App\Http\Controllers\G1_DocumentosController;
 use App\Livewire\CentralFileFilter;
 use App\Livewire\DerivarTramite;
@@ -74,27 +75,23 @@ Route::middleware(['auth', 'verified', 'role:administrador'])->group(function ()
         ->name('bandeja.entrada');
 });
 
-Route::view('mis_asignaciones', 'mis_asignaciones')
-    ->middleware(['auth', 'verified'])
-    ->name('mis.asignaciones');
+Route::middleware(['auth', 'verified', 'role:funcionario'])->group(function () {
+    Route::get('mis_asignaciones', MisAsignaciones::class)
+        ->name('mis.asignaciones');
 
-Route::view('panel_principal', 'panel_principal')
-    ->middleware(['auth', 'verified'])
-    ->name('panel.principal');
+    Route::view('panel_principal', 'Funcionario.panel_principal')
+        ->name('panel.principal');
 
-// bandeja salida
-Route::view('bandeja_salida', 'bandeja_salida')
-    ->middleware(['auth', 'verified'])
-    ->name('bandeja.salida');
+    // bandeja salida
+    Route::view('bandeja_salida', 'Funcionario.bandeja_salida')
+        ->name('bandeja.salida');
 
+    Route::view('perfil/editar', 'Funcionario.editar-perfil')
+        ->name('perfil.editar');
 
-Route::view('perfil/editar', 'editar-perfil')
-    ->middleware(['auth', 'verified'])
-    ->name('perfil.editar');
-
-Route::get('tramites/{tramiteId}/derivar', DerivarTramite::class)
-    ->middleware(['auth', 'verified'])
-    ->name('derivar.tramite');
+    Route::get('tramites/{tramiteId}/derivar', DerivarTramite::class)
+        ->name('derivar.tramite');
+});
 
 
 Route::middleware(['auth'])->group(function () {

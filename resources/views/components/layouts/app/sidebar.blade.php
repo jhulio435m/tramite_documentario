@@ -37,12 +37,14 @@
                         <flux:navlist.item icon="arrow-right-circle" :href="route('tramite.proceso')" :current="request()->routeIs('tramite.proceso')" wire:navigate>{{ __('Trámite en Proceso') }}</flux:navlist.item>
                         <flux:navlist.item icon="document-check" :href="route('tramite.finalizado')" :current="request()->routeIs('tramite.finalizado')" wire:navigate>{{ __('Trámite Finalizado') }}</flux:navlist.item>
                     @endif
-                <flux:navlist.group class="grid">
-                    <flux:navlist.item icon="home" :href="route('dashboard')" :current="request()->routeIs('dashboard')" wire:navigate>{{ __('Dashboard no usar') }}</flux:navlist.item>
-                    <flux:navlist.item icon="home" :href="route('panel.principal')" :current="request()->routeIs('panel.principal')" wire:navigate>{{ __('Panel principal') }}</flux:navlist.item>
-                    <!--<flux:navlist.item icon="document" :href="route('mis.asignaciones')" :current="request()->routeIs('mis.asignaciones')" wire:navigate>{{ __('Mis asignaciones') }}</flux:navlist.item>-->
-                    <flux:navlist.item icon="paper-airplane" :href="route('bandeja.salida')" :current="request()->routeIs('bandeja.salida')" wire:navigate>Bandeja de Salida</flux:navlist.item>
-                </flux:navlist.group>
+                @if ($role === 'funcionario')
+                    <flux:navlist.group class="grid">
+                        <flux:navlist.item icon="home" :href="route('dashboard')" :current="request()->routeIs('dashboard')" wire:navigate>{{ __('Dashboard no usar') }}</flux:navlist.item>
+                        <flux:navlist.item icon="home" :href="route('panel.principal')" :current="request()->routeIs('panel.principal')" wire:navigate>{{ __('Panel principal') }}</flux:navlist.item>
+                        <!--<flux:navlist.item icon="document" :href="route('mis.asignaciones')" :current="request()->routeIs('mis.asignaciones')" wire:navigate>{{ __('Mis asignaciones') }}</flux:navlist.item>-->
+                        <flux:navlist.item icon="paper-airplane" :href="route('bandeja.salida')" :current="request()->routeIs('bandeja.salida')" wire:navigate>Bandeja de Salida</flux:navlist.item>
+                    </flux:navlist.group>
+                @endif
             </flux:navlist>
 
             <flux:spacer />
