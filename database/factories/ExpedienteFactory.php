@@ -13,7 +13,7 @@ use Illuminate\Support\Str;
 /**
  * @extends Factory<\App\Models\Expediente>
  */
-class ExpedientesFactory extends Factory
+class ExpedienteFactory extends Factory
 {
     protected $model = Expediente::class;
 
