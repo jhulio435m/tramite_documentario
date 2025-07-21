@@ -14,6 +14,8 @@ use App\Livewire\EntregarArchivar;
 use App\Livewire\PanelSeguimiento;
 use App\Http\Controllers\G1_DocumentosController;
 use App\Livewire\CentralFileFilter;
+use App\Livewire\DerivarTramite;
+
 
 Route::get('/', function () {
     return view('welcome');
@@ -71,6 +73,28 @@ Route::middleware(['auth', 'verified', 'role:administrador'])->group(function ()
     Route::view('bandeja_entrada', 'Administrador.bandeja_entrada')
         ->name('bandeja.entrada');
 });
+
+Route::view('mis_asignaciones', 'mis_asignaciones')
+    ->middleware(['auth', 'verified'])
+    ->name('mis.asignaciones');
+
+Route::view('panel_principal', 'panel_principal')
+    ->middleware(['auth', 'verified'])
+    ->name('panel.principal');
+
+// bandeja salida
+Route::view('bandeja_salida', 'bandeja_salida')
+    ->middleware(['auth', 'verified'])
+    ->name('bandeja.salida');
+
+
+Route::view('perfil/editar', 'editar-perfil')
+    ->middleware(['auth', 'verified'])
+    ->name('perfil.editar');
+
+Route::get('tramites/{tramiteId}/derivar', DerivarTramite::class)
+    ->middleware(['auth', 'verified'])
+    ->name('derivar.tramite');
 
 
 Route::middleware(['auth'])->group(function () {
