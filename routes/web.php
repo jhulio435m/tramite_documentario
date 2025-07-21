@@ -67,30 +67,9 @@ Route::middleware(['auth', 'verified', 'role:administrador'])->group(function ()
 
     Route::view('tramite_finalizado', 'Administrador.tramite_finalizado')
         ->name('tramite.finalizado');
-
-    Route::view('carga_documentos', 'Administrador.carga_documentos')
-        ->name('carga.documentos');
-
-    Route::view('registro_expediente', 'Administrador.registro_expediente')
-        ->name('registro.expediente');
-
-    Route::view('solicitudes_pendientes', 'Administrador.solicitudes_pendientes')
-        ->name('solicitudes.pendientes');
-
-    Route::view('formulario_solicitudes', 'Administrador.formulario_solicitudes')
-        ->name('formulario.solicitudes');
-
-    Route::view('enviar_expediente', 'Administrador.enviar_expediente')
-        ->name('enviar.expediente');
-
+        
     Route::view('bandeja_entrada', 'Administrador.bandeja_entrada')
         ->name('bandeja.entrada');
-
-    Route::get('/carga_documentos', [G1_DocumentosController::class, 'index'])
-        ->name('carga.documentos');
-
-    Route::post('/carga_documentos/subir', [G1_DocumentosController::class, 'subir'])
-        ->name('documentos.subir');
 });
 
 
