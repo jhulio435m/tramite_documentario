@@ -4,9 +4,7 @@ namespace App\Livewire;
 
 use Livewire\Component;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Validator;
-use Livewire\Attributes\On;
-use Illuminate\Validation\Rule;
+use Illuminate\Support\Facades\DB;
 
 class EditarPerfil extends Component
 {
@@ -42,14 +40,23 @@ class EditarPerfil extends Component
         ]);
 
         $user = Auth::user();
-        $user->email = $validated['email'];
-        $user->cargo = $validated['cargo'];
-        $user->dependencia = $validated['dependencia'];
-        $user->save();
+        $correoAnterior = $user->email; // Guardar correo anterior antes de actualizarlo
+
+        DB::transaction(function () use ($user, $validated, $correoAnterior) {
+            // Actualizar tabla users
+            $user->email = $validated['email'];
+            $user->cargo = $validated['cargo'];
+            $user->dependencia = $validated['dependencia'];
+            $user->save();
+
+            // Actualizar columna funcionario_destinatario en tabla tramites
+            DB::table('tramites')
+                ->where('funcionario_destinatario', $correoAnterior)
+                ->update(['funcionario_destinatario' => $validated['email']]);
+        });
 
         $this->showSuccess = true;
     }
-
 
     public function render()
     {

@@ -1,4 +1,7 @@
 <div class="space-y-6">
+    <div class="flex justify-end p-4 bg-white shadow mb-4">
+        @livewire('notificaciones')
+    </div>
 
     {{-- Mensaje de éxito --}}
     @if (session()->has('success'))
@@ -342,7 +345,7 @@
                         
                         @if($tramiteSeleccionado->estado === 'Pendiente')
                             <div class="grid grid-cols-1 md:grid-cols-2 gap-3">
-                                <flux:button 
+                                <!--<flux:button 
                                     variant="primary" 
                                     size="sm" 
                                     icon="hand-raised"
@@ -350,7 +353,7 @@
                                     wire:confirm="¿Marcar este trámite como atendido?"
                                     class="w-full">
                                     Marcar Atendido
-                                </flux:button>
+                                </flux:button>-->
 
                                 <flux:button 
                                     variant="outline" 
@@ -362,7 +365,7 @@
                                     Derivar
                                 </flux:button>
 
-                                <flux:button 
+                                <!--<flux:button 
                                     variant="outline" 
                                     size="sm" 
                                     icon="check"
@@ -370,7 +373,7 @@
                                     wire:confirm="¿Aprobar este trámite?"
                                     class="w-full text-green-600 border-green-300 hover:bg-green-50">
                                     Aprobar Directamente
-                                </flux:button>
+                                </flux:button>-->
 
                                 <flux:button 
                                     variant="outline" 
@@ -379,7 +382,7 @@
                                     wire:click="finalizar({{ $tramiteSeleccionado->id }})" 
                                     wire:confirm="¿Finalizar este trámite?"
                                     class="w-full text-indigo-600 border-indigo-300 hover:bg-indigo-50">
-                                    Finalizar
+                                    Tramite atendido
                                 </flux:button>
                             </div>
 

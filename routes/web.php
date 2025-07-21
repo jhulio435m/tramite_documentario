@@ -2,6 +2,8 @@
 
 use Illuminate\Support\Facades\Route;
 use Livewire\Volt\Volt;
+use App\Livewire\DerivarTramite;
+
 
 Route::get('/', function () {
     return view('welcome');
@@ -22,6 +24,10 @@ Route::view('panel_principal', 'panel_principal')
 Route::view('perfil/editar', 'editar-perfil')
     ->middleware(['auth', 'verified'])
     ->name('perfil.editar');
+
+Route::get('tramites/{tramiteId}/derivar', DerivarTramite::class)
+    ->middleware(['auth', 'verified'])
+    ->name('derivar.tramite');
 
 
 Route::middleware(['auth'])->group(function () {

@@ -4,6 +4,8 @@ namespace App\Livewire;
 
 use Livewire\Component;
 use App\Models\Tramite;
+use App\Models\Notificacion;
+use App\Models\User;
 use Illuminate\Support\Facades\Auth;
 use Carbon\Carbon;
 
@@ -16,9 +18,11 @@ class PanelPrincipal extends Component
     public $completados = 0;
     public $derivados = 0;
 
-    // Propiedades para filtros de fecha
     public $fechaDesde = null;
     public $fechaHasta = null;
+
+    public $observaciones = '';
+    public $mostrarObservaciones = false;
 
     public function mount()
     {
@@ -29,11 +33,9 @@ class PanelPrincipal extends Component
     {
         $usuarioActual = Auth::user();
         
-        // Query base para trámites del usuario
         $queryPendientes = Tramite::where('estado', 'Pendiente')
                                  ->where('funcionario_destinatario', $usuarioActual->email);
 
-        // Aplicar filtros de fecha si están presentes
         if ($this->fechaDesde) {
             $queryPendientes->whereDate('fecha_inicio', '>=', $this->fechaDesde);
         }
@@ -44,12 +46,10 @@ class PanelPrincipal extends Component
 
         $this->tramitesPendientes = $queryPendientes->orderBy('created_at', 'desc')->get();
 
-        // Si hay trámites pendientes y no hay uno seleccionado, seleccionar el primero
         if ($this->tramitesPendientes->isNotEmpty() && !$this->tramiteSeleccionado) {
             $this->tramiteSeleccionado = $this->tramitesPendientes->first();
         }
 
-        // Estadísticas (sin filtros de fecha para mantener vista general)
         $this->pendientes = Tramite::where('estado', 'Pendiente')
                                 ->where('funcionario_destinatario', $usuarioActual->email)
                                 ->count();
@@ -67,18 +67,15 @@ class PanelPrincipal extends Component
                                 ->count();
     }
 
-    // Método para aplicar filtros
     public function aplicarFiltros()
     {
         $this->cargarDatos();
         
-        // Limpiar selección si el trámite seleccionado ya no está en los resultados
         if ($this->tramiteSeleccionado && !$this->tramitesPendientes->contains('id', $this->tramiteSeleccionado->id)) {
             $this->tramiteSeleccionado = $this->tramitesPendientes->first();
         }
     }
 
-    // Método para limpiar filtros
     public function limpiarFiltros()
     {
         $this->fechaDesde = null;
@@ -86,7 +83,6 @@ class PanelPrincipal extends Component
         $this->cargarDatos();
     }
 
-    // Watcher para actualizar automáticamente cuando cambien las fechas
     public function updatedFechaDesde()
     {
         $this->aplicarFiltros();
@@ -111,15 +107,39 @@ class PanelPrincipal extends Component
     public function marcarAtendido($tramiteId)
     {
         $tramite = Tramite::where('id', $tramiteId)
-                      ->where('funcionario_destinatario', Auth::user()->email)
-                      ->first();
-        
+            ->where('funcionario_destinatario', Auth::user()->email)
+            ->first();
+
         if ($tramite) {
             $tramite->estado = 'Atendido';
             $tramite->save();
 
+            Notificacion::create([
+                'user_id' => Auth::id(),
+                'titulo' => 'Trámite marcado como Atendido',
+                'mensaje' => "Usted ha marcado como atendido el trámite #{$tramite->id} (tipo: {$tramite->documento}).",
+                'visto' => false,
+            ]);
+
+            $solicitanteUser = User::where('email', $tramite->solicitante)->first();
+
+            if ($solicitanteUser && $solicitanteUser->id !== Auth::id()) {
+                Notificacion::create([
+                    'user_id' => $solicitanteUser->id,
+                    'titulo' => 'Actualización de trámite',
+                    'mensaje' => "Tu trámite #{$tramite->id} ha sido marcado como 'Atendido' por " . Auth::user()->name . ".",
+                    'visto' => false,
+                ]);
+            }
+
+            if (method_exists($this, 'dispatch')) {
+                $this->dispatch('notificacionCreada');
+            } else {
+                $this->emit('notificacionCreada');
+            }
+
             $this->cargarDatos();
-            
+
             if ($this->tramiteSeleccionado && $this->tramiteSeleccionado->id == $tramiteId) {
                 $this->tramiteSeleccionado = $this->tramitesPendientes->first();
             }
@@ -170,28 +190,10 @@ class PanelPrincipal extends Component
 
     public function derivar($tramiteId)
     {
-        $tramite = Tramite::where('id', $tramiteId)
-                          ->where('funcionario_destinatario', Auth::user()->email)
-                          ->first();
-        
-        if ($tramite) {
-            $tramite->estado = 'Derivado';
-            $tramite->save();
-
-            $this->cargarDatos();
-            
-            if ($this->tramiteSeleccionado && $this->tramiteSeleccionado->id == $tramiteId) {
-                $this->tramiteSeleccionado = $this->tramitesPendientes->first();
-            }
-
-            session()->flash('success', 'El trámite se ha derivado correctamente.');
-        }
+        // ✅ Redirección Livewire al formulario de derivación
+        return $this->redirect(route('derivar.tramite', $tramiteId));
     }
 
-
-    public $observaciones = '';
-    public $mostrarObservaciones = false;
-    // Método para calcular días transcurridos
     public function calcularDiasTranscurridos($fechaInicio)
     {
         $fechaInicio = Carbon::parse($fechaInicio)->startOfDay();
@@ -199,9 +201,6 @@ class PanelPrincipal extends Component
         return $fechaInicio->diffInDays($fechaActual, false);
     }
 
-
-
-    // Método para obtener estado de plazo
     public function obtenerEstadoPlazo($fechaInicio)
     {
         $dias = $this->calcularDiasTranscurridos($fechaInicio);
@@ -215,11 +214,9 @@ class PanelPrincipal extends Component
         }
     }
 
-    // Método para guardar observaciones
     public function guardarObservaciones()
     {
         if ($this->tramiteSeleccionado && !empty($this->observaciones)) {
-            // Aquí deberías tener un campo 'observaciones' en tu tabla tramites
             $this->tramiteSeleccionado->observaciones = $this->observaciones;
             $this->tramiteSeleccionado->save();
             
@@ -229,8 +226,6 @@ class PanelPrincipal extends Component
             session()->flash('success', 'Observaciones guardadas correctamente.');
         }
     }
-
-
 
     public function render()
     {
