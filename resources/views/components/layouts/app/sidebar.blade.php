@@ -20,6 +20,7 @@
                     <flux:navlist.item icon="document" :href="route('cambio_titulo_asesor')" :current="request()->routeIs('cambio_titulo_asesor')" wire:navigate>{{ __('Cambio de Título o Asesor') }}</flux:navlist.item>
                     <flux:navlist.item icon="document" :href="route('otros_tramites')" :current="request()->routeIs('otros_tramites')" wire:navigate>{{ __('Otros Trámites') }}</flux:navlist.item>
                     <flux:navlist.item icon="document" :href="route('tramites.index')" :current="request()->routeIs('tramites.*')" wire:navigate>{{ __('Trámites') }}</flux:navlist.item>
+                    <flux:navlist.item icon="document" :href="route('historial.tramites')" :current="request()->routeIs('historial.tramites')" wire:navigate>{{ __('Historial tramites') }}</flux:navlist.item>
                 </flux:navlist.group>
             </flux:navlist>
 

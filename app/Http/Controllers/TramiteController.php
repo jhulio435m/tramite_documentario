@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Http\Controllers;
+use App\Http\Controllers\TramiteController;
 
 use App\Models\TramiteSolicitud;
 use App\Models\TramiteArchivoSolicitud;

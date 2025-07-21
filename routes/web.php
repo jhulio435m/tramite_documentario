@@ -15,6 +15,8 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::view('ampliacion_plazo', 'ampliacion_plazo')->name('ampliacion_plazo');
     Route::view('cambio_titulo_asesor', 'cambio_titulo_asesor')->name('cambio_titulo_asesor');
     Route::view('otros_tramites', 'otros_tramites')->name('otros_tramites');
+    Route::view('historial_tramites', 'historial_tramites')->name('historial.tramites');
+    Route::view('detalle_tramite', 'detalle_tramite')->name('detalle.tramite');
 });
 
 
@@ -25,6 +27,7 @@ Route::middleware(['auth'])->group(function () {
     Volt::route('settings/password', 'settings.password')->name('settings.password');
     Volt::route('settings/appearance', 'settings.appearance')->name('settings.appearance');
 });
+
 
 require __DIR__.'/auth.php';
 
