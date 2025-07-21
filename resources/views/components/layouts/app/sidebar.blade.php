@@ -32,6 +32,7 @@
 
                     @if ($role === 'administrador')
                         <flux:navlist.item icon="document-magnifying-glass" :href="route('archivo.central')" :current="request()->routeIs('archivo.central')" wire:navigate>{{ __('Archivo Central') }}</flux:navlist.item>
+                        <flux:navlist.item icon="inbox" :href="route('bandeja.entrada')" :current="request()->routeIs('bandeja.entrada')" wire:navigate>{{ __('Bandeja de Entrada') }}</flux:navlist.item>
                         <flux:navlist.item icon="clock" :href="route('tramite.pendiente')" :current="request()->routeIs('tramite.pendiente')" wire:navigate>{{ __('Trámite Pendiente') }}</flux:navlist.item>
                         <flux:navlist.item icon="arrow-right-circle" :href="route('tramite.proceso')" :current="request()->routeIs('tramite.proceso')" wire:navigate>{{ __('Trámite en Proceso') }}</flux:navlist.item>
                         <flux:navlist.item icon="document-check" :href="route('tramite.finalizado')" :current="request()->routeIs('tramite.finalizado')" wire:navigate>{{ __('Trámite Finalizado') }}</flux:navlist.item>
