@@ -14,26 +14,33 @@
 
             <flux:navlist variant="outline">
                 <flux:navlist.group :heading="__('Platform')" class="grid">
+                    @php($role = auth()->user()->role->name ?? '')
                     <flux:navlist.item icon="home" :href="route('dashboard')" :current="request()->routeIs('dashboard')" wire:navigate>{{ __('Dashboard') }}</flux:navlist.item>
-                    <flux:navlist.item icon="check-circle" :href="route('verificacionExpediente')" :current="request()->routeIs('verificacionExpediente')" wire:navigate>{{ __('Verificación de expediente') }}</flux:navlist.item>
-                    <flux:navlist.item icon="check-circle" :href="route('registroObservaciones')" :current="request()->routeIs('registroObservaciones')" wire:navigate>{{ __('Registro de observaciones') }}</flux:navlist.item>
-                    <flux:navlist.item icon="check-circle" :href="route('remisionExpediente')" :current="request()->routeIs('remisionExpediente')" wire:navigate>{{ __('Remision de Expediente') }}</flux:navlist.item>
-                    <flux:navlist.item icon="check-circle" :href="route('registroEnvioAutomatico')" :current="request()->routeIs('registroEnvioAutomatico')" wire:navigate>{{ __('Registro de Envio Automatico') }}</flux:navlist.item>
-                    <flux:navlist.item icon="check-circle" :href="route('formularioFlujo')" :current="request()->routeIs('formularioFlujo')" wire:navigate>{{ __('Formulario para Flujo') }}</flux:navlist.item>
-                    <flux:navlist.item icon="check-circle" :href="route('canalizarEnvio')" :current="request()->routeIs('canalizarEnvio')" wire:navigate>{{ __('Canalizar Expediente') }}</flux:navlist.item>
-                    <flux:navlist.item icon="check-circle" :href="route('revisarExpedientesFinalizados')" :current="request()->routeIs('revisarExpedientesFinalizados')" wire:navigate>{{ __('Expedientes Finalizados') }}</flux:navlist.item>
-                    <flux:navlist.item icon="check-circle" :href="route('notificacionesSolicitante')" :current="request()->routeIs('notificacionesSolicitante')" wire:navigate>{{ __('Notificaciones Solicitante') }}</flux:navlist.item>
-                    <flux:navlist.item icon="check-circle" :href="route('entregarArchivar')" :current="request()->routeIs('entregarArchivar')" wire:navigate>{{ __('Entrega y Archivado') }}</flux:navlist.item>
-                    <flux:navlist.item icon="check-circle" :href="route('panelSeguimiento')" :current="request()->routeIs('panelSeguimiento')" wire:navigate>{{ __('Panel de Seguimiento') }}</flux:navlist.item>
-                    <flux:navlist.item icon="document-magnifying-glass" :href="route('archivo.central')" :current="request()->routeIs('archivo.central')" wire:navigate>{{ __('Archivo Central') }}</flux:navlist.item>
-                    <flux:navlist.item icon="clock" :href="route('tramite.pendiente')" :current="request()->routeIs('tramite.pendiente')" wire:navigate>{{ __('Trámite Pendiente') }}</flux:navlist.item>
-                    <flux:navlist.item icon="arrow-right-circle" :href="route('tramite.proceso')" :current="request()->routeIs('tramite.proceso')" wire:navigate>{{ __('Trámite en Proceso') }}</flux:navlist.item>
-                    <flux:navlist.item icon="document-check" :href="route('tramite.finalizado')" :current="request()->routeIs('tramite.finalizado')" wire:navigate>{{ __('Trámite Finalizado') }}</flux:navlist.item>
-                    <flux:navlist.item icon="document-plus" :href="route('carga.documentos')" :current="request()->routeIs('carga.documentos')" wire:navigate>{{ __('Cargar Documentos') }}</flux:navlist.item>
-                    <flux:navlist.item icon="document-text" :href="route('registro.expediente')" :current="request()->routeIs('registro.expediente')" wire:navigate>{{ __('Registro Expediente') }}</flux:navlist.item>
-                    <flux:navlist.item icon="document-duplicate" :href="route('solicitudes.pendientes')" :current="request()->routeIs('solicitudes.pendientes')" wire:navigate>{{ __('Solicitudes Pendientes') }}</flux:navlist.item>
-                    <flux:navlist.item icon="arrow-up-circle" :href="route('formulario.solicitudes')" :current="request()->routeIs('formulario.solicitudes')" wire:navigate>{{ __('Formulario Solicitudes') }}</flux:navlist.item>
-                    <flux:navlist.item icon="document-check" :href="route('enviar.expediente')" :current="request()->routeIs('enviar.expediente')" wire:navigate>{{ __('Enviar expediente aprobado') }}</flux:navlist.item>
+
+                    @if ($role === 'operador')
+                        <flux:navlist.item icon="check-circle" :href="route('verificacionExpediente')" :current="request()->routeIs('verificacionExpediente')" wire:navigate>{{ __('Verificación de expediente') }}</flux:navlist.item>
+                        <flux:navlist.item icon="check-circle" :href="route('registroObservaciones')" :current="request()->routeIs('registroObservaciones')" wire:navigate>{{ __('Registro de observaciones') }}</flux:navlist.item>
+                        <flux:navlist.item icon="check-circle" :href="route('remisionExpediente')" :current="request()->routeIs('remisionExpediente')" wire:navigate>{{ __('Remision de Expediente') }}</flux:navlist.item>
+                        <flux:navlist.item icon="check-circle" :href="route('registroEnvioAutomatico')" :current="request()->routeIs('registroEnvioAutomatico')" wire:navigate>{{ __('Registro de Envio Automatico') }}</flux:navlist.item>
+                        <flux:navlist.item icon="check-circle" :href="route('formularioFlujo')" :current="request()->routeIs('formularioFlujo')" wire:navigate>{{ __('Formulario para Flujo') }}</flux:navlist.item>
+                        <flux:navlist.item icon="check-circle" :href="route('canalizarEnvio')" :current="request()->routeIs('canalizarEnvio')" wire:navigate>{{ __('Canalizar Expediente') }}</flux:navlist.item>
+                        <flux:navlist.item icon="check-circle" :href="route('revisarExpedientesFinalizados')" :current="request()->routeIs('revisarExpedientesFinalizados')" wire:navigate>{{ __('Expedientes Finalizados') }}</flux:navlist.item>
+                        <flux:navlist.item icon="check-circle" :href="route('notificacionesSolicitante')" :current="request()->routeIs('notificacionesSolicitante')" wire:navigate>{{ __('Notificaciones Solicitante') }}</flux:navlist.item>
+                        <flux:navlist.item icon="check-circle" :href="route('entregarArchivar')" :current="request()->routeIs('entregarArchivar')" wire:navigate>{{ __('Entrega y Archivado') }}</flux:navlist.item>
+                        <flux:navlist.item icon="check-circle" :href="route('panelSeguimiento')" :current="request()->routeIs('panelSeguimiento')" wire:navigate>{{ __('Panel de Seguimiento') }}</flux:navlist.item>
+                    @endif
+
+                    @if ($role === 'administrador')
+                        <flux:navlist.item icon="document-magnifying-glass" :href="route('archivo.central')" :current="request()->routeIs('archivo.central')" wire:navigate>{{ __('Archivo Central') }}</flux:navlist.item>
+                        <flux:navlist.item icon="clock" :href="route('tramite.pendiente')" :current="request()->routeIs('tramite.pendiente')" wire:navigate>{{ __('Trámite Pendiente') }}</flux:navlist.item>
+                        <flux:navlist.item icon="arrow-right-circle" :href="route('tramite.proceso')" :current="request()->routeIs('tramite.proceso')" wire:navigate>{{ __('Trámite en Proceso') }}</flux:navlist.item>
+                        <flux:navlist.item icon="document-check" :href="route('tramite.finalizado')" :current="request()->routeIs('tramite.finalizado')" wire:navigate>{{ __('Trámite Finalizado') }}</flux:navlist.item>
+                        <flux:navlist.item icon="document-plus" :href="route('carga.documentos')" :current="request()->routeIs('carga.documentos')" wire:navigate>{{ __('Cargar Documentos') }}</flux:navlist.item>
+                        <flux:navlist.item icon="document-text" :href="route('registro.expediente')" :current="request()->routeIs('registro.expediente')" wire:navigate>{{ __('Registro Expediente') }}</flux:navlist.item>
+                        <flux:navlist.item icon="document-duplicate" :href="route('solicitudes.pendientes')" :current="request()->routeIs('solicitudes.pendientes')" wire:navigate>{{ __('Solicitudes Pendientes') }}</flux:navlist.item>
+                        <flux:navlist.item icon="arrow-up-circle" :href="route('formulario.solicitudes')" :current="request()->routeIs('formulario.solicitudes')" wire:navigate>{{ __('Formulario Solicitudes') }}</flux:navlist.item>
+                        <flux:navlist.item icon="document-check" :href="route('enviar.expediente')" :current="request()->routeIs('enviar.expediente')" wire:navigate>{{ __('Enviar expediente aprobado') }}</flux:navlist.item>
+                    @endif
                 </flux:navlist.group>
             </flux:navlist>
 
