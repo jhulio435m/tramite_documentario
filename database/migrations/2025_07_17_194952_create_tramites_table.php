@@ -19,11 +19,6 @@ return new class extends Migration
             $table->date('fecha_inicio');
             $table->string('estado')->default('Pendiente');
             $table->timestamps();
-            $table->text('descripcion');
-            $table->text('observaciones')->nullable();
-            $table->text('resultado')->nullable();
-            $table->string('archivo_adjunto')->nullable();
-            $table->string('user_id')->nullable();
             $table->string('funcionario_destinatario')->nullable();
         });
     }
