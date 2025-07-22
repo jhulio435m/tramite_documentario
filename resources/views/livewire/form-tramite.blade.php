@@ -5,6 +5,7 @@
         <div class="mb-4 text-sm">
             <p><strong>Duración:</strong> {{ $detalles->duracion }} días</p>
             <p><strong>Área de inicio:</strong> {{ $detalles->area_inicio }}</p>
+            <p><strong>Dependencia:</strong> Sin asignar</p>
         </div>
     @endif
 
@@ -27,8 +28,7 @@
         <h2 class="font-bold text-sm mb-2">Archivos</h2>
         @foreach($requisitos as $index => $req)
             <div class="mb-2">
-                <label class="block text-xs mb-1">{{ $req }}</label>
-                <input type="file" wire:model="archivos.{{ $index }}" class="w-full border rounded p-1 text-xs" />
+                <flux:input type="file" wire:model="logo" label="{{ $req }}"/>
                 @error("archivos.$index")<span class="text-red-600 text-xs">{{ $message }}</span>@enderror
             </div>
         @endforeach
