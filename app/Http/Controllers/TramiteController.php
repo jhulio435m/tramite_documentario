@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Http\Controllers;
+use App\Http\Controllers\TramiteController;
 
 use App\Models\TramiteSolicitud;
 use App\Models\TramiteArchivoSolicitud;
@@ -162,6 +163,6 @@ class TramiteController extends Controller
             }
         }
 
-        return redirect()->route('tramites.lista')->with('success', 'Solicitud enviada correctamente.');
+        return redirect()->route('tramites.index')->with('success', 'Solicitud enviada correctamente.');
     }
 }

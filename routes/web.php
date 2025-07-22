@@ -27,66 +27,15 @@ Route::view('dashboard', 'dashboard')
     ->name('dashboard');
 
 // Ruta principal de trámites
-Route::view('/tramites', 'tramites_lista')
+Route::view('tramites_lista', 'tramites_lista')
     ->middleware(['auth', 'verified'])
-    ->name('tramites_lista');
+    ->name('tramites.lista');
 
-// Rutas específicas para cada trámite
-Route::view('/tramites/constancia-expedito-profesional', 'constancia_expedito_profesional')
-    ->middleware(['auth', 'verified'])
-    ->name('constancia_expedito_profesional');
+use App\Livewire\FormTramite;
 
-Route::view('/tramites/constancia-expedito-bachiller', 'constancia_expedito_bachiller')
+Route::get('form-tramite/{tramite}', FormTramite::class)
     ->middleware(['auth', 'verified'])
-    ->name('constancia_expedito_bachiller');
-
-Route::view('/tramites/constancia-practicas-preprofesionales', 'constancia_practicas_preprofesionales')
-    ->middleware(['auth', 'verified'])
-    ->name('constancia_practicas_preprofesionales');
-
-Route::view('/tramites/constancia-plan-tesis', 'constancia_plan_tesis')
-    ->middleware(['auth', 'verified'])
-    ->name('constancia_plan_tesis');
-
-Route::view('/tramites/constancia-egresado', 'constancia_egresado')
-    ->middleware(['auth', 'verified'])
-    ->name('constancia_egresado');
-
-Route::view('/tramites/certificado-estudios-pregrado', 'certificado_estudios_pregrado')
-    ->middleware(['auth', 'verified'])
-    ->name('certificado_estudios_pregrado');
-
-Route::view('/tramites/certificado-practicas', 'certificado_practicas')
-    ->middleware(['auth', 'verified'])
-    ->name('certificado_practicas');
-
-Route::view('/tramites/constancia-record-academico', 'constancia_record_academico')
-    ->middleware(['auth', 'verified'])
-    ->name('constancia_record_academico');
-
-Route::view('/tramites/constancia-orden-merito', 'constancia_orden_merito')
-    ->middleware(['auth', 'verified'])
-    ->name('constancia_orden_merito');
-
-Route::view('/tramites/cambio-titulo-asesor', 'cambio_titulo_asesor')
-    ->middleware(['auth', 'verified'])
-    ->name('cambio_titulo_asesor');
-
-Route::view('/tramites/ampliacion-plazo-tesis', 'ampliacion_plazo_tesis')
-    ->middleware(['auth', 'verified'])
-    ->name('ampliacion_plazo_tesis');
-
-Route::view('/tramites/otorgar-titulo-profesional', 'otorgar_titulo_profesional')
-    ->middleware(['auth', 'verified'])
-    ->name('otorgar_titulo_profesional');
-
-Route::view('/tramites/otorgar-grado-academico', 'otorgar_grado_academico')
-    ->middleware(['auth', 'verified'])
-    ->name('otorgar_grado_academico');
-
-Route::view('/tramites/otros-tramites', 'otros_tramites')
-    ->middleware(['auth', 'verified'])
-    ->name('otros_tramites');
+    ->name('form.tramite');
 
 Route::middleware(['auth', 'verified', 'role:operador'])->group(function () {
     Route::get('/verificacion-expediente', VerificacionExpediente::class)
@@ -178,10 +127,10 @@ Route::middleware(['auth'])->group(function () {
     Volt::route('settings/appearance', 'settings.appearance')->name('settings.appearance');
 });
 
+
 require __DIR__.'/auth.php';
 
-//Tramites 
-use App\Http\Controllers\TramiteController;
+// Tramites
 
 Route::get('/tramites', [TramiteController::class, 'listaTramites'])->name('tramites.index');
 Route::get('/tramites/{id}', [TramiteController::class, 'show'])->name('tramites.show');
