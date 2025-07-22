@@ -26,6 +26,10 @@ Route::view('dashboard', 'dashboard')
     ->middleware(['auth', 'verified'])
     ->name('dashboard');
 
+Route::view('soporte', 'soporte')
+    ->middleware(['auth', 'verified'])
+    ->name('soporte');
+
 // Ruta principal de trámites
 Route::view('tramites_lista', 'tramites_lista')
     ->middleware(['auth', 'verified'])
