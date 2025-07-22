@@ -26,6 +26,10 @@ Route::view('dashboard', 'dashboard')
     ->middleware(['auth', 'verified'])
     ->name('dashboard');
 
+Route::view('soporte', 'soporte')
+    ->middleware(['auth', 'verified'])
+    ->name('soporte');
+
 Route::middleware(['auth', 'verified', 'role:operador'])->group(function () {
     Route::get('/verificacion-expediente', VerificacionExpediente::class)
         ->name('verificacionExpediente');
