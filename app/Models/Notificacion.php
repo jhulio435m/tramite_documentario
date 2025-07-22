@@ -9,8 +9,10 @@ class Notificacion extends Model
 {
     use HasFactory;
 
+
     protected $fillable = [
         'tramite_id',
+        'numero_expediente',
         'fecha_solicitud',
         'documento',
         'tipo',
@@ -19,6 +21,19 @@ class Notificacion extends Model
         'destinatario_contacto',
         'funcionario',
         'estado',
+        'mensaje',
+        'archivo',
+        'estado_entrega',
+        'fecha_entrega',
+        'receptor',
+        'observaciones',
+        'fecha_archivo',
+        'archivado_por',
+    ];
+
+    protected $casts = [
+        'fecha_solicitud' => 'datetime',
+        'fecha_entrega'   => 'datetime',
+        'fecha_archivo'   => 'datetime',
     ];
 }
-

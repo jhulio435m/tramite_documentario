@@ -11,7 +11,7 @@ class NotificacionController extends Controller
     public function entregaLista()
     {
         $notificaciones = Notificacion::where('estado', 'Lista para entrega')->get();
-        return view('notificaciones.mesadepartes-entrega-lista', compact('notificaciones'));
+        return view('mesadepartes-entrega-lista', compact('notificaciones'));
     }
     // HU01: Guardar una solicitud de notificación
     public function store(Request $request)
@@ -41,13 +41,13 @@ class NotificacionController extends Controller
         $pendientes = Notificacion::where('estado', 'Pendiente')->get();
         $finalizadas = Notificacion::where('estado', 'Finalizado')->get();
 
-        return view('notificaciones.mesadepartes-bandeja', compact('pendientes', 'finalizadas'));
+        return view('mesadepartes-bandeja', compact('pendientes', 'finalizadas'));
     }
 
     public function elaborar($id)
     {
         $notificacion = Notificacion::findOrFail($id); // Busca por ID o lanza error 404
-        return view('notificaciones.mesadepartes-elaboracion', compact('notificacion'));
+        return view('mesadepartes-elaboracion', compact('notificacion'));
     }
 
     public function finalizar(Request $request, $id)
@@ -89,4 +89,37 @@ class NotificacionController extends Controller
         // Aquí puedes agregar lógica para enviar correo o notificación al usuario
         return redirect()->route('notificaciones.mesadepartes.bandeja')->with('success', '✅ Notificación entregada y finalizada con éxito.');
     }
+public function vistaArchivo(Request $request)
+{
+    $expedientesActivos = Notificacion::where('estado', 'Finalizado')->get();
+
+    $query = Notificacion::where('estado', 'Archivado');
+
+    // Filtros
+    if ($request->filled('buscar')) {
+        $query->where('numero_expediente', 'like', '%' . $request->buscar . '%');
+    }
+    if ($request->filled('fecha')) {
+        $query->whereDate('fecha_archivo', '=', $request->fecha);
+    }
+
+    $expedientesArchivados = $query->get();
+
+    return view('mesadepartes-archivar', compact('expedientesActivos', 'expedientesArchivados'));
+}
+public function archivar($id)
+{
+    $notificacion = Notificacion::findOrFail($id);
+
+    $notificacion->update([
+        'estado'        => 'Archivado',
+        'fecha_archivo' => now(),
+        'archivado_por' => auth()->user()->name ?? 'Operador',
+    ]);
+
+    return back()->with('success', '📁 Notificación archivada correctamente.');
+    if ($notificacion->estado !== 'Finalizado') {
+    return back()->with('error', 'Solo se pueden archivar notificaciones finalizadas.');
+}
+}
 }

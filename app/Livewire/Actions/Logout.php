@@ -3,7 +3,7 @@
 namespace App\Livewire\Actions;
 
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Session;
+use Illuminate\Support\Facades\Session  ;
 
 class Logout
 {

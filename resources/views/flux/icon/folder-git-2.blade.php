@@ -1,45 +1,6 @@
-{{-- Credit: Lucide (https://lucide.dev) --}}
-
-@props([
-    'variant' => 'outline',
-])
-
-@php
-    if ($variant === 'solid') {
-        throw new \Exception('The "solid" variant is not supported in Lucide.');
-    }
-
-    $classes = Flux::classes('shrink-0')->add(
-        match ($variant) {
-            'outline' => '[:where(&)]:size-6',
-            'solid' => '[:where(&)]:size-6',
-            'mini' => '[:where(&)]:size-5',
-            'micro' => '[:where(&)]:size-4',
-        },
-    );
-
-    $strokeWidth = match ($variant) {
-        'outline' => 2,
-        'mini' => 2.25,
-        'micro' => 2.5,
-    };
-@endphp
-
-<svg
-    {{ $attributes->class($classes) }}
-    data-flux-icon
-    xmlns="http://www.w3.org/2000/svg"
-    viewBox="0 0 24 24"
-    fill="none"
-    stroke="currentColor"
-    stroke-width="{{ $strokeWidth }}"
-    stroke-linecap="round"
-    stroke-linejoin="round"
-    aria-hidden="true"
-    data-slot="icon"
->
-    <path d="M9 20H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h3.9a2 2 0 0 1 1.69.9l.81 1.2a2 2 0 0 0 1.67.9H20a2 2 0 0 1 2 2v5" />
-    <circle cx="13" cy="12" r="2" />
-    <path d="M18 19c-2.8 0-5-2.2-5-5v8" />
-    <circle cx="20" cy="19" r="2" />
+<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+  <path stroke-linecap="round" stroke-linejoin="round" d="M3 6.75A2.25 2.25 0 015.25 4.5h4.086a2.25 2.25 0 011.59.659l.914.914a.75.75 0 00.53.22h6.38A2.25 2.25 0 0121 8.543M3 6.75v10.5A2.25 2.25 0 005.25 19.5h13.5A2.25 2.25 0 0021 17.25V8.543M3 6.75h6.75" />
+  <circle cx="8" cy="14" r="1.5" />
+  <circle cx="16" cy="10" r="1.5" />
+  <path stroke-linecap="round" stroke-linejoin="round" d="M8 14v.5a2.5 2.5 0 002.5 2.5H13" />
 </svg>
