@@ -73,17 +73,47 @@ Route::middleware(['auth', 'verified', 'role:administrador'])->group(function ()
     Route::get('archivo_central', CentralFileFilter::class)
         ->name('archivo.central');
 
-    Route::view('tramite_pendiente', 'Administrador.tramite_pendiente')
-        ->name('tramite.pendiente');
+    Route::view('bandeja_entrada', 'Administrador.bandeja_entrada')
+        ->name('bandeja.entrada');
+
+    Route::view('tramite_aprobado', 'Administrador.tramite_aprobado')
+        ->name('tramite.aprobado');
+
+    Route::view('tramite_archivado', 'Administrador.tramite_archivado')
+        ->name('tramite.archivado');
+
+    Route::view('tramite_atendido', 'Administrador.tramite_atendido')
+        ->name('tramite.atendido');
+
+    Route::view('tramite_canalizado', 'Administrador.tramite_canalizado')
+        ->name('tramite.canalizado');
+
+    Route::view('tramite_derivado', 'Administrador.tramite_derivado')
+        ->name('tramite.derivado');
 
     Route::view('tramite_en_proceso', 'Administrador.tramite_en_proceso')
-        ->name('tramite.proceso');
+        ->name('tramite.en_proceso');
+
+    Route::view('tramite_en_revision', 'Administrador.tramite_en_revision')
+        ->name('tramite.en_revision');
+
+    Route::view('tramite_enviado', 'Administrador.tramite_enviado')
+        ->name('tramite.enviado');
 
     Route::view('tramite_finalizado', 'Administrador.tramite_finalizado')
         ->name('tramite.finalizado');
+
+    Route::view('tramite_pendiente', 'Administrador.tramite_pendiente')
+        ->name('tramite.pendiente');
+    
+    Route::view('tramite_rechazado', 'Administrador.tramite_rechazado')
+        ->name('tramite.rechazado');
         
     Route::view('bandeja_entrada', 'Administrador.bandeja_entrada')
         ->name('bandeja.entrada');
+
+    Route::view('repositorio_archivados', 'Administrador.repositorio_archivados')
+        ->name('repositorio.archivados');
 });
 
 Route::middleware(['auth', 'verified', 'role:funcionario'])->group(function () {
