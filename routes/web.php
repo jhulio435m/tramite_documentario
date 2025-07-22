@@ -31,6 +31,12 @@ Route::view('tramites_lista', 'tramites_lista')
     ->middleware(['auth', 'verified'])
     ->name('tramites.lista');
 
+use App\Livewire\FormTramite;
+
+Route::get('form-tramite/{tramite}', FormTramite::class)
+    ->middleware(['auth', 'verified'])
+    ->name('form.tramite');
+
 Route::middleware(['auth', 'verified', 'role:operador'])->group(function () {
     Route::get('/verificacion-expediente', VerificacionExpediente::class)
         ->name('verificacionExpediente');
