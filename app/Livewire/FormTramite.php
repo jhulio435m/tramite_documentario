@@ -6,6 +6,12 @@ use Livewire\Component;
 use Livewire\WithFileUploads;
 use App\Models\TramiteType;
 use App\Models\DetalleTramite;
+use App\Models\Expediente;
+use App\Models\TramiteExpediente;
+use App\Models\Status;
+use App\Models\Month;
+use Illuminate\Support\Str;
+use Illuminate\Support\Facades\Auth;
 
 class FormTramite extends Component
 {
@@ -47,9 +53,35 @@ class FormTramite extends Component
     public function enviarSolicitud()
     {
         $this->validate();
+
+        $paths = [];
         foreach ($this->archivos as $archivo) {
-            $archivo->store('tramites');
+            $paths[] = $archivo->store('tramites');
         }
+
+        $codigo = strtoupper(Str::random(8));
+
+        $status = Status::where('name', 'Pendiente')->value('id');
+
+        Expediente::create([
+            'codigo' => $codigo,
+            'solicitante' => Auth::user()->name.' '.Auth::user()->last_name,
+            'dni' => Auth::user()->dni,
+            'year' => now()->year,
+            'month_id' => now()->month,
+            'fecha_ingreso' => now()->toDateString(),
+            'tramite_type_id' => $this->tramiteId,
+            'status_id' => $status,
+            'sumilla' => $this->tramiteName,
+        ]);
+
+        TramiteExpediente::create([
+            'codigo' => $codigo,
+            'tramite_type_id' => $this->tramiteId,
+            'sustento' => $this->sustento,
+            'archivos' => $paths,
+        ]);
+
         session()->flash('message', 'Solicitud enviada correctamente.');
         $this->reset(['sustento','archivos']);
     }

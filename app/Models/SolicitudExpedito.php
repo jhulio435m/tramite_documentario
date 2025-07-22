@@ -8,6 +8,7 @@ class SolicitudExpedito extends Model
 {
     // Campos que se pueden llenar con create() o fill()
     protected $fillable = [
+        'codigo',
         'sustento',
         'archivos',
     ];

@@ -8,6 +8,12 @@ use App\Models\TramiteType;
 use App\Models\RequisitosConstanciaExpeditoProfesional;
 use Illuminate\Support\Facades\Log;
 use App\Models\SolicitudExpedito;
+use App\Models\Expediente;
+use App\Models\TramiteExpediente;
+use App\Models\Status;
+use App\Models\Month;
+use Illuminate\Support\Str;
+use Illuminate\Support\Facades\Auth;
 
 class ConstanciaExpeditoProfesional extends Component
 {
@@ -91,8 +97,31 @@ class ConstanciaExpeditoProfesional extends Component
             Log::info("Archivo [$index] guardado en: $ruta");
         }
 
-        // Guardamos en la base de datos
+        // Crear expediente
+        $codigo = strtoupper(Str::random(8));
+        $status = Status::where('name', 'Pendiente')->value('id');
+
+        Expediente::create([
+            'codigo' => $codigo,
+            'solicitante' => Auth::user()->name.' '.Auth::user()->last_name,
+            'dni' => Auth::user()->dni,
+            'year' => now()->year,
+            'month_id' => now()->month,
+            'fecha_ingreso' => now()->toDateString(),
+            'tramite_type_id' => $this->tramite->tramite_type_id ?? null,
+            'status_id' => $status,
+            'sumilla' => $this->titulo,
+        ]);
+
         SolicitudExpedito::create([
+            'codigo' => $codigo,
+            'sustento' => $this->sustento,
+            'archivos' => $rutasArchivos,
+        ]);
+
+        TramiteExpediente::create([
+            'codigo' => $codigo,
+            'tramite_type_id' => $this->tramite->tramite_type_id ?? null,
             'sustento' => $this->sustento,
             'archivos' => $rutasArchivos,
         ]);
