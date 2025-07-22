@@ -42,6 +42,7 @@
                         <flux:navlist.item icon="clock" :href="route('tramite.en_revision')" :current="request()->routeIs('tramite.en_revision')" wire:navigate>{{ __('Trámite en Revisión') }}</flux:navlist.item>
                         <flux:navlist.item icon="arrow-right-circle" :href="route('tramite.enviado')" :current="request()->routeIs('tramite.enviado')" wire:navigate>{{ __('Trámite Enviado') }}</flux:navlist.item>
                         <flux:navlist.item icon="document-check" :href="route('tramite.finalizado')" :current="request()->routeIs('tramite.finalizado')" wire:navigate>{{ __('Trámite Finalizado') }}</flux:navlist.item>
+                        <flux:navlist.item icon="document-check" :href="route('repositorio.archivados')" :current="request()->routeIs('repositorio.archivados')" wire:navigate>{{ __('repositorio archivados') }}</flux:navlist.item>
                     @endif
                     
                     @if ($role === 'funcionario')
