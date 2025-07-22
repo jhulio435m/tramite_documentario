@@ -16,7 +16,7 @@
                 <flux:navlist.group class="grid">
                     @php($role = auth()->user()->role->name ?? '')
                     <flux:navlist.item icon="home" :href="route('dashboard')" :current="request()->routeIs('dashboard')" wire:navigate>{{ __('Dashboard') }}</flux:navlist.item>
-                    <flux:navlist.item icon="document" :href="route('tramites_lista')" :current="request()->routeIs('tramites_lista')" wire:navigate>{{ __('Lista de Trámites') }}</flux:navlist.item>
+                    <flux:navlist.item icon="document" :href="route('tramites.lista')" :current="request()->routeIs('tramites.lista')" wire:navigate>{{ __('Lista de Trámites') }}</flux:navlist.item>
                     <flux:navlist.item icon="document" :href="route('dashboard')" :current="request()->routeIs('dashboard')" wire:navigate>{{ __('Dashboard') }}</flux:navlist.item>
 
                     @if ($role === 'operador')
