@@ -33,10 +33,17 @@
                     @if ($role === 'administrador')
                         <flux:navlist.item icon="document-magnifying-glass" :href="route('archivo.central')" :current="request()->routeIs('archivo.central')" wire:navigate>{{ __('Archivo Central') }}</flux:navlist.item>
                         <flux:navlist.item icon="inbox" :href="route('bandeja.entrada')" :current="request()->routeIs('bandeja.entrada')" wire:navigate>{{ __('Bandeja de Entrada') }}</flux:navlist.item>
-                        <flux:navlist.item icon="clock" :href="route('tramite.pendiente')" :current="request()->routeIs('tramite.pendiente')" wire:navigate>{{ __('Trámite Pendiente') }}</flux:navlist.item>
-                        <flux:navlist.item icon="arrow-right-circle" :href="route('tramite.proceso')" :current="request()->routeIs('tramite.proceso')" wire:navigate>{{ __('Trámite en Proceso') }}</flux:navlist.item>
+                        <flux:navlist.item icon="document-minus" :href="route('tramite.aprobado')" :current="request()->routeIs('tramite.aprobado')" wire:navigate>{{ __('Trámite Aprobado') }}</flux:navlist.item>
+                        <flux:navlist.item icon="document-plus" :href="route('tramite.archivado')" :current="request()->routeIs('tramite.archivado')" wire:navigate>{{ __('Trámite Archivado') }}</flux:navlist.item>
+                        <flux:navlist.item icon="arrow-right" :href="route('tramite.atendido')" :current="request()->routeIs('tramite.atendido')" wire:navigate>{{ __('Trámite Atendido') }}</flux:navlist.item>
+                        <flux:navlist.item icon="document-check" :href="route('tramite.canalizado')" :current="request()->routeIs('tramite.canalizado')" wire:navigate>{{ __('Trámite Canalizado') }}</flux:navlist.item>
+                        <flux:navlist.item icon="document-text" :href="route('tramite.derivado')" :current="request()->routeIs('tramite.derivado')" wire:navigate>{{ __('Trámite Derivado') }}</flux:navlist.item>
+                        <flux:navlist.item icon="document-text" :href="route('tramite.en_proceso')" :current="request()->routeIs('tramite.en_proceso')" wire:navigate>{{ __('Trámite en Proceso') }}</flux:navlist.item>
+                        <flux:navlist.item icon="clock" :href="route('tramite.en_revision')" :current="request()->routeIs('tramite.en_revision')" wire:navigate>{{ __('Trámite en Revisión') }}</flux:navlist.item>
+                        <flux:navlist.item icon="arrow-right-circle" :href="route('tramite.enviado')" :current="request()->routeIs('tramite.enviado')" wire:navigate>{{ __('Trámite Enviado') }}</flux:navlist.item>
                         <flux:navlist.item icon="document-check" :href="route('tramite.finalizado')" :current="request()->routeIs('tramite.finalizado')" wire:navigate>{{ __('Trámite Finalizado') }}</flux:navlist.item>
                     @endif
+                    
                     @if ($role === 'funcionario')
                         <flux:navlist.item icon="home" :href="route('panel.principal')" :current="request()->routeIs('panel.principal')" wire:navigate>{{ __('Panel principal') }}</flux:navlist.item>
                         <flux:navlist.item icon="document" :href="route('mis.asignaciones')" :current="request()->routeIs('mis.asignaciones')" wire:navigate>{{ __('Mis asignaciones') }}</flux:navlist.item>
