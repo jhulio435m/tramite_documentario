@@ -30,6 +30,17 @@ Route::view('soporte', 'soporte')
     ->middleware(['auth', 'verified'])
     ->name('soporte');
 
+// Ruta principal de trámites
+Route::view('tramites_lista', 'tramites_lista')
+    ->middleware(['auth', 'verified'])
+    ->name('tramites.lista');
+
+use App\Livewire\FormTramite;
+
+Route::get('form-tramite/{tramite}', FormTramite::class)
+    ->middleware(['auth', 'verified'])
+    ->name('form.tramite');
+
 Route::middleware(['auth', 'verified', 'role:operador'])->group(function () {
     Route::get('/verificacion-expediente', VerificacionExpediente::class)
         ->name('verificacionExpediente');
@@ -98,6 +109,20 @@ Route::middleware(['auth', 'verified', 'role:funcionario'])->group(function () {
 });
 
 
+
+Route::view('ampliacion_plazo', 'ampliacion_plazo')
+    ->middleware(['auth', 'verified'])
+    ->name('ampliacion_plazo');
+
+Route::view('cambio_titulo_asesor', 'cambio_titulo_asesor')
+    ->middleware(['auth', 'verified'])
+    ->name('cambio_titulo_asesor');
+
+Route::view('otros_tramites', 'otros_tramites')
+    ->middleware(['auth', 'verified'])
+    ->name('otros_tramites');
+
+
 Route::middleware(['auth'])->group(function () {
     Route::redirect('settings', 'settings/profile');
 
@@ -106,4 +131,15 @@ Route::middleware(['auth'])->group(function () {
     Volt::route('settings/appearance', 'settings.appearance')->name('settings.appearance');
 });
 
+
 require __DIR__.'/auth.php';
+
+// Tramites
+
+Route::get('/tramites', [TramiteController::class, 'listaTramites'])->name('tramites.index');
+Route::get('/tramites/{id}', [TramiteController::class, 'show'])->name('tramites.show');
+Route::post('/tramites/{id}/enviar', [TramiteController::class, 'enviarSolicitud'])->name('tramites.enviar');
+
+Route::get('/tramites/historial', function () {
+    return 'Página de historial aún no implementada.';
+})->name('tramites.historial');
