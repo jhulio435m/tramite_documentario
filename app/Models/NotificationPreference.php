@@ -5,11 +5,11 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class NotificationPreference extends Model
+class Notificacion extends Model
 {
     use HasFactory;
 
-    protected $table = 'notification_preferences'; // Asegura que apunta a la tabla correcta
+    protected $table = 'notificaciones'; // Asegura que apunta a la tabla correcta
 
     protected $fillable = [
         'user_id',
